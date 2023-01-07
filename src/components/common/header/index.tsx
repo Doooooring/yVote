@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 
-import { NewsOrder } from '@entities/interfaces/news';
+import { setVacant } from '@/entities/state';
 
 interface HeaderProps {
-  setVacant: (vacant: boolean | NewsOrder) => void;
+  setVacant: setVacant;
 }
 
 interface NavBoxProps {
   link: String;
   comment: String;
-  setVacant: (vacant: boolean | NewsOrder) => void;
+  setVacant: setVacant;
 }
 
 const activeStyle = (isActive: boolean) => {

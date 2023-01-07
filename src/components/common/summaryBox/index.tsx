@@ -1,8 +1,19 @@
+import axios from 'axios';
+
 import styled from 'styled-components';
+
+import { Preview } from '@interfaces/news';
+import { vacant, setVacant } from '@/entities/state';
 
 import { useCallback, useMemo } from 'react';
 
-export default function SummaryBox() {
+interface PreviewBoxProps {
+  Preview: Preview;
+  vacant: vacant;
+  setVacant: setVacant;
+}
+
+export default function PreviewBox() {
   return <Wrapper></Wrapper>;
 }
 
