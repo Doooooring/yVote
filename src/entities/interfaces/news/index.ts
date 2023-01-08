@@ -16,8 +16,6 @@ export interface News {
   };
 }
 
-export interface NewsOrder extends Partial<Pick<News, 'order'>> {}
-
 export interface Preview
   extends Partial<
     Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>

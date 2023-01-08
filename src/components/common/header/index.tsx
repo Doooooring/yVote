@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
 
-import { setVacant } from '@/entities/state';
+import { setCurClicked } from '@/entities/state';
 
 interface HeaderProps {
-  setVacant: setVacant;
+  setCurClicked: setCurClicked;
 }
 
 interface NavBoxProps {
   link: String;
   comment: String;
-  setVacant: setVacant;
+  setCurClicked: setCurClicked;
 }
 
 const activeStyle = (isActive: boolean) => {
@@ -25,12 +25,12 @@ const activeStyle = (isActive: boolean) => {
       };
 };
 
-function NavBox({ link, comment, setVacant }: NavBoxProps) {
+function NavBox({ link, comment, setCurClicked }: NavBoxProps) {
   return (
     <NavLink
       to={`${link}`}
       onClick={() => {
-        setVacant(true);
+        setCurClicked(undefined);
       }}
       style={({ isActive }) => activeStyle(isActive)}
     >
@@ -39,7 +39,7 @@ function NavBox({ link, comment, setVacant }: NavBoxProps) {
   );
 }
 
-export default function Header({ setVacant }: HeaderProps) {
+export default function Header({ setCurClicked }: HeaderProps) {
   return (
     <Wrapper>
       <HeaderBody>
@@ -52,17 +52,17 @@ export default function Header({ setVacant }: HeaderProps) {
           <NavBox
             link={'/news'}
             comment="뉴스 모아보기"
-            setVacant={setVacant}
+            setCurClicked={setCurClicked}
           />
           <NavBox
             link={'/keywords'}
             comment="키워드 검색"
-            setVacant={setVacant}
+            setCurClicked={setCurClicked}
           />
           <NavBox
             link={'/analyze'}
             comment="정치 성향 테스트"
-            setVacant={setVacant}
+            setCurClicked={setCurClicked}
           />
         </NavigationBox>
       </HeaderBody>

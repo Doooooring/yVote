@@ -9,16 +9,22 @@ import Keywords from '@pages/keywords';
 import KeyExplanation from '@pages/keyExplanation';
 import News from '@pages/news';
 
-import { News as NewsInf, NewsOrder } from '@entities/interfaces/news';
+import { News as NewsInf } from '@entities/interfaces/news';
+import { curClicked, setCurClicked } from '@entities/state';
 
 function App() {
-  const [vacant, setVacant] = useState<boolean | NewsOrder>(true);
+  const [curClicked, setCurClicked] = useState<curClicked>(undefined);
   return (
     <Wrapper>
-      <Header setVacant={setVacant} />
+      <Header setCurClicked={setCurClicked} />
       <Router>
         <Routes>
-          <Route path="/news" element={<News />} />
+          <Route
+            path="/news"
+            element={
+              <News curClicked={curClicked} setCurClicked={setCurClicked} />
+            }
+          />
           <Route path="/keywords" element={<Keywords />} />
           <Route path="/keywords/:keyname" element={<KeyExplanation />} />
           <Route path="/analyze" element={<Analyze />} />

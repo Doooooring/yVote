@@ -1,4 +1,7 @@
-import { News, NewsOrder } from '@entities/interfaces/news';
+import { News } from '@entities/interfaces/news';
 
-export type vacant = boolean | NewsOrder;
-export type setVacant = (vacant: vacant) => void;
+export type curClicked = undefined | News['order'];
+export type setCurClicked = (curClicked: curClicked) => void;
+
+export type newsContent = undefined | News;
+export type setNewsContent = (newsContent: newsContent) => void;
