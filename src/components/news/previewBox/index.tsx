@@ -11,6 +11,7 @@ import { Preview } from '@interfaces/news';
 import { curClicked, setCurClicked, setNewsContent } from '@entities/state';
 
 import { useCallback, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 interface PreviewBoxProps {
   Preview: Preview;
@@ -68,7 +69,11 @@ export default function PreviewBox({
         <Summary>{summary}</Summary>
         <KeywordsWrapper>
           {keywords?.map((keyword) => {
-            return <Keyword>{keyword}</Keyword>;
+            return (
+              <Keyword>
+                <Link to={`/keyword/:${keyword}`}>{`#${keyword}`}</Link>
+              </Keyword>
+            );
           })}
         </KeywordsWrapper>
       </BodyWrapper>
@@ -128,4 +133,9 @@ const NewIco = styled.img`
 `;
 const Summary = styled.p``;
 const KeywordsWrapper = styled.div``;
-const Keyword = styled.p``;
+const Keyword = styled.p`
+  display: inline;
+  & > a {
+    text-decoration: none;
+  }
+`;
