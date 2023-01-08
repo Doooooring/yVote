@@ -49,23 +49,19 @@ export default function PreviewBox({
           showNewsContent();
         }}
       >
-        <img
+        <NewsImg
           src={''}
           alt=""
           width="100%"
           onError={(e) => {
             onErrorImg(e);
           }}
-        ></img>
+        ></NewsImg>
       </ImgWrapper>
       <BodyWrapper>
         <HeadWrapper>
           <Header>{title}</Header>
-          <New
-            style={{
-              display: state ? 'inline' : 'none',
-            }}
-          >
+          <New state={state}>
             <NewIco src={icoNew} alt="hmm" height="18px"></NewIco>
           </New>
         </HeadWrapper>
@@ -103,6 +99,9 @@ const ImgWrapper = styled.div`
   width: 18%;
   overflow: hidden;
 `;
+
+const NewsImg = styled.img``;
+
 const BodyWrapper = styled.div`
   display: inline-block;
   padding-left: 20px;
@@ -115,7 +114,14 @@ const Header = styled.h1`
   font-weight: 700;
   margin-right: 10px;
 `;
-const New = styled.span``;
+
+interface NewProps {
+  state: Boolean | undefined;
+}
+
+const New = styled.span<NewProps>`
+  display: ${({ state }) => (state ? 'inline' : 'none')};
+`;
 const NewIco = styled.img`
   position: relative;
   top: 3px;
