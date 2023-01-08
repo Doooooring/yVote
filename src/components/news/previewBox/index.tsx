@@ -44,7 +44,11 @@ export default function PreviewBox({
 
   return (
     <Wrapper>
-      <ImgWrapper>
+      <ImgWrapper
+        onClick={() => {
+          showNewsContent();
+        }}
+      >
         <img
           src={''}
           alt=""
