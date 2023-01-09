@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 
 import { News } from '@interfaces/news';
-import icoClose from '@assets/img/ico_close.png';
+
 import icoChosun from '@assets/img/ico_chosun.png';
 import icoDonga from '@assets/img/ico_donga.png';
 import icoJoongang from '@assets/img/ico_joongang.png';
