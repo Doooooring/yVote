@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 
-export default function NewsHistory() {
+import { BrickBar } from '@components/common/figure';
+
+import { News } from '@entities/interfaces/news';
+
+interface NewsHistoryProps {
+  news: News['news'];
+}
+
+export default function NewsHistory({ news }: NewsHistoryProps) {
   return (
     <Wrapper>
       <HistoryHead>관련 뉴스 기사</HistoryHead>
       <HistoryExplanation>
         <HistoryDate></HistoryDate>
-        <BrickBar />
+        <BrickBar num={news.length} />
         <HistorySentences></HistorySentences>
       </HistoryExplanation>
     </Wrapper>
