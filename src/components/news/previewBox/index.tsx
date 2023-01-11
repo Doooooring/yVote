@@ -131,7 +131,13 @@ const NewIco = styled.img`
   position: relative;
   top: 3px;
 `;
-const Summary = styled.p``;
+const Summary = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 const KeywordsWrapper = styled.div``;
 const Keyword = styled.p`
   display: inline;

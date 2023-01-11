@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-import { BrickBar } from '@components/common/figure';
+import { Link } from 'react-router-dom';
 
+import { BrickBar } from '@components/common/figure';
 import { News } from '@entities/interfaces/news';
 
 interface NewsHistoryProps {
@@ -13,9 +14,30 @@ export default function NewsHistory({ news }: NewsHistoryProps) {
     <Wrapper>
       <HistoryHead>관련 뉴스 기사</HistoryHead>
       <HistoryExplanation>
-        <HistoryDate></HistoryDate>
+        <HistoryDate>
+          {news.map((comp) => {
+            const year = comp.date.getFullYear;
+            const month = comp.date.getMonth;
+            return <li>{`${year}.${month}`}</li>;
+          })}
+        </HistoryDate>
         <BrickBar num={news.length} />
-        <HistorySentences></HistorySentences>
+        <HistorySentences>
+          {news.map((comp) => {
+            return (
+              <SentenceWrapper>
+                <Link
+                  to={`${comp.link}`}
+                  style={{
+                    textDecoration: 'none',
+                  }}
+                >
+                  {comp.title}
+                </Link>
+              </SentenceWrapper>
+            );
+          })}
+        </HistorySentences>
       </HistoryExplanation>
     </Wrapper>
   );
@@ -52,3 +74,5 @@ const HistoryDate = styled(NewsGrid)`
   margin-right: 20px;
 `;
 const HistorySentences = styled(NewsGrid)``;
+
+const SentenceWrapper = styled.div``;

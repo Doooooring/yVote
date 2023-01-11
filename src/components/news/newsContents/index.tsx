@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 import { curClicked, setCurClicked, newsContent } from '@entities/state';
 import { BrickBar } from '@/components/common/figure';
-import NewsHistory from '../newsHistory';
-import Journals from '../journals';
+import NewsHistory from './newsHistory';
+import Journals from './journals';
+import VoteBox from './voteBox';
 
 interface NewsContentProps {
   curClicked: curClicked;
@@ -33,11 +34,16 @@ export default function NewsContent({
           <CloseButton htmlFor="close-button"></CloseButton>
         </NewsBoxClose>
         <Body>
-          <ContentHead></ContentHead>
+          <ContentHead>{newsContent.title}</ContentHead>
           <ContentBody>
-            <Summary></Summary>
+            <Summary>{newsContent.summary}</Summary>
             <NewsHistory news={newsContent.news} />
-            <Journals journals={newsContent.journals}/>
+            <Journals journals={newsContent.journals} />
+            <VoteBox
+              state={newsContent.state}
+              opinions={newsContent.opinions}
+              votes={newsContent.votes}
+            />
           </ContentBody>
         </Body>
       </Wrapper>
@@ -45,10 +51,54 @@ export default function NewsContent({
   }
 }
 
-const Wrapper = styled.div``;
-const NewsBoxClose = styled.div``;
-const CloseButton = styled.label``;
-const Body = styled.div``;
-const ContentHead = styled.h1``;
-const ContentBody = styled.div``;
-const Summary = styled.div``;
+const Wrapper = styled.div`
+  height: 1000px;
+  width: 500px;
+  background-color: white;
+  border-width: 0px;
+  border-color: black;
+  border-radius: 10px;
+  border-style: solid;
+  padding-bottom: 20px;
+  text-align: left;
+  position: absolute;
+  overflow: scroll;
+`;
+const NewsBoxClose = styled.div`
+  padding-top: 10px;
+  padding-right: 20px;
+  text-align: right;
+`;
+const CloseButton = styled.label`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  line-height: 150%;
+  text-align: left;
+  position: relative;
+  background-color: white;
+`;
+const ContentHead = styled.h1`
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 21px;
+  font-weight: 600;
+`;
+const ContentBody = styled.div`
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+const Summary = styled.div`
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 550;
+  margin-bottom: 5%;
+  font-family: 'summary-font';
+  word-break: break-all;
+`;
