@@ -62,7 +62,13 @@ export default function News({ curClicked, setCurClicked }: NewsProps) {
               </PreviewBoxWrapper>
             ))}
           </NewsList>
-          <NewsContentsWrapper></NewsContentsWrapper>
+          <NewsContentsWrapper curClicked={curClicked}>
+            <NewsContents
+              curClicked={curClicked}
+              setCurClicked={setCurClicked}
+              newsContent={newsContent}
+            />
+          </NewsContentsWrapper>
         </MainContentsBody>
       </MainContents>
     </Wrapper>
@@ -148,7 +154,13 @@ const PreviewBoxWrapper = styled.div`
   width: 470px;
 `;
 
-const NewsContentsWrapper = styled.div`
+interface NewsContentsWrapperProps {
+  curClicked: curClicked;
+}
+
+const NewsContentsWrapper = styled.div<NewsContentsWrapperProps>`
   width: 500px;
   height: 800px;
+  opacity: ${(curClicked) => (curClicked ? 1 : 0)};
+  pointer-events: ${(curClicked) => (curClicked ? 'auto' : 'none')};
 `;
