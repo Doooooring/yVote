@@ -9,9 +9,9 @@ export enum category {
 }
 
 export interface Keyword {
-  keyword: String;
-  explain: String;
+  keyword: string;
+  explain: string;
   category: category;
   recent: Boolean;
-  news: Array<Number>;
+  news: Array<number>;
 }

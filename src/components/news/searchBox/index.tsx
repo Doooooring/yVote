@@ -4,12 +4,25 @@ import styled from 'styled-components';
 
 import { useState, useCallback, useEffect } from 'react';
 
+import { News, Preview } from '@interfaces/news';
 import { Keyword } from '@interfaces/keywords';
+
+import { curPreviewsList, setCurPreviewsList } from '@state/index';
+
 import { HOST_URL } from '@assets/url';
 
 interface KeyName extends Partial<Pick<Keyword, 'keyword'>> {}
 
-export default function SearchBox({}) {
+interface SearchBoxProps {
+  newsContentDefault: Preview[];
+  setCurPreviewsList: setCurPreviewsList;
+}
+
+export default function SearchBox({
+  newsContentDefault,
+  setCurPreviewsList,
+}: SearchBoxProps) {
+  const [searchWord, setSearchWord] = useState<String>('');
   const [relatedWords, getRelatedWords] = useState<String[]>([
     '키워드를 검색해 봅시다.',
   ]);
