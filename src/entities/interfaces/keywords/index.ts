@@ -15,3 +15,26 @@ export interface Keyword {
   recent: Boolean;
   news: Array<number>;
 }
+
+export interface KeywordInHuman extends Keyword {
+  category: category.human;
+}
+
+export interface KeywordInPolitics extends Keyword {
+  category: category.politics;
+}
+export interface KeywordInPolicy extends Keyword {
+  category: category.policy;
+}
+export interface KeywordInEconomy extends Keyword {
+  category: category.economy;
+}
+export interface KeywordInSocial extends Keyword {
+  category: category.social;
+}
+export interface KeywordInOrganization extends Keyword {
+  category: category.organizatioin;
+}
+export interface KeywordInEtc extends Keyword {
+  category: category.etc;
+}
