@@ -9,6 +9,7 @@ export enum category {
 }
 
 export interface Keyword {
+  _id: string;
   keyword: string;
   explain: string;
   category: category;
@@ -16,25 +17,27 @@ export interface Keyword {
   news: Array<number>;
 }
 
-export interface KeywordInHuman extends Keyword {
+export interface KeywordToView extends Partial<Pick<Keyword, 'keyword' | 'category' | 'recent'>> {}
+
+export interface KeywordInHuman extends KeywordToView {
   category: category.human;
 }
 
-export interface KeywordInPolitics extends Keyword {
+export interface KeywordInPolitics extends KeywordToView {
   category: category.politics;
 }
-export interface KeywordInPolicy extends Keyword {
+export interface KeywordInPolicy extends KeywordToView {
   category: category.policy;
 }
-export interface KeywordInEconomy extends Keyword {
+export interface KeywordInEconomy extends KeywordToView {
   category: category.economy;
 }
-export interface KeywordInSocial extends Keyword {
+export interface KeywordInSocial extends KeywordToView {
   category: category.social;
 }
-export interface KeywordInOrganization extends Keyword {
+export interface KeywordInOrganization extends KeywordToView {
   category: category.organizatioin;
 }
-export interface KeywordInEtc extends Keyword {
+export interface KeywordInEtc extends KeywordToView {
   category: category.etc;
 }

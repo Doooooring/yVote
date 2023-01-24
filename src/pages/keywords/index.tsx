@@ -30,20 +30,19 @@ export default function Keywords() {
   const [keywordInSocial, setkeywordInSocial] = useState<Array<KeywordInSocial>>([]);
   const [keywordInEtc, setKeywordInEtc] = useState<Array<KeywordInEtc>>([]);
 
-  const categories = useMemo(() => {
-    return [category.human, category.economy, category.organizatioin, category.policy, category.politics, category.etc];
-  }, []);
-
+  
   return (
     <Wrapper>
-      <RecentGrid></RecentGrid>
-      <CategoryGrid category={category.human} keywords={keywordInHuman} />
-      <CategoryGrid category={category.economy} keywords={keywordInEconomy} />
-      <CategoryGrid category={category.organizatioin} keywords={keywordInOrganization} />
-      <CategoryGrid category={category.policy} keywords={keywordInPolicy} />
-      <CategoryGrid category={category.politics} keywords={keywordInPolitics} />
-      <CategoryGrid category={category.social} keywords={keywordInSocial} />
-      <CategoryGrid category={category.etc} keywords={keywordInEtc} />
+      <GridContainer>
+        <RecentGrid></RecentGrid>
+        <CategoryGrid category={category.human} keywords={keywordInHuman} />
+        <CategoryGrid category={category.economy} keywords={keywordInEconomy} />
+        <CategoryGrid category={category.organizatioin} keywords={keywordInOrganization} />
+        <CategoryGrid category={category.policy} keywords={keywordInPolicy} />
+        <CategoryGrid category={category.politics} keywords={keywordInPolitics} />
+        <CategoryGrid category={category.social} keywords={keywordInSocial} />
+        <CategoryGrid category={category.etc} keywords={keywordInEtc} />
+      </GridContainer>
     </Wrapper>
   );
 }

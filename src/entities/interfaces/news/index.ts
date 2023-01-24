@@ -1,6 +1,7 @@
 type Press = '조선' | '중앙' | '동아' | '한겨례' | '한경' | '매경';
 
 export interface News {
+  _id: string;
   order: number;
   title: string;
   summary: string;
@@ -18,7 +19,4 @@ export interface News {
   };
 }
 
-export interface Preview
-  extends Partial<
-    Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>
-  > {}
+export interface Preview extends Partial<Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>> {}
