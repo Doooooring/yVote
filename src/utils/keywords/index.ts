@@ -14,6 +14,10 @@ interface getKeywordsResponse {
   other: Array<KeywordWithCategory>;
 }
 
+interface getKeywordDetailResponse {
+  
+}
+
 class KeywordsServices {
   async getKeywords() {
     const response: getKeywordsResponse = await axios.get(
@@ -24,7 +28,11 @@ class KeywordsServices {
 
   async getKeywordsWithCategory() {}
 
-  async getKeywordDetail(keyword: Keyword['keyword']) {}
+  async getKeywordDetail(keyword: Keyword['keyword']) {
+      const response : getKeywordDetailResponse = await axios.get(
+        `${HOST_URL}/keywords/detail`
+      )
+  }
 }
 
 export default new KeywordsServices();

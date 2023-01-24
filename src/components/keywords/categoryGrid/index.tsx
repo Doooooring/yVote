@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useState, useEffect } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 
 import { KeywordToView } from '@interfaces/keywords';
 
@@ -9,9 +9,10 @@ import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
 interface CategoryGridProps {
   category: KeywordToView['category'];
   keywords: Array<KeywordToView>;
+  setKeywords: Dispatch<SetStateAction<KeywordToView[]>>;
 }
 
-export default function CategoryGrid({ category, keywords }: CategoryGridProps) {
+export default function CategoryGrid({ category, keywords, setKeywords }: CategoryGridProps) {
   return (
     <Wrapper>
       <GridHeader>{category}</GridHeader>

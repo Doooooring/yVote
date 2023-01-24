@@ -15,5 +15,24 @@ export type setCurPreviewsList = (curNewsList: curPreviewsList) => void;
 export interface recentKeyword extends Keyword {
   recent: true;
 }
-export type recentKeywords = Array<recentKeyword>;
+export type recentKeywords = Array<Keyword>;
 export type setRecentKeywords = (recentKeyword: recentKeyword) => void;
+
+export interface KeywordInHuman extends Keyword {
+    category : category.human
+}
+export interface KeywordInPolicy extends Keyword {
+    category : category.policy
+}
+export interface KeywordInEconomy extends Keyword {
+    category : category.economy
+}
+export interface KeywordInSocial extends Keyword {
+    category : category.social
+}
+export interface KeywordInOrganization extends Keyword {
+    category : category.organizatioin
+}
+export interface KeywordInEtc extends Keyword {
+    category : category.etc
+}

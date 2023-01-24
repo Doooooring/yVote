@@ -17,12 +17,12 @@ export interface Keyword {
   news: Array<number>;
 }
 
-export interface KeywordToView extends Partial<Pick<Keyword, 'keyword' | 'category' | 'recent'>> {}
+export interface KeywordToView
+  extends Partial<Pick<Keyword, '_id' | 'keyword' | 'category' | 'recent'>> {}
 
 export interface KeywordInHuman extends KeywordToView {
   category: category.human;
 }
-
 export interface KeywordInPolitics extends KeywordToView {
   category: category.politics;
 }

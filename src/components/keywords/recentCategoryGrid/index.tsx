@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { KeywordToView } from '@interfaces/keywords';
 
 interface RecentCategoryGridProps {
-  keywords: Array<KeywordToView>;
+  keyword: KeywordToView;
 }
 
-export default function RecentCategoryGrid({ keywords }: RecentCategoryGridProps) {
+export default function RecentCategoryGrid({ keyword }: RecentCategoryGridProps) {
   return <Wrapper></Wrapper>;
 }
 
