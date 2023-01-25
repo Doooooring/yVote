@@ -11,19 +11,14 @@ import NewsContents from '@components/news/newsContents';
 import { SpeechBubble } from '@components/common/figure';
 
 import { News, Preview } from '@entities/interfaces/news';
-import {
-  curClicked,
-  setCurClicked,
-  newsContent,
-  curPreviewsList,
-} from '@entities/state';
+import { curClicked, setCurClicked, newsContent, curPreviewsList } from '@entities/state';
 
 interface NewsProps {
   curClicked: curClicked;
   setCurClicked: setCurClicked;
 }
 
-export default function News({ curClicked, setCurClicked }: NewsProps) {
+export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const curBoxNumber = useRef(0);
   const [newsContentDefault, setNewsContentDefault] = useState<News[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
@@ -77,15 +72,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 1200px;
-  margin-top: 100px;
-`;
-
-const Body = styled.div`
   width: 1000px;
   height: 1200px;
-
-  text-align: center;
+  margin-top: 100px;
 `;
 
 const SearchWrapper = styled.div`

@@ -1,5 +1,5 @@
 import { News, Preview } from '@entities/interfaces/news';
-import {category, Keyword } from '@interfaces/keywords';
+import { category, Keyword } from '@interfaces/keywords';
 
 // news page State
 export type curClicked = undefined | News['order'];
@@ -19,20 +19,20 @@ export type recentKeywords = Array<Keyword>;
 export type setRecentKeywords = (recentKeyword: recentKeyword) => void;
 
 export interface KeywordInHuman extends Keyword {
-    category : category.human
+  category: 'human';
 }
 export interface KeywordInPolicy extends Keyword {
-    category : category.policy
+  category: 'policy';
 }
 export interface KeywordInEconomy extends Keyword {
-    category : category.economy
+  category: 'economy';
 }
 export interface KeywordInSocial extends Keyword {
-    category : category.social
+  category: 'social';
 }
 export interface KeywordInOrganization extends Keyword {
-    category : category.organizatioin
+  category: 'organization';
 }
 export interface KeywordInEtc extends Keyword {
-    category : category.etc
+  category: 'etc';
 }

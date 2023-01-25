@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from '@components/common/header';
 import Analyze from '@pages/analyze';
 import Initial from '@pages/initial';
-import Keywords from '@pages/keywords';
+import KeywordsPage from '@pages/keywords';
 import KeyExplanation from '@pages/keyExplanation';
-import News from '@pages/news';
+import NewsPage from '@pages/news';
 
 import { News as NewsInf } from '@entities/interfaces/news';
 import { curClicked, setCurClicked } from '@entities/state';
@@ -21,11 +21,9 @@ function App() {
         <Routes>
           <Route
             path="/news"
-            element={
-              <News curClicked={curClicked} setCurClicked={setCurClicked} />
-            }
+            element={<NewsPage curClicked={curClicked} setCurClicked={setCurClicked} />}
           />
-          <Route path="/keywords" element={<Keywords />} />
+          <Route path="/keywords" element={<KeywordsPage />} />
           <Route path="/keywords/:keyname" element={<KeyExplanation />} />
           <Route path="/analyze" element={<Analyze />} />
           <Route path="/" element={<Initial />} />

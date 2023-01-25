@@ -1,37 +1,31 @@
 import axios from 'axios';
 
-import { Keyword } from '@interfaces/keywords';
+import { category, Keyword, KeywordToView } from '@interfaces/keywords';
 
 import { HOST_URL } from '@assets/url';
 
-interface KeywordWithCategory {
-  _id: Keyword['category'];
-  keywords: Array<Keyword>;
+interface otherObject {
+  _id: category;
+  keywords: Array<KeywordToView>;
 }
 
-interface getKeywordsResponse {
-  recent: Array<Keyword>;
-  other: Array<KeywordWithCategory>;
+export interface getKeywordsResponse {
+  recent: Array<KeywordToView>;
+  other: Array<otherObject>;
 }
 
-interface getKeywordDetailResponse {
-  
-}
+interface getKeywordDetailResponse {}
 
 class KeywordsServices {
   async getKeywords() {
-    const response: getKeywordsResponse = await axios.get(
-      `${HOST_URL}/keywords`,
-    );
+    const response: getKeywordsResponse = await axios.get(`${HOST_URL}/keywords`);
     return response;
   }
 
   async getKeywordsWithCategory() {}
 
   async getKeywordDetail(keyword: Keyword['keyword']) {
-      const response : getKeywordDetailResponse = await axios.get(
-        `${HOST_URL}/keywords/detail`
-      )
+    const response: getKeywordDetailResponse = await axios.get(`${HOST_URL}/keywords/detail`);
   }
 }
 

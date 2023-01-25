@@ -2,79 +2,115 @@ import styled from 'styled-components';
 
 import KeywordsServices from '@utils/keywords';
 
+import SearchBox from '@components/keywords/searchBox';
 import CategoryGrid from '@components/keywords/categoryGrid';
 import RecentKeywordBox from '@components/keywords/recentCategoryGrid';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback, Dispatch, SetStateAction } from 'react';
 
 import { category, Keyword, KeywordToView } from '@interfaces/keywords';
-
+import KeywordServices, { getKeywordsResponse } from '@utils/keywords';
 import { recentKeywords } from '@entities/state';
+import RecentCategoryGrid from '@components/keywords/recentCategoryGrid';
 
-export default function Keywords() {
+export default function KeywordsPage() {
   const [recentKeywords, setRecentKeywords] = useState<Array<KeywordToView>>([]);
   const [keywordInHuman, setKeywordInHuman] = useState<Array<KeywordToView>>([]);
   const [keywordInEconomy, setKeywordInEconomy] = useState<Array<KeywordToView>>([]);
   const [keywordInOrganization, setkeywordInOrganization] = useState<Array<KeywordToView>>([]);
   const [keywordInPolicy, setKeywordInPolicy] = useState<Array<KeywordToView>>([]);
   const [keywordInPolitics, setKeywordInPolitics] = useState<Array<KeywordToView>>([]);
-  const [keywordInSocial, setkeywordInSocial] = useState<Array<KeywordToView>>([]);
+  const [keywordInSocial, setKeywordInSocial] = useState<Array<KeywordToView>>([]);
   const [keywordInEtc, setKeywordInEtc] = useState<Array<KeywordToView>>([]);
+
+  const setStateMap = useMemo(() => {
+    return {
+      human: setKeywordInHuman,
+      economy: setKeywordInEconomy,
+      organization: setkeywordInOrganization,
+      policy: setKeywordInPolicy,
+      politics: setKeywordInPolitics,
+      social: setKeywordInSocial,
+      etc: setKeywordInEtc,
+    };
+  }, []);
+
+  const setInitKeywords = useCallback(async () => {
+    const response: getKeywordsResponse = await KeywordServices.getKeywords();
+    const { recent, other } = response;
+    setRecentKeywords(recent);
+    other.forEach((comp) => {
+      const { _id, keywords } = comp;
+      const setState: Dispatch<SetStateAction<KeywordToView[]>> = setStateMap[_id];
+      setState(keywords);
+    });
+  }, []);
+
+  useEffect(() => {
+    setInitKeywords();
+  }, []);
 
   return (
     <Wrapper>
+      <SearchWrapper>
+        <SearchBox />
+      </SearchWrapper>
       <GridContainer>
-        <RecentGrid>
-          {recentKeywords.map((recentKeyword) => {
-            return <RecentKeywordBox keyword={recentKeyword} />;
-          })}
-        </RecentGrid>
+        <RecentCategoryGrid keywords={recentKeywords} setKeywords={setRecentKeywords} />
         <CategoryGrid
-          category={category.human}
+          category={'human'}
           keywords={keywordInHuman}
           setKeywords={setKeywordInHuman}
         />
         <CategoryGrid
-          category={category.economy}
+          category={'economy'}
           keywords={keywordInEconomy}
           setKeywords={setKeywordInEconomy}
         />
         <CategoryGrid
-          category={category.organizatioin}
+          category={'organization'}
           keywords={keywordInOrganization}
           setKeywords={setkeywordInOrganization}
         />
         <CategoryGrid
-          category={category.policy}
+          category={'policy'}
           keywords={keywordInPolicy}
           setKeywords={setKeywordInPolicy}
         />
         <CategoryGrid
-          category={category.politics}
+          category={'politics'}
           keywords={keywordInPolitics}
           setKeywords={setKeywordInPolitics}
         />
         <CategoryGrid
-          category={category.social}
+          category={'social'}
           keywords={keywordInSocial}
-          setKeywords={setkeywordInSocial}
+          setKeywords={setKeywordInSocial}
         />
-        <CategoryGrid
-          category={category.etc}
-          keywords={keywordInEtc}
-          setKeywords={setKeywordInEtc}
-        />
+        <CategoryGrid category={'etc'} keywords={keywordInEtc} setKeywords={setKeywordInEtc} />
       </GridContainer>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+`;
 
-const GridContainer = styled.div``;
+const SearchWrapper = styled.div`
+  width: 1000px;
+  height: 50px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 30px -25px;
+  margin-bottom: 40px;
+`;
 
-const RecentGridContainer = styled.div``;
-
-const RecentGridHeader = styled.h2``;
-
-const RecentGrid = styled.div``;
+const GridContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
