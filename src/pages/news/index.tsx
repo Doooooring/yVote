@@ -1,17 +1,14 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom';
-
 import icoNews from '@assets/img/ico_news.png';
-
+import { SpeechBubble } from '@components/common/figure';
+import NewsContents from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
 import SearchBox from '@components/news/searchBox';
-import NewsContents from '@components/news/newsContents';
-import { SpeechBubble } from '@components/common/figure';
-
 import { News, Preview } from '@entities/interfaces/news';
-import { curClicked, setCurClicked, newsContent, curPreviewsList } from '@entities/state';
+import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
 
 interface NewsProps {
   curClicked: curClicked;
@@ -23,8 +20,6 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const [newsContentDefault, setNewsContentDefault] = useState<News[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviewsList, setCurPreviewsList] = useState<curPreviewsList>([]);
-
-  useEffect(() => {}, []);
 
   return (
     <Wrapper>

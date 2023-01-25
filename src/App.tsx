@@ -1,16 +1,15 @@
-import styled from 'styled-components';
 import { useState } from 'react';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from '@components/common/header';
-import Analyze from '@pages/analyze';
-import Initial from '@pages/initial';
-import KeywordsPage from '@pages/keywords';
-import KeyExplanation from '@pages/keyExplanation';
-import NewsPage from '@pages/news';
-
 import { News as NewsInf } from '@entities/interfaces/news';
 import { curClicked, setCurClicked } from '@entities/state';
+import Analyze from '@pages/analyze';
+import Initial from '@pages/initial';
+import KeyExplanation from '@pages/keyExplanation';
+import KeywordsPage from '@pages/keywords';
+import NewsPage from '@pages/news';
 
 function App() {
   const [curClicked, setCurClicked] = useState<curClicked>(undefined);

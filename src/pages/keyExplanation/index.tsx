@@ -1,12 +1,11 @@
-import styled from 'styled-components';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import SearchBox from '@components/keywords/searchBox';
 import KeywordBox from '@components/keywords/categoryGrid';
-import PreviewBox from '@components/news/previewBox';
+import SearchBox from '@components/keywords/searchBox';
 import NewsContent from '@components/news/newsContents';
-
+import PreviewBox from '@components/news/previewBox';
 import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
 
 export default function KeyExplanation() {
@@ -18,7 +17,6 @@ export default function KeyExplanation() {
 
   useEffect(() => {
     window.location.reload();
-
   }, []);
 
   return (

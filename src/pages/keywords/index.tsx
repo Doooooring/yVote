@@ -1,17 +1,12 @@
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
-import KeywordsServices from '@utils/keywords';
-
-import SearchBox from '@components/keywords/searchBox';
 import CategoryGrid from '@components/keywords/categoryGrid';
-import RecentKeywordBox from '@components/keywords/recentCategoryGrid';
-
-import { useState, useEffect, useMemo, useCallback, Dispatch, SetStateAction } from 'react';
-
+import RecentCategoryGrid from '@components/keywords/recentCategoryGrid';
+import SearchBox from '@components/keywords/searchBox';
+import { recentKeywords } from '@entities/state';
 import { category, Keyword, KeywordToView } from '@interfaces/keywords';
 import KeywordServices, { getKeywordsResponse } from '@utils/keywords';
-import { recentKeywords } from '@entities/state';
-import RecentCategoryGrid from '@components/keywords/recentCategoryGrid';
 
 export default function KeywordsPage() {
   const [recentKeywords, setRecentKeywords] = useState<Array<KeywordToView>>([]);

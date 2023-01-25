@@ -14,6 +14,7 @@
     "@types/react-router": "^5.1.20",
     "axios": "^1.2.2",
     "craco-alias": "^3.0.1",
+    "eslint-plugin-simple-import-sort": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",

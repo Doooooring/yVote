@@ -1,10 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
-import { Dispatch, SetStateAction } from 'react';
-
-import { KeywordToView } from '@interfaces/keywords';
-
 import RecentKeywordBox from '@components/keywords/recentCategoryGrid/keywordBox';
+import { KeywordToView } from '@interfaces/keywords';
 
 interface RecentCategoryGridProps {
   keywords: Array<KeywordToView>;
@@ -15,7 +13,7 @@ export default function RecentCategoryGrid({ keywords, setKeywords }: RecentCate
   return (
     <Wrapper>
       {keywords.map((keyword) => {
-        return <RecentKeywordBox keyword={keyword}></RecentKeywordBox>;
+        return <RecentKeywordBox key={keyword.keyword} keyword={keyword}></RecentKeywordBox>;
       })}
     </Wrapper>
   );

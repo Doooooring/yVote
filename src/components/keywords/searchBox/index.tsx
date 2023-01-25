@@ -1,15 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-
 import styled from 'styled-components';
 
-import { useState, useCallback, useEffect } from 'react';
-
-import { News, Preview } from '@interfaces/news';
-import { Keyword } from '@interfaces/keywords';
-
-import { curPreviewsList, setCurPreviewsList } from '@state/index';
-
 import { HOST_URL } from '@assets/url';
+import { Keyword } from '@interfaces/keywords';
+import { News, Preview } from '@interfaces/news';
+import { curPreviewsList, setCurPreviewsList } from '@state/index';
 
 interface KeyName extends Partial<Pick<Keyword, 'keyword'>> {}
 
@@ -19,8 +15,8 @@ interface SearchBoxProps {
 }
 
 export default function SearchBox() {
-  const [searchWord, setSearchWord] = useState<String>('');
-  const [relatedWords, getRelatedWords] = useState<String[]>(['키워드를 검색해 봅시다.']);
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [relatedWords, getRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
   const [keylist, setKeyList] = useState<KeyName[]>([]);
   const [curFocusOnWord, setCurFocusOnWord] = useState<number>(-1);
   const [arrowKeyActive, setArrowKeyActive] = useState<boolean>(false);
@@ -46,6 +42,7 @@ export default function SearchBox() {
         <RelatedBox>
           {relatedWords.map((word) => (
             <RelatedWord
+              key={word}
               className={'word'}
               id={`${relatedWords.indexOf(word)}`}
               isFocused={word === relatedWords[curFocusOnWord]}
@@ -120,7 +117,7 @@ const RelatedBox = styled.div`
 `;
 
 interface RelatedWordProps {
-  isFocused: Boolean;
+  isFocused: boolean;
 }
 
 const RelatedWord = styled.p<RelatedWordProps>`

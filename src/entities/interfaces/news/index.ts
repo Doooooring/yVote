@@ -8,7 +8,7 @@ export interface News {
   news: Array<{ date: Date; title: string; link: string }>;
   journals: Array<{ press: Press; title: string; link: string }>;
   keywords: Array<string>;
-  state: Boolean;
+  state: boolean;
   opinions: {
     left: string;
     right: string;
@@ -19,4 +19,5 @@ export interface News {
   };
 }
 
-export interface Preview extends Partial<Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>> {}
+export interface Preview
+  extends Partial<Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>> {}

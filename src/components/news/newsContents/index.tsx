@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import { curClicked, setCurClicked, newsContent } from '@entities/state';
 import { BrickBar } from '@/components/common/figure';
-import NewsHistory from './newsHistory';
-import Journals from './journals';
-import VoteBox from './voteBox';
+import Journals from '@components/news/newsContents/journals';
+import NewsHistory from '@components/news/newsContents/newsHistory';
+import VoteBox from '@components/news/newsContents/voteBox';
+import { curClicked, newsContent, setCurClicked } from '@entities/state';
 
 interface NewsContentProps {
   curClicked: curClicked;
@@ -12,11 +12,7 @@ interface NewsContentProps {
   newsContent: newsContent;
 }
 
-export default function NewsContent({
-  curClicked,
-  setCurClicked,
-  newsContent,
-}: NewsContentProps) {
+export default function NewsContent({ curClicked, setCurClicked, newsContent }: NewsContentProps) {
   if (curClicked === undefined || newsContent === undefined) {
     return <div></div>;
   } else {
