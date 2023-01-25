@@ -1,17 +1,13 @@
+import { useCallback, useMemo } from 'react';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import defaultImg from '@assets/img/img_thumb@2x.png';
 import icoNew from '@assets/img/ico_new.png';
+import defaultImg from '@assets/img/img_thumb@2x.png';
 import { HOST_URL } from '@assets/url';
-
-import { Preview } from '@interfaces/news';
-
 import { curClicked, setCurClicked, setNewsContent } from '@entities/state';
-
-import { useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Preview } from '@interfaces/news';
 
 interface PreviewBoxProps {
   Preview: Preview;
@@ -28,19 +24,18 @@ export default function PreviewBox({
 }: PreviewBoxProps) {
   const { order, title, summary, keywords, state } = Preview;
 
-  const onErrorImg = useCallback(
-    (e: React.SyntheticEvent<HTMLImageElement>) => {
-      e.currentTarget.src = defaultImg;
-    },
-    [],
-  );
+  const onErrorImg = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = defaultImg;
+  }, []);
 
   const showNewsContent = useCallback(async () => {
     try {
       const response = await axios.get(`${HOST_URL}/news/${order}`);
       setNewsContent(response.data);
       setCurClicked(order);
-    } catch {}
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   return (
@@ -70,7 +65,7 @@ export default function PreviewBox({
         <KeywordsWrapper>
           {keywords?.map((keyword) => {
             return (
-              <Keyword>
+              <Keyword key={keyword}>
                 <Link to={`/keyword/:${keyword}`}>{`#${keyword}`}</Link>
               </Keyword>
             );
@@ -121,7 +116,7 @@ const Header = styled.h1`
 `;
 
 interface NewProps {
-  state: Boolean | undefined;
+  state: boolean | undefined;
 }
 
 const New = styled.span<NewProps>`

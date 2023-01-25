@@ -1,15 +1,15 @@
-import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { setCurClicked } from '@/entities/state';
+import { setCurClicked } from '@entities/state';
 
 interface HeaderProps {
   setCurClicked: setCurClicked;
 }
 
 interface NavBoxProps {
-  link: String;
-  comment: String;
+  link: string;
+  comment: string;
   setCurClicked: setCurClicked;
 }
 
@@ -49,21 +49,9 @@ export default function Header({ setCurClicked }: HeaderProps) {
           </HomeLink>
         </LogoImgBox>
         <NavigationBox>
-          <NavBox
-            link={'/news'}
-            comment="뉴스 모아보기"
-            setCurClicked={setCurClicked}
-          />
-          <NavBox
-            link={'/keywords'}
-            comment="키워드 검색"
-            setCurClicked={setCurClicked}
-          />
-          <NavBox
-            link={'/analyze'}
-            comment="정치 성향 테스트"
-            setCurClicked={setCurClicked}
-          />
+          <NavBox link={'/news'} comment="뉴스 모아보기" setCurClicked={setCurClicked} />
+          <NavBox link={'/keywords'} comment="키워드 검색" setCurClicked={setCurClicked} />
+          <NavBox link={'/analyze'} comment="정치 성향 테스트" setCurClicked={setCurClicked} />
         </NavigationBox>
       </HeaderBody>
     </Wrapper>

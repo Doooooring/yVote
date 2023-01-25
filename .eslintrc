@@ -16,15 +16,11 @@
   },
   "rules": {
     "no-unused-vars": "off",
-    "no-restricted-imports": [
-      "error",
-      {
-        "patterns": [".*"]
-      }
-    ],
+    "no-restricted-imports": ["error"],
     "@typescript-eslint/no-empty-interface": "off",
     "import/first": "error",
     "import/newline-after-import": "error",
+    "@typescript-eslint/no-restricted-imports": "warn",
     "import/no-duplicates": "error",
     "simple-import-sort/imports": [
       "error",

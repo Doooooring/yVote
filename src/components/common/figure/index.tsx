@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface SpeechBubbleProps {
-  width: Number;
-  height: Number;
+  width: number;
+  height: number;
 }
 
 export function SpeechBubble({ width, height }: SpeechBubbleProps) {
@@ -14,7 +14,7 @@ export function SpeechBubble({ width, height }: SpeechBubbleProps) {
 }
 
 interface BrickBarProps {
-  num: Number;
+  num: number;
 }
 
 export function BrickBar({ num }: BrickBarProps) {
@@ -26,7 +26,7 @@ export function BrickBar({ num }: BrickBarProps) {
       }}
     >
       {iterationBlock.map(() => {
-        return <div className="brick"></div>;
+        return <div key={iterationBlock.indexOf(num)} className="brick"></div>;
       })}
     </Bar>
   );

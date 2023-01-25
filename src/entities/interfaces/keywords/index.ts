@@ -12,7 +12,7 @@ export interface Keyword {
   keyword: string;
   explain: string;
   category: category;
-  recent: Boolean;
+  recent: boolean;
   news: Array<number>;
 }
 

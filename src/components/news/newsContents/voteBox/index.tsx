@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
+import { newsContent } from '@entities/state';
 import { News } from '@interfaces/news';
-import { newsContent } from '@/entities/state';
 
 interface VoteBoxProps {
   state: News['state'];

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BrickBar } from '@/components/common/figure';
+import { BrickBar } from '@components/common/figure';
 import Journals from '@components/news/newsContents/journals';
 import NewsHistory from '@components/news/newsContents/newsHistory';
 import VoteBox from '@components/news/newsContents/voteBox';

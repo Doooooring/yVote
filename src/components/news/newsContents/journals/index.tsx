@@ -1,17 +1,14 @@
-import styled from 'styled-components';
-
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { useState, useMemo } from 'react';
-
-import { News } from '@interfaces/news';
+import styled from 'styled-components';
 
 import icoChosun from '@assets/img/ico_chosun.png';
 import icoDonga from '@assets/img/ico_donga.png';
-import icoJoongang from '@assets/img/ico_joongang.png';
-import icoHankyung from '@assets/img/ico_hankyung.png';
 import icoHankyoreh from '@assets/img/ico_hankyoreh.png';
+import icoHankyung from '@assets/img/ico_hankyung.png';
+import icoJoongang from '@assets/img/ico_joongang.png';
 import icoMk from '@assets/img/ico_mk.png';
+import { News } from '@interfaces/news';
 
 interface JournalsProps {
   journals: News['journals'];
@@ -35,6 +32,7 @@ export default function Journals({ journals }: JournalsProps) {
       {journals.map((journal) => {
         return (
           <Link
+            key={journal.press}
             to={`${journal.link}`}
             target="_blank"
             style={{ textDecoration: 'none' }}

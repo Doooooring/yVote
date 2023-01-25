@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-import { category, Keyword, KeywordToView } from '@interfaces/keywords';
-
 import { HOST_URL } from '@assets/url';
+import { category, Keyword, KeywordToView } from '@interfaces/keywords';
 
 interface otherObject {
   _id: category;
@@ -22,7 +21,9 @@ class KeywordsServices {
     return response;
   }
 
-  async getKeywordsWithCategory() {}
+  async getKeywordsWithCategory() {
+    return 0;
+  }
 
   async getKeywordDetail(keyword: Keyword['keyword']) {
     const response: getKeywordDetailResponse = await axios.get(`${HOST_URL}/keywords/detail`);

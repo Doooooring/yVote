@@ -1,11 +1,11 @@
 class NewsServices {
-    async getPreviews( ) {
+  async getPreviews() {
+    return 0;
+  }
 
-    }
-
-    async getNewsContent() {
-        
-    }
+  async getNewsContent() {
+    return 0;
+  }
 }
 
-export default new NewsServices()
+export default new NewsServices();

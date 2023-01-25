@@ -1,6 +1,5 @@
-import styled from 'styled-components';
-
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { BrickBar } from '@components/common/figure';
 import { News } from '@entities/interfaces/news';
@@ -18,14 +17,14 @@ export default function NewsHistory({ news }: NewsHistoryProps) {
           {news.map((comp) => {
             const year = comp.date.getFullYear;
             const month = comp.date.getMonth;
-            return <li>{`${year}.${month}`}</li>;
+            return <li key={`${comp.date}`}>{`${year}.${month}`}</li>;
           })}
         </HistoryDate>
         <BrickBar num={news.length} />
         <HistorySentences>
           {news.map((comp) => {
             return (
-              <SentenceWrapper>
+              <SentenceWrapper key={comp.title}>
                 <Link
                   to={`${comp.link}`}
                   style={{

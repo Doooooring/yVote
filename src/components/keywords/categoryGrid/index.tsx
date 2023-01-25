@@ -1,10 +1,8 @@
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { useState, Dispatch, SetStateAction, useEffect } from 'react';
-
-import { KeywordToView } from '@interfaces/keywords';
-
 import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
+import { KeywordToView } from '@interfaces/keywords';
 
 interface CategoryGridProps {
   category: KeywordToView['category'];
@@ -18,7 +16,7 @@ export default function CategoryGrid({ category, keywords, setKeywords }: Catego
       <GridHeader>{category}</GridHeader>
       <GridContainer>
         {keywords.map((keyword) => {
-          return <KeywordBox keyword={keyword} />;
+          return <KeywordBox key={keyword._id} keyword={keyword} />;
         })}
       </GridContainer>
     </Wrapper>

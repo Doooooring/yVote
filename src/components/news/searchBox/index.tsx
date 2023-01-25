@@ -1,15 +1,11 @@
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
-
 import styled from 'styled-components';
 
-import { useState, useCallback, useEffect } from 'react';
-
-import { News, Preview } from '@interfaces/news';
-import { Keyword } from '@interfaces/keywords';
-
-import { curPreviewsList, setCurPreviewsList } from '@state/index';
-
 import { HOST_URL } from '@assets/url';
+import { Keyword } from '@interfaces/keywords';
+import { News, Preview } from '@interfaces/news';
+import { curPreviewsList, setCurPreviewsList } from '@state/index';
 
 interface KeyName extends Partial<Pick<Keyword, 'keyword'>> {}
 
@@ -18,14 +14,9 @@ interface SearchBoxProps {
   setCurPreviewsList: setCurPreviewsList;
 }
 
-export default function SearchBox({
-  newsContentDefault,
-  setCurPreviewsList,
-}: SearchBoxProps) {
-  const [searchWord, setSearchWord] = useState<String>('');
-  const [relatedWords, getRelatedWords] = useState<String[]>([
-    '키워드를 검색해 봅시다.',
-  ]);
+export default function SearchBox({ newsContentDefault, setCurPreviewsList }: SearchBoxProps) {
+  const [searchWord, setSearchWord] = useState<string>('');
+  const [relatedWords, getRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
   const [keylist, setKeyList] = useState<KeyName[]>([]);
   const [curFocusOnWord, setCurFocusOnWord] = useState<number>(-1);
   const [arrowKeyActive, setArrowKeyActive] = useState<boolean>(false);
@@ -52,6 +43,7 @@ export default function SearchBox({
           {relatedWords.map((word) => (
             <RelatedWord
               className={'word'}
+              key={word}
               id={`${relatedWords.indexOf(word)}`}
               isFocused={word === relatedWords[curFocusOnWord]}
             >
@@ -125,7 +117,7 @@ const RelatedBox = styled.div`
 `;
 
 interface RelatedWordProps {
-  isFocused: Boolean;
+  isFocused: boolean;
 }
 
 const RelatedWord = styled.p<RelatedWordProps>`
@@ -137,8 +129,7 @@ const RelatedWord = styled.p<RelatedWordProps>`
   font-size: 15px;
   border-style: solid;
   z-index: 1;
-  background-color: ${({ isFocused }) =>
-    isFocused ? 'rgb(120, 120, 120)' : 'rgba(0,0,0,0)'};
+  background-color: ${({ isFocused }) => (isFocused ? 'rgb(120, 120, 120)' : 'rgba(0,0,0,0)')};
 `;
 
 const SubmitButton = styled.button`
