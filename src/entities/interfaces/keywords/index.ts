@@ -19,6 +19,8 @@ export interface Keyword {
 export interface KeywordToView
   extends Partial<Pick<Keyword, '_id' | 'keyword' | 'category' | 'recent'>> {}
 
+export interface KeywordOnDetail extends Partial<Pick<Keyword, '_id' | 'keyword'>> {}
+
 export interface KeywordInHuman extends KeywordToView {
   category: 'human';
 }

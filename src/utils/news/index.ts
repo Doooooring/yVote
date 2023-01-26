@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { HOST_URL } from '@assets/url';
-import { Preview } from '@interfaces/news';
+import { News, Preview } from '@interfaces/news';
 
 class NewsServices {
   async getPreviews(curNum: number) {
@@ -10,8 +10,10 @@ class NewsServices {
     return data;
   }
 
-  async getNewsContent() {
-    return 0;
+  async getNewsContent(id: Preview['_id']) {
+    const response = await axios.get(`${HOST_URL}/news/detail?id=${id}`);
+    const data: News = response.data;
+    return data;
   }
 }
 

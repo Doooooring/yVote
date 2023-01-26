@@ -23,6 +23,8 @@ export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
       <ImageWrapper>
         <img
           src={`${HOST_URL}/`}
+          height="190px"
+          width="190px"
           alt="hmm"
           onError={(e) => {
             onErrorImg(e);
@@ -35,28 +37,33 @@ export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
 
 const Wrapper = styled.div`
   position: relative;
+  width: 190px;
+  height: 190px;
+  border-radius: 15px;
+  overflow: hidden;
 `;
 
 const ImageWrapper = styled.div`
-  height: 100%;
-  width: 100%;
   position: absolute;
+  width: 190px;
+  height: 190px;
   top: 0;
   left: 0;
   z-index: 1;
 `;
 
 const KeywordWrapper = styled.div`
-  height: 100%;
-  width: 100%;
   display: flex;
-  justify-items: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 190px;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 999;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 const KeywordTitle = styled.p`

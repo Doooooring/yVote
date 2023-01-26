@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Params, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import KeywordBox from '@components/keywords/categoryGrid';
@@ -7,13 +7,33 @@ import SearchBox from '@components/keywords/searchBox';
 import NewsContent from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
 import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
+import { Keyword, KeywordOnDetail } from '@interfaces/keywords';
+import { Preview } from '@interfaces/news';
+import KeywordsServices from '@utils/keywords';
 
 export default function KeyExplanation() {
   const [curClicked, setCurclicked] = useState<curClicked>(undefined);
+  const [curKeyName, setCurKeyName] = useState<KeywordOnDetail['keyword']>();
   const [newsContents, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviewList, setCurPreviewList] = useState<curPreviewsList>([]);
   const params = useParams();
-  const keyname = useMemo(() => params.keyname, []);
+  const keyName = useMemo(() => params.keyName, []);
+
+  const getKeywordData = useCallback(async () => {
+    interface KeywordDetail {
+      keyword: KeywordOnDetail;
+      previews: Array<Preview>;
+    }
+    if (!keyName) {
+      return 0;
+    }
+    const { keyword, previews }: KeywordDetail = await KeywordsServices.getKeywordDetail(
+      keyName,
+      0,
+    );
+    setCurKeyName(keyword.keyword);
+    setCurPreviewList(previews);
+  }, []);
 
   useEffect(() => {
     window.location.reload();

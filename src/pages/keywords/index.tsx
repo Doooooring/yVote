@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
+import { SpeechBubble } from '@components/common/figure';
 import CategoryGrid from '@components/keywords/categoryGrid';
 import RecentCategoryGrid from '@components/keywords/recentCategoryGrid';
 import SearchBox from '@components/keywords/searchBox';
@@ -49,6 +50,7 @@ export default function KeywordsPage() {
     <Wrapper>
       <SearchWrapper>
         <SearchBox />
+        <SpeechBubble width={200} height={30} />
       </SearchWrapper>
       <GridContainer>
         <RecentCategoryGrid keywords={recentKeywords} setKeywords={setRecentKeywords} />
@@ -100,8 +102,9 @@ const SearchWrapper = styled.div`
   height: 50px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 30px -25px;
-  margin-bottom: 40px;
+  box-shadow: 0 0 30px -20px;
+  margin-bottom: 80px;
+  text-align: center;
 `;
 
 const GridContainer = styled.div`

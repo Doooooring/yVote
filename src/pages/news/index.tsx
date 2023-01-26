@@ -125,7 +125,7 @@ interface NewsListProps {
 
 const NewsList = styled.div<NewsListProps>`
   width: ${({ curClicked }) => {
-    return curClicked ? '1000px' : '500px';
+    return curClicked ? '500px' : '1000px';
   }};
   display: grid;
   grid-template-columns: repeat(auto-fill, 490px);

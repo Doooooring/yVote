@@ -38,7 +38,11 @@ export default function SearchBox() {
   return (
     <Wrapper>
       <InputWrapper>
-        <InputBox></InputBox>
+        <InputBox
+          type="text"
+          placeholder="궁금한 뉴스의 키워드, 인물을 검색하시오"
+          value={searchWord}
+        ></InputBox>
         <RelatedBox>
           {relatedWords.map((word) => (
             <RelatedWord
@@ -84,7 +88,7 @@ const InputBox = styled.input`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  font-size: 15px;
+  font-size: 13px;
   color: rgb(170, 170, 170);
   font-weight: 600;
   padding-left: 40px;
@@ -95,7 +99,7 @@ const InputBox = styled.input`
   background-position: 6px 6px;
   &::placeholder {
     color: rgb(170, 170, 170);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 800;
   }
   &:focus {

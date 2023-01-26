@@ -7,7 +7,8 @@ import icoNew from '@assets/img/ico_new.png';
 import defaultImg from '@assets/img/img_thumb@2x.png';
 import { HOST_URL } from '@assets/url';
 import { curClicked, setCurClicked, setNewsContent } from '@entities/state';
-import { Preview } from '@interfaces/news';
+import { News, Preview } from '@interfaces/news';
+import NewsServices from '@utils/news';
 
 interface PreviewBoxProps {
   Preview: Preview;
@@ -22,7 +23,7 @@ export default function PreviewBox({
   setCurClicked,
   setNewsContent,
 }: PreviewBoxProps) {
-  const { order, title, summary, keywords, state } = Preview;
+  const { _id, order, title, summary, keywords, state } = Preview;
 
   const onErrorImg = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = defaultImg;
@@ -30,8 +31,8 @@ export default function PreviewBox({
 
   const showNewsContent = useCallback(async () => {
     try {
-      const response = await axios.get(`${HOST_URL}/news/${order}`);
-      setNewsContent(response.data);
+      const response: News = await NewsServices.getNewsContent(_id);
+      setNewsContent(response);
       setCurClicked(order);
     } catch (e) {
       console.error(e);
@@ -39,12 +40,16 @@ export default function PreviewBox({
   }, []);
 
   return (
-    <Wrapper>
-      <ImgWrapper
-        onClick={() => {
-          showNewsContent();
-        }}
-      >
+    <Wrapper
+      onClick={() => {
+        if (curClicked === order) {
+          setCurClicked(undefined);
+          return;
+        }
+        showNewsContent();
+      }}
+    >
+      <ImgWrapper>
         <NewsImg
           src={''}
           alt=""
