@@ -20,4 +20,4 @@ export interface News {
 }
 
 export interface Preview
-  extends Partial<Pick<News, 'order' | 'title' | 'summary' | 'keywords' | 'state'>> {}
+  extends Partial<Pick<News, '_id' | 'order' | 'title' | 'summary' | 'keywords' | 'state'>> {}

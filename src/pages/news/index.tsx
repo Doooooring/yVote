@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,6 +10,7 @@ import PreviewBox from '@components/news/previewBox';
 import SearchBox from '@components/news/searchBox';
 import { News, Preview } from '@entities/interfaces/news';
 import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
+import NewsService from '@utils/news';
 
 interface NewsProps {
   curClicked: curClicked;
@@ -17,17 +19,26 @@ interface NewsProps {
 
 export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const curBoxNumber = useRef(0);
-  const [newsContentDefault, setNewsContentDefault] = useState<News[]>([]);
+  const [previewsDefault, setPreviewsDefault] = useState<Preview[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
-  const [curPreviewsList, setCurPreviewsList] = useState<curPreviewsList>([]);
+  const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
+
+  const getNewsContent = useCallback(async () => {
+    const PreviewInit: Array<Preview> = await NewsService.getPreviews(0);
+    console.log(PreviewInit);
+    setPreviewsDefault(PreviewInit);
+    setCurPreviews(PreviewInit);
+    return 0;
+  }, []);
+
+  useEffect(() => {
+    getNewsContent();
+  }, []);
 
   return (
     <Wrapper>
       <SearchWrapper>
-        <SearchBox
-          newsContentDefault={newsContentDefault}
-          setCurPreviewsList={setCurPreviewsList}
-        />
+        <SearchBox newsContentDefault={previewsDefault} setCurPreviewsList={setPreviewsDefault} />
         <SpeechBubble width={200} height={30} />
       </SearchWrapper>
       <MainContents>
@@ -39,10 +50,10 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
         </MainHeaderWrapper>
         <MainContentsBody>
           <NewsList curClicked={curClicked}>
-            {curPreviewsList.map((Preview) => (
-              <PreviewBoxWrapper key={Preview.order}>
+            {curPreviews.map((preview) => (
+              <PreviewBoxWrapper key={preview.order}>
                 <PreviewBox
-                  Preview={Preview}
+                  Preview={preview}
                   curClicked={curClicked}
                   setCurClicked={setCurClicked}
                   setNewsContent={setNewsContent}
@@ -67,7 +78,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1000px;
+  text-align: center;
   height: 1200px;
   margin-top: 100px;
 `;
@@ -77,7 +88,7 @@ const SearchWrapper = styled.div`
   height: 50px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 30px -25px;
+  box-shadow: 0px 0px 30px -20px;
   margin-bottom: 40px;
 `;
 

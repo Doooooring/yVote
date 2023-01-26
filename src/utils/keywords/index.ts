@@ -27,6 +27,7 @@ class KeywordsServices {
 
   async getKeywordDetail(keyword: Keyword['keyword']) {
     const response: getKeywordDetailResponse = await axios.get(`${HOST_URL}/keywords/detail`);
+    return response;
   }
 }
 

@@ -1,6 +1,7 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
+import logo from '@assets/img/ico_logo.png';
 import { setCurClicked } from '@entities/state';
 
 interface HeaderProps {
@@ -14,6 +15,7 @@ interface NavBoxProps {
 }
 
 const activeStyle = (isActive: boolean) => {
+  console.log('here');
   return isActive
     ? {
         borderBottom: '3px solid rgb(61, 152, 247)',
@@ -27,15 +29,14 @@ const activeStyle = (isActive: boolean) => {
 
 function NavBox({ link, comment, setCurClicked }: NavBoxProps) {
   return (
-    <NavLink
+    <HomeLink
       to={`${link}`}
       onClick={() => {
         setCurClicked(undefined);
       }}
-      style={({ isActive }) => activeStyle(isActive)}
     >
       {comment}
-    </NavLink>
+    </HomeLink>
   );
 }
 
@@ -45,13 +46,17 @@ export default function Header({ setCurClicked }: HeaderProps) {
       <HeaderBody>
         <LogoImgBox>
           <HomeLink to="/">
-            <Logo />
+            <Logo src={logo} alt="hmm" height="40px" />
           </HomeLink>
         </LogoImgBox>
         <NavigationBox>
           <NavBox link={'/news'} comment="뉴스 모아보기" setCurClicked={setCurClicked} />
+          <Blank />
           <NavBox link={'/keywords'} comment="키워드 검색" setCurClicked={setCurClicked} />
+          <Blank />
           <NavBox link={'/analyze'} comment="정치 성향 테스트" setCurClicked={setCurClicked} />
+          <Blank />
+          <NavBox link={'/contact'} comment="CONTACT" setCurClicked={setCurClicked} />
         </NavigationBox>
       </HeaderBody>
     </Wrapper>
@@ -90,7 +95,14 @@ const LogoImgBox = styled.div`
   width: 30%;
   height: 100%;
 `;
+
 const HomeLink = styled(NavLink)`
+  border-bottom: none;
+  color: grey;
+  &.active {
+    border-bottom: 3px solid rgb(61, 152, 247);
+    color: rgb(61, 152, 247);
+  }
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -104,4 +116,8 @@ const NavigationBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+`;
+
+const Blank = styled.div`
+  width: 30px;
 `;

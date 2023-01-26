@@ -11,12 +11,14 @@ import KeyExplanation from '@pages/keyExplanation';
 import KeywordsPage from '@pages/keywords';
 import NewsPage from '@pages/news';
 
+import './App.css';
+
 function App() {
   const [curClicked, setCurClicked] = useState<curClicked>(undefined);
   return (
     <Wrapper>
-      <Header setCurClicked={setCurClicked} />
       <Router>
+        <Header setCurClicked={setCurClicked} />
         <Routes>
           <Route
             path="/news"

@@ -58,6 +58,7 @@ export default function SearchBox() {
 }
 
 const Wrapper = styled.form`
+  position: relative;
   display: inline-block;
   width: 300px;
   height: 40px;
@@ -65,8 +66,8 @@ const Wrapper = styled.form`
   margin-bottom: 10px;
   margin-top: 10px;
   text-align: center;
-  position: relative;
 `;
+
 const InputWrapper = styled.div`
   position: absolute;
   top: 0px;
@@ -89,7 +90,7 @@ const InputBox = styled.input`
   padding-left: 40px;
   padding-top: 4px;
   padding-bottom: 3px;
-  background-image: url('image/ico_search.png');
+  background-image: url('@assets/img/ico_search.png');
   background-repeat: no-repeat;
   background-position: 6px 6px;
   &::placeholder {

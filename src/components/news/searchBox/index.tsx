@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
+import IcoSearch from '@assets/img/ico_search.png';
 import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { News, Preview } from '@interfaces/news';
@@ -38,7 +39,11 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
   return (
     <Wrapper>
       <InputWrapper>
-        <InputBox></InputBox>
+        <InputBox
+          type="text"
+          placeholder="궁금한 뉴스의 키워드, 인물을 검색하시오"
+          value={searchWord}
+        />
         <RelatedBox>
           {relatedWords.map((word) => (
             <RelatedWord
@@ -58,6 +63,7 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
 }
 
 const Wrapper = styled.form`
+  position: relative;
   display: inline-block;
   width: 300px;
   height: 40px;
@@ -65,8 +71,8 @@ const Wrapper = styled.form`
   margin-bottom: 10px;
   margin-top: 10px;
   text-align: center;
-  position: relative;
 `;
+
 const InputWrapper = styled.div`
   position: absolute;
   top: 0px;
@@ -83,18 +89,18 @@ const InputBox = styled.input`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  font-size: 15px;
+  font-size: 13px;
   color: rgb(170, 170, 170);
   font-weight: 600;
   padding-left: 40px;
   padding-top: 4px;
   padding-bottom: 3px;
-  background-image: url('image/ico_search.png');
+  background-image: url('@assets/img/ico_search.png');
   background-repeat: no-repeat;
   background-position: 6px 6px;
   &::placeholder {
     color: rgb(170, 170, 170);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 800;
   }
   &:focus {
