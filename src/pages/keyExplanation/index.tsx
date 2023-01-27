@@ -17,7 +17,9 @@ export default function KeyExplanation() {
   const [newsContents, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviewList, setCurPreviewList] = useState<curPreviewsList>([]);
   const params = useParams();
-  const keyName = useMemo(() => params.keyName, []);
+  const keyName = useMemo(() => params.keyname, []);
+
+  console.log('here');
 
   const getKeywordData = useCallback(async () => {
     interface KeywordDetail {
@@ -25,18 +27,21 @@ export default function KeyExplanation() {
       previews: Array<Preview>;
     }
     if (!keyName) {
+      console.log('설마');
       return 0;
     }
     const { keyword, previews }: KeywordDetail = await KeywordsServices.getKeywordDetail(
       keyName,
       0,
     );
+    console.log(keyword);
+    console.log(previews);
     setCurKeyName(keyword.keyword);
     setCurPreviewList(previews);
   }, []);
 
   useEffect(() => {
-    window.location.reload();
+    getKeywordData();
   }, []);
 
   return (
@@ -48,6 +53,7 @@ export default function KeyExplanation() {
         <MainContentsLeft curClicked={curClicked}>
           <KeywordWrapper>
             <ExplanationBox>
+              <KeywordBoxWrapper></KeywordBoxWrapper>
               <Explanation></Explanation>
             </ExplanationBox>
           </KeywordWrapper>
@@ -60,7 +66,14 @@ export default function KeyExplanation() {
   );
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 1200px;
+  margin-top: 100px;
+`;
 
 const SearchWrapper = styled.div`
   width: 1000px;
@@ -86,6 +99,8 @@ const MainContentsLeft = styled.div<MainContentsLeftProps>`
 `;
 
 const KeywordWrapper = styled.div``;
+
+const KeywordBoxWrapper = styled.div``;
 
 const ExplanationWrapper = styled.div``;
 

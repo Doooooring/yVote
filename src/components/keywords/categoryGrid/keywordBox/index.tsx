@@ -11,13 +11,15 @@ interface KeywordBoxProps {
 }
 
 export default function KeywordBox({ keyword }: KeywordBoxProps) {
+  const { _id, keyword: keyname, category } = keyword;
+
   const onErrorImg = useCallback((e: React.SyntheticEvent) => {
     const target = e.target as HTMLImageElement;
     target.src = defaultImg;
   }, []);
 
   return (
-    <LinkWrapper to={`/keywords/${keyword}`}>
+    <LinkWrapper to={`/keywords/${keyname}`}>
       <Wrapper>
         <ImageWrapper>
           <img
@@ -30,7 +32,7 @@ export default function KeywordBox({ keyword }: KeywordBoxProps) {
           />
         </ImageWrapper>
         <KeywordWrapper>
-          <KeywordTitle>{keyword.keyword}</KeywordTitle>
+          <KeywordTitle>{keyname}</KeywordTitle>
         </KeywordWrapper>
       </Wrapper>
     </LinkWrapper>
