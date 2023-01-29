@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Params, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import KeywordBox from '@components/keywords/categoryGrid';
+import icoClose from '@assets/img/ico_close.png';
+import icoNews from '@assets/img/ico_news.png';
+import { SpeechBubble } from '@components/common/figure';
+import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
 import SearchBox from '@components/keywords/searchBox';
 import NewsContent from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
@@ -12,55 +15,77 @@ import { Preview } from '@interfaces/news';
 import KeywordsServices from '@utils/keywords';
 
 export default function KeyExplanation() {
-  const [curClicked, setCurclicked] = useState<curClicked>(undefined);
-  const [curKeyName, setCurKeyName] = useState<KeywordOnDetail['keyword']>();
-  const [newsContents, setNewsContent] = useState<newsContent>(undefined);
-  const [curPreviewList, setCurPreviewList] = useState<curPreviewsList>([]);
+  const [curClicked, setCurClicked] = useState<curClicked>(undefined);
+  const [curKeyword, setCurKeyword] = useState<KeywordOnDetail>();
+  const [curNewsContent, setCurNewsContent] = useState<newsContent>(undefined);
+  const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
   const params = useParams();
-  const keyName = useMemo(() => params.keyname, []);
-
-  console.log('here');
-
+  const keyName = useMemo(() => params.keyname, [params]);
   const getKeywordData = useCallback(async () => {
     interface KeywordDetail {
       keyword: KeywordOnDetail;
       previews: Array<Preview>;
     }
     if (!keyName) {
-      console.log('설마');
       return 0;
     }
     const { keyword, previews }: KeywordDetail = await KeywordsServices.getKeywordDetail(
       keyName,
       0,
     );
-    console.log(keyword);
-    console.log(previews);
-    setCurKeyName(keyword.keyword);
-    setCurPreviewList(previews);
+    setCurKeyword(keyword);
+    setCurPreviews(previews);
   }, []);
 
   useEffect(() => {
     getKeywordData();
-  }, []);
+  }, [keyName]);
 
-  return (
+  return !curKeyword ? (
+    <div></div>
+  ) : (
     <Wrapper>
       <SearchWrapper>
         <SearchBox />
+        <SpeechBubble width={200} height={30} />
       </SearchWrapper>
       <MainContents>
         <MainContentsLeft curClicked={curClicked}>
           <KeywordWrapper>
-            <ExplanationBox>
-              <KeywordBoxWrapper></KeywordBoxWrapper>
-              <Explanation></Explanation>
-            </ExplanationBox>
+            <KeywordBoxWrapper>
+              <KeywordBox keyword={keyName} tail={true} />
+            </KeywordBoxWrapper>
+            <ExplanationWrapper>
+              <Explanation>{curKeyword.explain}</Explanation>
+            </ExplanationWrapper>
           </KeywordWrapper>
-          <ExplanationWrapper></ExplanationWrapper>
-          <NewsList curClicked={curClicked}></NewsList>
+          <NewsListWrapper>
+            <NewsHeaderWrapper>
+              <img src={icoNews} alt="hmm" height="18px"></img>
+              <NewsListHeader>최신 뉴스</NewsListHeader>
+            </NewsHeaderWrapper>
+            <NewsList curClicked={curClicked}>
+              {curPreviews.map((preview) => {
+                return (
+                  <PreviewBox
+                    key={preview._id}
+                    Preview={preview}
+                    curClicked={curClicked}
+                    setCurClicked={setCurClicked}
+                    setNewsContent={setCurNewsContent}
+                  />
+                );
+              })}
+            </NewsList>
+          </NewsListWrapper>
         </MainContentsLeft>
-        <MainContentsRight></MainContentsRight>
+        <MainContentsRight>
+          <NewsContent
+            curClicked={curClicked}
+            setCurClicked={setCurClicked}
+            newsContent={curNewsContent}
+          />
+        </MainContentsRight>
       </MainContents>
     </Wrapper>
   );
@@ -81,11 +106,15 @@ const SearchWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 30px -25px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 `;
 
 const MainContents = styled.div`
   width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(2, 495px);
+  grid-column-gap: 10px;
+  position: relative;
 `;
 
 interface MainContentsLeftProps {
@@ -94,19 +123,47 @@ interface MainContentsLeftProps {
 
 const MainContentsLeft = styled.div<MainContentsLeftProps>`
   width: ${({ curClicked }) => {
-    return curClicked ? '1000px' : '500px';
+    return curClicked ? '500px' : '1000px';
   }};
 `;
 
-const KeywordWrapper = styled.div``;
+const KeywordWrapper = styled.div`
+  margin-bottom: 30px;
+`;
 
-const KeywordBoxWrapper = styled.div``;
+const KeywordBoxWrapper = styled.div`
+  margin-bottom: 20px;
+`;
 
-const ExplanationWrapper = styled.div``;
+const ExplanationWrapper = styled.div`
+  width: 480px;
+  height: 180px;
+  background-color: white;
+  padding-top: 30px;
+  padding-left: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px -25px;
+`;
 
-const ExplanationBox = styled.div``;
+const Explanation = styled.p`
+  text-align: left;
+`;
 
-const Explanation = styled.p``;
+const NewsListWrapper = styled.div``;
+
+const NewsHeaderWrapper = styled.div`
+  width: 500px;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 20px;
+`;
+
+const NewsListHeader = styled.p`
+  display: inline;
+  margin-left: 10px;
+  font-weight: 700;
+  font-size: 18px;
+`;
 
 interface NewsListProps {
   curClicked: curClicked;
@@ -114,12 +171,13 @@ interface NewsListProps {
 
 const NewsList = styled.div<NewsListProps>`
   width: ${({ curClicked }) => {
-    return curClicked ? '1000px' : '500px';
+    return curClicked ? '500px' : '1000px';
   }};
   display: grid;
   grid-template-columns: repeat(auto-fill, 490px);
   grid-template-rows: repeat(auto-fill, 120px);
-  grid-column-gap: 20px;
+  grid-column-gap: 0px;
+  grid-row-gap: 20px;
   justify-items: center;
   border-style: solid;
   border-radius: 10px;

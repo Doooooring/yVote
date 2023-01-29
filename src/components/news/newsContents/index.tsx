@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import icoClose from '@assets/img/ico_close.png';
 import { BrickBar } from '@components/common/figure';
 import Journals from '@components/news/newsContents/journals';
 import NewsHistory from '@components/news/newsContents/newsHistory';
@@ -27,7 +28,9 @@ export default function NewsContent({ curClicked, setCurClicked, newsContent }: 
               setCurClicked(undefined);
             }}
           ></input>
-          <CloseButton htmlFor="close-button"></CloseButton>
+          <CloseButton htmlFor="close-button">
+            <img src={icoClose} alt="hmm" />
+          </CloseButton>
         </NewsBoxClose>
         <Body>
           <ContentHead>{newsContent.title}</ContentHead>
@@ -55,6 +58,7 @@ const Wrapper = styled.div`
   border-color: black;
   border-radius: 10px;
   border-style: solid;
+  padding-top: 20px;
   padding-bottom: 20px;
   text-align: left;
   position: absolute;
@@ -66,6 +70,9 @@ const NewsBoxClose = styled.div`
   text-align: right;
 `;
 const CloseButton = styled.label`
+  padding-top: 10px;
+
+  text-align: right;
   &:hover {
     cursor: pointer;
   }
@@ -82,8 +89,8 @@ const Body = styled.div`
 `;
 const ContentHead = styled.h1`
   padding-left: 20px;
-  margin-bottom: 8px;
-  font-size: 21px;
+  margin-bottom: 20px;
+  font-size: 22px;
   font-weight: 600;
 `;
 const ContentBody = styled.div`
@@ -92,8 +99,9 @@ const ContentBody = styled.div`
 `;
 const Summary = styled.div`
   display: inline-block;
-  font-size: 20px;
-  font-weight: 550;
+  font-size: 17px;
+  color: rgb(130, 130, 130);
+  font-weight: 450;
   margin-bottom: 5%;
   font-family: 'summary-font';
   word-break: break-all;

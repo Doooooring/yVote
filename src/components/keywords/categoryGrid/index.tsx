@@ -12,6 +12,10 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ category, keywords, setKeywords }: CategoryGridProps) {
+  const [preKeywords, setPreKeywords] = useState<KeywordToView[] | undefined>(undefined);
+  const [curKeywords, setCurKeywords] = useState<KeywordToView[]>(keywords);
+  const [postKeywords, setPostKeywords] = useState<KeywordToView[] | undefined>(undefined);
+
   return (
     <Wrapper>
       <HeaderWrapper>
@@ -21,7 +25,7 @@ export default function CategoryGrid({ category, keywords, setKeywords }: Catego
       <GridWrapper>
         <GridContainer>
           {keywords.map((keyword) => {
-            return <KeywordBox key={keyword._id} keyword={keyword} />;
+            return <KeywordBox key={keyword._id} keyword={keyword.keyword} tail={false} />;
           })}
         </GridContainer>
       </GridWrapper>
@@ -54,7 +58,7 @@ const GridContainer = styled.div`
   display: grid;
   height: 220px;
   grid-template-rows: repeat(2, 95px);
-  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-columns: repeat(auto-fill, 220px);
   grid-auto-flow: column;
   grid-row-gap: 10px;
   grid-column-gap: 10px;

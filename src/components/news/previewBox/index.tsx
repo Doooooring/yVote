@@ -53,7 +53,7 @@ export default function PreviewBox({
         <NewsImg
           src={''}
           alt=""
-          width="100%"
+          height="100px"
           onError={(e) => {
             onErrorImg(e);
           }}
@@ -63,15 +63,15 @@ export default function PreviewBox({
         <HeadWrapper>
           <Header>{title}</Header>
           <New state={state}>
-            <NewIco src={icoNew} alt="hmm" height="18px"></NewIco>
+            <NewIco src={icoNew} alt="hmm" height="16px"></NewIco>
           </New>
         </HeadWrapper>
         <Summary>{summary}</Summary>
         <KeywordsWrapper>
           {keywords?.map((keyword) => {
             return (
-              <Keyword key={keyword}>
-                <Link to={`/keyword/:${keyword}`}>{`#${keyword}`}</Link>
+              <Keyword key={keyword} to={`/keywords/${keyword}`}>
+                {`#${keyword}`}
               </Keyword>
             );
           })}
@@ -86,11 +86,11 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   width: 480px;
-  height: 100px;
+  height: 120px;
   border-radius: 10px;
   border: 1px solid rgba(200, 200, 200, 0.5);
   background-color: white;
-  box-shadow: 0px 0px 35px -25px;
+  box-shadow: 0px 0px 35px -30px;
   margin-bottom: 20px;
   text-align: left;
   padding: 10px;
@@ -100,9 +100,9 @@ const Wrapper = styled.div`
 `;
 const ImgWrapper = styled.div`
   display: inline-block;
-  border: 1px solid rgb(210, 210, 210);
+  border: 1px solid rgb(230, 230, 230);
   border-radius: 10px;
-  width: 18%;
+  height: 100px;
   overflow: hidden;
 `;
 
@@ -112,6 +112,7 @@ const BodyWrapper = styled.div`
   display: inline-block;
   padding-left: 20px;
   width: 80%;
+  height: 90%;
 `;
 const HeadWrapper = styled.div``;
 const Header = styled.h1`
@@ -128,11 +129,14 @@ interface NewProps {
 const New = styled.span<NewProps>`
   display: ${({ state }) => (state ? 'inline' : 'none')};
 `;
+
 const NewIco = styled.img`
   position: relative;
   top: 3px;
 `;
 const Summary = styled.p`
+  color: rgb(120, 120, 120);
+  padding-top: 5px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -140,9 +144,10 @@ const Summary = styled.p`
   text-overflow: ellipsis;
 `;
 const KeywordsWrapper = styled.div``;
-const Keyword = styled.p`
+const Keyword = styled(Link)`
   display: inline;
-  & > a {
-    text-decoration: none;
-  }
+  text-decoration: none;
+  font-size: 13px;
+  margin-right: 6px;
+  color: #3a84e5;
 `;

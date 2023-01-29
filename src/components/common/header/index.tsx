@@ -14,19 +14,6 @@ interface NavBoxProps {
   setCurClicked: setCurClicked;
 }
 
-const activeStyle = (isActive: boolean) => {
-  console.log('here');
-  return isActive
-    ? {
-        borderBottom: '3px solid rgb(61, 152, 247)',
-        color: 'rgb(61, 152, 247)',
-      }
-    : {
-        borderBottom: 'none',
-        color: 'grey',
-      };
-};
-
 function NavBox({ link, comment, setCurClicked }: NavBoxProps) {
   return (
     <HomeLink
@@ -54,7 +41,7 @@ export default function Header({ setCurClicked }: HeaderProps) {
           <Blank />
           <NavBox link={'/keywords'} comment="키워드 검색" setCurClicked={setCurClicked} />
           <Blank />
-          <NavBox link={'/analyze'} comment="정치 성향 테스트" setCurClicked={setCurClicked} />
+          <NavBox link={'/analyze'} comment="hmmm..." setCurClicked={setCurClicked} />
           <Blank />
           <NavBox link={'/contact'} comment="CONTACT" setCurClicked={setCurClicked} />
         </NavigationBox>

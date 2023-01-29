@@ -4,8 +4,10 @@ import { HOST_URL } from '@assets/url';
 import { News, Preview } from '@interfaces/news';
 
 class NewsServices {
-  async getPreviews(curNum: number) {
-    const response = await axios.get(`${HOST_URL}/news/preview?curNum=${curNum}`);
+  async getPreviews(curNum: number, keyword: string | undefined = undefined) {
+    const response = await axios.get(
+      `${HOST_URL}/news/preview?curNum=${curNum}&keyword=${keyword}`,
+    );
     const data: Array<Preview> = response.data;
     return data;
   }

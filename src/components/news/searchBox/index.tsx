@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { InputHTMLAttributes, useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -6,9 +6,12 @@ import IcoSearch from '@assets/img/ico_search.png';
 import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { News, Preview } from '@interfaces/news';
+import { stripBasename } from '@remix-run/router';
 import { curPreviewsList, setCurPreviewsList } from '@state/index';
+import { getConstantVowel } from '@utils/common';
+import NewsServices from '@utils/news';
 
-interface KeyName extends Partial<Pick<Keyword, 'keyword'>> {}
+type KeyName = Keyword['keyword'];
 
 interface SearchBoxProps {
   newsContentDefault: Preview[];
@@ -17,7 +20,7 @@ interface SearchBoxProps {
 
 export default function SearchBox({ newsContentDefault, setCurPreviewsList }: SearchBoxProps) {
   const [searchWord, setSearchWord] = useState<string>('');
-  const [relatedWords, getRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
+  const [relatedWords, setRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
   const [keylist, setKeyList] = useState<KeyName[]>([]);
   const [curFocusOnWord, setCurFocusOnWord] = useState<number>(-1);
   const [arrowKeyActive, setArrowKeyActive] = useState<boolean>(false);
@@ -32,9 +35,97 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
     }
   }, []);
 
+  const submit = useCallback(
+    async (e: React.KeyboardEvent<HTMLInputElement>, searchWord: string) => {
+      e.preventDefault();
+      if (curFocusOnWord !== -1) {
+        setSearchWord(relatedWords[curFocusOnWord]);
+      }
+      const newsList = await NewsServices.getPreviews(0, searchWord);
+      if (newsList.length !== 0) {
+        setCurPreviewsList(newsList);
+      } else {
+        alert('Nothing');
+      }
+    },
+    [],
+  );
+
   useEffect(() => {
     getKeys();
   }, []);
+
+  function handleSearchBoxChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    if (arrowKeyActive) {
+      setArrowKeyActive(false);
+      return;
+    }
+    const preValue = e.currentTarget.value;
+    setSearchWord(preValue);
+    if (preValue === '') {
+      setCurFocusOnWord(-1);
+      setCurPreviewsList(newsContentDefault);
+      setRelatedWords(['키워드를 검색해 봅시다']);
+    } else {
+      if (curFocusOnWord !== -1) {
+        setCurFocusOnWord(-1);
+      }
+      const findRelatedWords = [];
+      const preValueToChar = getConstantVowel(preValue, false) as string;
+      for (const key of keylist) {
+        const keyToChar = getConstantVowel(key, true) as string[];
+        if (keyToChar.includes(preValueToChar)) {
+          findRelatedWords.push(key);
+        }
+        if (findRelatedWords.length === 10) {
+          break;
+        }
+      }
+      if (findRelatedWords.length === 0) {
+        setRelatedWords(['그런건 없어용 :)']);
+      } else {
+        setRelatedWords(findRelatedWords);
+      }
+    }
+  }
+  async function handleArrowKey(e: React.KeyboardEvent<HTMLInputElement>, searchWord: string) {
+    if (e.key === 'Enter') {
+      submit(e, searchWord);
+    } else if (
+      e.key === 'ArrowUp' ||
+      e.key === 'ArrowDown' ||
+      e.key === 'ArrowRight' ||
+      e.key === 'ArrowLeft'
+    ) {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || searchWord === '') {
+        return 0;
+      } else {
+        if (e.key === 'ArrowUp') {
+          if (curFocusOnWord === -1) {
+            return 0;
+          } else {
+            setArrowKeyActive(true);
+            setSearchWord(relatedWords[curFocusOnWord - 1]);
+            setCurFocusOnWord(curFocusOnWord - 1);
+          }
+        } else if (e.key === 'ArrowDown') {
+          if (curFocusOnWord === relatedWords.length - 1) {
+            setArrowKeyActive(true);
+            setSearchWord(relatedWords[0]);
+            setCurFocusOnWord(0);
+            return 0;
+          } else {
+            setArrowKeyActive(true);
+            setSearchWord(relatedWords[curFocusOnWord + 1]);
+            setCurFocusOnWord(curFocusOnWord + 1);
+          }
+        }
+      }
+    } else {
+      return 0;
+    }
+  }
 
   return (
     <Wrapper>
@@ -43,6 +134,12 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
           type="text"
           placeholder="궁금한 뉴스의 키워드, 인물을 검색하시오"
           value={searchWord}
+          onChange={(e) => {
+            handleSearchBoxChange(e);
+          }}
+          onKeyDown={(e) => {
+            handleArrowKey(e, searchWord);
+          }}
         />
         <RelatedBox>
           {relatedWords.map((word) => (

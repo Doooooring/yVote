@@ -18,14 +18,12 @@ interface NewsProps {
 }
 
 export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
-  const curBoxNumber = useRef(0);
   const [previewsDefault, setPreviewsDefault] = useState<Preview[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
 
   const getNewsContent = useCallback(async () => {
     const PreviewInit: Array<Preview> = await NewsService.getPreviews(0);
-    console.log(PreviewInit);
     setPreviewsDefault(PreviewInit);
     setCurPreviews(PreviewInit);
     return 0;
@@ -129,8 +127,8 @@ const NewsList = styled.div<NewsListProps>`
   }};
   display: grid;
   grid-template-columns: repeat(auto-fill, 490px);
-  grid-template-rows: repeat(auto-fill, 120px);
-  grid-column-gap: 20px;
+  grid-template-rows: repeat(auto-fill, 130px);
+  grid-column-gap: 0px;
   justify-items: center;
   border-style: solid;
   border-radius: 10px;

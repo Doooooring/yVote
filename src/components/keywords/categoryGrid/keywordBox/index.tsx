@@ -2,52 +2,79 @@ import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import icoClose from '@assets/img/ico_close.png';
 import defaultImg from '@assets/img/img_thumb@2x.png';
 import { HOST_URL } from '@assets/url';
-import { KeywordToView } from '@interfaces/keywords';
+import { Keyword } from '@interfaces/keywords';
 
 interface KeywordBoxProps {
-  keyword: KeywordToView;
+  keyword: Keyword['keyword'] | undefined;
+  tail: boolean;
 }
 
-export default function KeywordBox({ keyword }: KeywordBoxProps) {
-  const { _id, keyword: keyname, category } = keyword;
-
-  const onErrorImg = useCallback((e: React.SyntheticEvent) => {
-    const target = e.target as HTMLImageElement;
+export default function KeywordBox({ keyword, tail }: KeywordBoxProps) {
+  const onErrorImg = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.currentTarget;
     target.src = defaultImg;
   }, []);
 
   return (
-    <LinkWrapper to={`/keywords/${keyname}`}>
-      <Wrapper>
+    <LinkWrapper
+      to={`/keywords/${keyword}`}
+      state={tail}
+      onClick={(e) => {
+        if (tail) {
+          e.preventDefault();
+        }
+      }}
+    >
+      <Wrapper state={tail}>
         <ImageWrapper>
-          <img
+          <CloseImg
             src={`${HOST_URL}/`}
             alt="hmm"
             height="95px"
             onError={(e) => {
               onErrorImg(e);
             }}
+            state={tail}
           />
         </ImageWrapper>
         <KeywordWrapper>
-          <KeywordTitle>{keyname}</KeywordTitle>
+          <KeywordTitle>{keyword}</KeywordTitle>
         </KeywordWrapper>
+        <KeywordBoxTail state={tail}>
+          <Link to="/keywords">
+            <img src={icoClose} alt="hmm" />
+          </Link>
+        </KeywordBoxTail>
       </Wrapper>
     </LinkWrapper>
   );
 }
 
-const LinkWrapper = styled(Link)`
-  text-decoration: none; ;
+interface LinkWrapperProps {
+  state: boolean;
+}
+
+const LinkWrapper = styled(Link)<LinkWrapperProps>`
+  display: block;
+  width: 240px;
+  text-decoration: none;
+  &:hover {
+    cursor: ${({ state }) => (state ? 'default' : 'pointer')};
+  }
 `;
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  state: boolean;
+}
+
+const Wrapper = styled.div<WrapperProps>`
+  width: ${({ state }) => (state ? '240px' : '220px')};
   display: flex;
   justify-content: row;
   align-items: center;
-  width: 200px;
   height: 95px;
   border-radius: 10px;
   border: 1px solid rgba(200, 200, 200, 0.5);
@@ -62,12 +89,36 @@ const KeywordWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 105px;
+  width: 125px;
   height: 95px;
 `;
 
 const KeywordTitle = styled.p`
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 600;
   color: black;
+`;
+
+interface KeywordBoxTailProps {
+  state: boolean;
+}
+
+const KeywordBoxTail = styled.div<KeywordBoxTailProps>`
+  display: ${({ state }) => (state ? 'flex' : 'none')};
+  width: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgb(200, 200, 200);
+`;
+
+interface CloseImgProps {
+  state: boolean;
+}
+
+const CloseImg = styled.img<CloseImgProps>`
+  &:hover {
+    cursor: ${({ state }) => (state ? 'pointer' : 'default')};
+  }
 `;

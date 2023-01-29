@@ -28,7 +28,7 @@ export default function Journals({ journals }: JournalsProps) {
   );
   return (
     <Wrapper>
-      <Head></Head>
+      <Head>사설 및 칼럼</Head>
       {journals.map((journal) => {
         return (
           <Link
@@ -60,7 +60,9 @@ const Wrapper = styled.div`
   overflow: scroll;
 `;
 const Head = styled.h2`
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 20px;
 `;
 const Journal = styled.div`
   display: flex;
@@ -80,6 +82,7 @@ const Press = styled.img`
   font-weight: 600;
 `;
 const JournalName = styled.p`
+  color: black;
   font-size: 14px;
   font-weight: 600;
 `;
