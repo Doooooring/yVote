@@ -87,5 +87,5 @@ const GridContainer = styled.div<GridContainerProps>`
   grid-row-gap: 10px;
   grid-column-gap: 20px;
   transform: ${({ curView }) => `translateX(-${curView * 1020}px)`};
-  transition-duration: 1s;
+  transition-duration: 0.5s;
 `;
