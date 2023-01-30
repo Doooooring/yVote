@@ -6,7 +6,6 @@ import IcoSearch from '@assets/img/ico_search.png';
 import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { News, Preview } from '@interfaces/news';
-import { stripBasename } from '@remix-run/router';
 import { curPreviewsList, setCurPreviewsList } from '@state/index';
 import { getConstantVowel } from '@utils/common';
 import NewsServices from '@utils/news';
@@ -28,7 +27,7 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
   const getKeys = useCallback(async () => {
     try {
       const response = await axios.get(`${HOST_URL}/keywords/keyword`);
-      const { keylist } = response.data;
+      const keylist = response.data;
       setKeyList(keylist);
     } catch {
       Error();
@@ -71,13 +70,15 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
       if (curFocusOnWord !== -1) {
         setCurFocusOnWord(-1);
       }
-      const findRelatedWords = [];
-      const preValueToChar = getConstantVowel(preValue, false) as string;
+      const findRelatedWords: string[] = [];
+      const preValueToChars = getConstantVowel(preValue, true) as string[];
       for (const key of keylist) {
-        const keyToChar = getConstantVowel(key, true) as string[];
-        if (keyToChar.includes(preValueToChar)) {
-          findRelatedWords.push(key);
-        }
+        const keyToChar = getConstantVowel(key, false) as string;
+        preValueToChars.forEach((preValueToChar) => {
+          if (keyToChar.includes(preValueToChar)) {
+            findRelatedWords.push(key);
+          }
+        });
         if (findRelatedWords.length === 10) {
           break;
         }
@@ -154,7 +155,6 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
           ))}
         </RelatedBox>
       </InputWrapper>
-      <SubmitButton>{'찾기'}</SubmitButton>
     </Wrapper>
   );
 }

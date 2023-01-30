@@ -59,7 +59,7 @@ interface LinkWrapperProps {
 
 const LinkWrapper = styled(Link)<LinkWrapperProps>`
   display: block;
-  width: 240px;
+  width: ${({ state }) => (state ? '255px' : '235px')};
   text-decoration: none;
   &:hover {
     cursor: ${({ state }) => (state ? 'default' : 'pointer')};
@@ -71,7 +71,7 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  width: ${({ state }) => (state ? '240px' : '220px')};
+  width: ${({ state }) => (state ? '255px' : '235px')};
   display: flex;
   justify-content: row;
   align-items: center;
@@ -89,7 +89,7 @@ const KeywordWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 125px;
+  width: 140px;
   height: 95px;
 `;
 

@@ -4,7 +4,7 @@ import { HOST_URL } from '@assets/url';
 import { News, Preview } from '@interfaces/news';
 
 class NewsServices {
-  async getPreviews(curNum: number, keyword: string | undefined = undefined) {
+  async getPreviews(curNum: number, keyword: string | null = null) {
     const response = await axios.get(
       `${HOST_URL}/news/preview?curNum=${curNum}&keyword=${keyword}`,
     );

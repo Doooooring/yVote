@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import icoNews from '@assets/img/ico_news.png';
+import { LeftButton, RightButton } from '@components/keywords/categoryGrid/buttons';
 import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
 import { KeywordToView } from '@interfaces/keywords';
 
@@ -12,9 +13,15 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ category, keywords, setKeywords }: CategoryGridProps) {
-  const [preKeywords, setPreKeywords] = useState<KeywordToView[] | undefined>(undefined);
-  const [curKeywords, setCurKeywords] = useState<KeywordToView[]>(keywords);
-  const [postKeywords, setPostKeywords] = useState<KeywordToView[] | undefined>(undefined);
+  const [curView, setCurView] = useState<number>(0);
+
+  const viewToLeft = () => {
+    setCurView(curView - 1);
+  };
+
+  const viewToRight = () => {
+    setCurView(curView + 1);
+  };
 
   return (
     <Wrapper>
@@ -22,13 +29,21 @@ export default function CategoryGrid({ category, keywords, setKeywords }: Catego
         <img src={icoNews} alt="hmm" height="18px"></img>
         <CategoryHead>{category}</CategoryHead>
       </HeaderWrapper>
-      <GridWrapper>
-        <GridContainer>
-          {keywords.map((keyword) => {
-            return <KeywordBox key={keyword._id} keyword={keyword.keyword} tail={false} />;
-          })}
-        </GridContainer>
-      </GridWrapper>
+      <BodyWrapper>
+        <LeftButton curView={curView} viewToLeft={viewToLeft} />
+        <GridWrapper>
+          <GridContainer curView={curView}>
+            {keywords.map((keyword) => {
+              return <KeywordBox key={keyword._id} keyword={keyword.keyword} tail={false} />;
+            })}
+          </GridContainer>
+        </GridWrapper>
+        <RightButton
+          curView={curView}
+          viewToRight={viewToRight}
+          lastPage={Math.floor(keywords.length / 8)}
+        />
+      </BodyWrapper>
     </Wrapper>
   );
 }
@@ -50,16 +65,27 @@ const CategoryHead = styled.div`
   font-size: 18px;
 `;
 
-const GridWrapper = styled.div`
-  overflow: scroll;
+const BodyWrapper = styled.div`
+  position: relative;
 `;
 
-const GridContainer = styled.div`
+const GridWrapper = styled.div`
+  border: 0px solid black;
+  overflow: hidden;
+`;
+
+interface GridContainerProps {
+  curView: number;
+}
+
+const GridContainer = styled.div<GridContainerProps>`
   display: grid;
   height: 220px;
   grid-template-rows: repeat(2, 95px);
-  grid-template-columns: repeat(auto-fill, 220px);
+  grid-template-columns: repeat(auto-fill, 235px);
   grid-auto-flow: column;
   grid-row-gap: 10px;
-  grid-column-gap: 10px;
+  grid-column-gap: 20px;
+  transform: ${({ curView }) => `translateX(-${curView * 1020}px)`};
+  transition-duration: 1s;
 `;
