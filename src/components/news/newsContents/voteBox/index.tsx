@@ -20,7 +20,7 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
 
   const submitButtonText = useMemo(() => {
     return {
-      resolve: '생각이 바뀌었습니다.',
+      resolve: 'C 생각이 바뀌었습니다',
       pending: ' ✔ 참여하기',
       error: '! 생각을 하고 왔습니다.',
     };
@@ -30,20 +30,27 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
     return 0;
   }, [checkLeftRight]);
 
+  function handlePendingState() {
+    switch (haveThinked) {
+      case true:
+        if (checkLeftRight === null) {
+          setCheckLeftRight('none');
+        }
+        setSubmitState('resolve');
+        break;
+      case false:
+        setSubmitState('error');
+        break;
+    }
+  }
+
   const clickSubmitButton = () => {
     switch (submitState) {
       case 'resolve':
         setSubmitState('pending');
         break;
       case 'pending':
-        if (haveThinked === true) {
-          if (checkLeftRight === null) {
-            setCheckLeftRight('none');
-          }
-          setSubmitState('resolve');
-        } else {
-          setSubmitState('error');
-        }
+        handlePendingState();
         break;
       case 'error':
         setSubmitState('pending');
@@ -216,7 +223,6 @@ const LeftRightHead = styled.div`
 `;
 
 const CheckBoxWrapper = styled.div`
-  color: grey;
   margin-bottom: 10px;
 `;
 
@@ -245,7 +251,9 @@ const CheckBoxLabel = styled.label`
   margin-right: 10px;
 `;
 
-const LRComment = styled.span``;
+const LRComment = styled.span`
+  color: black;
+`;
 
 const SubmitBlock = styled.div`
   text-align: center;
