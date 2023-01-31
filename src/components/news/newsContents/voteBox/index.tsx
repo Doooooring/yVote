@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { newsContent } from '@entities/state';
@@ -10,13 +10,46 @@ interface VoteBoxProps {
   votes: News['votes'];
 }
 
+type SubmitState = 'resolve' | 'pending' | 'error';
+
 export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
   const [haveThinked, setHaveThinked] = useState<boolean | null>(false);
-  const [checkLeftRight, setCheckLeftRight] = useState<'left' | 'right' | null>(null);
+  const [checkLeftRight, setCheckLeftRight] = useState<'left' | 'right' | 'none' | null>(null);
+  const [haveVoted, setHaveVoted] = useState<boolean | 'error'>(false);
+  const [submitState, setSubmitState] = useState<SubmitState>('pending');
 
-  useEffect(() => {
-    setHaveThinked(null);
-  });
+  const submitButtonText = useMemo(() => {
+    return {
+      resolve: '생각이 바뀌었습니다.',
+      pending: ' ✔ 참여하기',
+      error: '! 생각을 하고 왔습니다.',
+    };
+  }, []);
+
+  const vote = useCallback(() => {
+    return 0;
+  }, [checkLeftRight]);
+
+  const clickSubmitButton = () => {
+    switch (submitState) {
+      case 'resolve':
+        setSubmitState('pending');
+        break;
+      case 'pending':
+        if (haveThinked === true) {
+          if (checkLeftRight === null) {
+            setCheckLeftRight('none');
+          }
+          setSubmitState('resolve');
+        } else {
+          setSubmitState('error');
+        }
+        break;
+      case 'error':
+        setSubmitState('pending');
+        break;
+    }
+  };
 
   return (
     <Wrapper>
@@ -24,12 +57,30 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
         <VotingSentence>투표하기 전에 생각했나요?</VotingSentence>
         <VotingBlocks>
           <VotingBlock>
-            <ThinkBox type="checkbox" id="yes" checked={haveThinked === true} />
-            <ThinkBoxLabel htmlFor="yes" />예
+            <ThinkBox
+              type="radio"
+              name="think"
+              id="yes"
+              checked={state === true && haveThinked === true}
+              onClick={() => {
+                setHaveThinked(true);
+              }}
+              disabled={submitState !== 'pending'}
+            />
+            예
           </VotingBlock>
           <VotingBlock>
-            <ThinkBox type="checkbox" id="no" checked={haveThinked === false} />
-            <ThinkBoxLabel htmlFor="no" />
+            <ThinkBox
+              type="radio"
+              name="think"
+              id="no"
+              checked={state === true && haveThinked === false}
+              onClick={() => {
+                setHaveThinked(false);
+                setCheckLeftRight(null);
+              }}
+              disabled={submitState !== 'pending'}
+            />
             아니오
           </VotingBlock>
         </VotingBlocks>
@@ -37,14 +88,43 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
       <LeftRightBox>
         <LeftRightHead>여러분의 생각에 투표하세요.</LeftRightHead>
         <CheckBoxWrapper>
-          <CheckBox type="checkbox" id="left" checked={checkLeftRight === 'left'} />
-          <CheckBoxLabel htmlFor="left" />
+          <CheckBox
+            type="radio"
+            name="checkbox"
+            id="left"
+            checked={checkLeftRight === 'left'}
+            onClick={() => {
+              setCheckLeftRight('left');
+            }}
+            disabled={haveThinked === false || submitState === 'resolve'}
+          />
           <LRComment>{'left'}</LRComment>
         </CheckBoxWrapper>
         <CheckBoxWrapper>
-          <CheckBox type="checkbox" id="right" checked={checkLeftRight === 'right'} />
-          <CheckBoxLabel htmlFor="right" />
+          <CheckBox
+            type="radio"
+            name="checkbox"
+            id="right"
+            checked={checkLeftRight === 'right'}
+            onClick={() => {
+              setCheckLeftRight('right');
+            }}
+            disabled={haveThinked === false || submitState === 'resolve'}
+          />
           <LRComment>{'right'}</LRComment>
+        </CheckBoxWrapper>
+        <CheckBoxWrapper>
+          <CheckBox
+            type="radio"
+            name="checkbox"
+            id="none"
+            checked={checkLeftRight === 'none'}
+            onClick={() => {
+              setCheckLeftRight('none');
+            }}
+            disabled={haveThinked === false || submitState === 'resolve'}
+          />
+          <LRComment>{'잘 모르겠다'}</LRComment>
         </CheckBoxWrapper>
       </LeftRightBox>
       <SubmitBlock>
@@ -52,9 +132,10 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
           type="submit"
           onClick={(e) => {
             e.preventDefault();
+            clickSubmitButton();
           }}
         >
-          ✔ 참여하기
+          {submitButtonText[submitState]}
         </SubmitButton>
       </SubmitBlock>
       <BackDrop state={state}></BackDrop>
@@ -97,7 +178,7 @@ const VotingBlock = styled.div`
 `;
 
 const ThinkBox = styled.input`
-  display: none;
+  margin-right: 10px;
   &:checked + label::after {
     content: '✔';
     color: red;
@@ -140,7 +221,7 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const CheckBox = styled.input`
-  display: none;
+  margin-right: 10px;
   &:checked + label::after {
     content: '✔';
     color: grey;
@@ -148,7 +229,7 @@ const CheckBox = styled.input`
     padding: 0;
     text-align: center;
     position: absolute;
-    top: -2px;
+    top: -6px;
     left: 2px;
   }
 `;

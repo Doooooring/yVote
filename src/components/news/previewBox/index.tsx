@@ -41,6 +41,7 @@ export default function PreviewBox({
 
   return (
     <Wrapper
+      state={curClicked === order}
       onClick={() => {
         if (curClicked === order) {
           setCurClicked(undefined);
@@ -81,7 +82,11 @@ export default function PreviewBox({
   );
 }
 
-const Wrapper = styled.div`
+interface WrapperProps {
+  state: boolean;
+}
+
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -89,7 +94,7 @@ const Wrapper = styled.div`
   height: 120px;
   border-radius: 10px;
   border: 1px solid rgba(200, 200, 200, 0.5);
-  background-color: white;
+  background-color: ${({ state }) => (state ? 'rgb(200, 200, 200)' : 'white')};
   box-shadow: 0px 0px 35px -30px;
   margin-bottom: 20px;
   text-align: left;
