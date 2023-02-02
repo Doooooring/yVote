@@ -3,19 +3,21 @@ import styled from 'styled-components';
 
 import { newsContent } from '@entities/state';
 import { News } from '@interfaces/news';
+import NewsServices from '@utils/news';
 
 interface VoteBoxProps {
+  id: News['_id'];
   state: News['state'];
   opinions: News['opinions'];
   votes: News['votes'];
+  voteHistory: 'left' | 'right' | 'none' | null;
 }
 
 type SubmitState = 'resolve' | 'pending' | 'error';
 
-export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
+export default function VoteBox({ id, state, opinions, votes, voteHistory }: VoteBoxProps) {
   const [haveThinked, setHaveThinked] = useState<boolean | null>(false);
   const [checkLeftRight, setCheckLeftRight] = useState<'left' | 'right' | 'none' | null>(null);
-  const [haveVoted, setHaveVoted] = useState<boolean | 'error'>(false);
   const [submitState, setSubmitState] = useState<SubmitState>('pending');
 
   const submitButtonText = useMemo(() => {
@@ -26,7 +28,13 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
     };
   }, []);
 
-  const vote = useCallback(() => {
+  const vote = useCallback(async () => {
+    if (checkLeftRight === null) {
+      return;
+    }
+    const token = localStorage.getItem('yVote');
+    const response = await NewsServices.vote(id, checkLeftRight, token);
+    localStorage.setItem('yVote', response.token);
     return 0;
   }, [checkLeftRight]);
 
@@ -44,19 +52,32 @@ export default function VoteBox({ state, opinions, votes }: VoteBoxProps) {
     }
   }
 
-  const clickSubmitButton = () => {
-    switch (submitState) {
-      case 'resolve':
-        setSubmitState('pending');
-        break;
-      case 'pending':
-        handlePendingState();
-        break;
-      case 'error':
-        setSubmitState('pending');
-        break;
+  const clickSubmitButton = async () => {
+    try {
+      const response = await vote();
+      switch (submitState) {
+        case 'resolve':
+          setSubmitState('pending');
+          break;
+        case 'pending':
+          handlePendingState();
+          break;
+        case 'error':
+          setSubmitState('pending');
+          break;
+      }
+    } catch (e) {
+      alert('다시 시도해 주세요.');
     }
   };
+
+  useEffect(() => {
+    if (voteHistory !== null) {
+      setHaveThinked(true);
+      setCheckLeftRight(voteHistory);
+      setSubmitState('resolve');
+    }
+  }, [voteHistory]);
 
   return (
     <Wrapper>

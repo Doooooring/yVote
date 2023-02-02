@@ -10,11 +10,19 @@ import { curClicked, setCurClicked, setNewsContent } from '@entities/state';
 import { News, Preview } from '@interfaces/news';
 import NewsServices from '@utils/news';
 
+type AnswerState = 'left' | 'right' | 'none' | null;
+
 interface PreviewBoxProps {
   Preview: Preview;
   curClicked: curClicked;
   setCurClicked: setCurClicked;
   setNewsContent: setNewsContent;
+  setVoteHistory: (voteHistory: AnswerState) => void;
+}
+
+interface getNewsContentResponse {
+  response: AnswerState;
+  news: News;
 }
 
 export default function PreviewBox({
@@ -22,6 +30,7 @@ export default function PreviewBox({
   curClicked,
   setCurClicked,
   setNewsContent,
+  setVoteHistory,
 }: PreviewBoxProps) {
   const { _id, order, title, summary, keywords, state } = Preview;
 
@@ -31,9 +40,11 @@ export default function PreviewBox({
 
   const showNewsContent = useCallback(async () => {
     try {
-      const response: News = await NewsServices.getNewsContent(_id);
-      setNewsContent(response);
+      const newsInfo: getNewsContentResponse = await NewsServices.getNewsContent(_id);
+      const { response, news } = newsInfo;
+      setNewsContent(news);
       setCurClicked(order);
+      setVoteHistory(response);
     } catch (e) {
       console.error(e);
     }
@@ -45,6 +56,7 @@ export default function PreviewBox({
       onClick={() => {
         if (curClicked === order) {
           setCurClicked(undefined);
+          setVoteHistory(null);
           return;
         }
         showNewsContent();
@@ -52,7 +64,7 @@ export default function PreviewBox({
     >
       <ImgWrapper>
         <NewsImg
-          src={''}
+          src={`${HOST_URL}`}
           alt=""
           height="100px"
           onError={(e) => {

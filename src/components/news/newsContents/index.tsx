@@ -11,9 +11,15 @@ interface NewsContentProps {
   curClicked: curClicked;
   setCurClicked: setCurClicked;
   newsContent: newsContent;
+  voteHistory: 'left' | 'right' | 'none' | null;
 }
 
-export default function NewsContent({ curClicked, setCurClicked, newsContent }: NewsContentProps) {
+export default function NewsContent({
+  curClicked,
+  setCurClicked,
+  newsContent,
+  voteHistory,
+}: NewsContentProps) {
   if (curClicked === undefined || newsContent === undefined) {
     return <div></div>;
   } else {
@@ -39,9 +45,11 @@ export default function NewsContent({ curClicked, setCurClicked, newsContent }: 
             <NewsHistory news={newsContent.news} />
             <Journals journals={newsContent.journals} />
             <VoteBox
+              id={newsContent._id}
               state={newsContent.state}
               opinions={newsContent.opinions}
               votes={newsContent.votes}
+              voteHistory={voteHistory}
             />
           </ContentBody>
         </Body>

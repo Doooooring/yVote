@@ -21,6 +21,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const [previewsDefault, setPreviewsDefault] = useState<Preview[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
+  const [voteHistory, setVoteHistory] = useState<'left' | 'right' | 'none' | null>(null);
 
   const getNewsContent = useCallback(async () => {
     const PreviewInit: Array<Preview> = await NewsService.getPreviews(0);
@@ -55,6 +56,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
                   curClicked={curClicked}
                   setCurClicked={setCurClicked}
                   setNewsContent={setNewsContent}
+                  setVoteHistory={setVoteHistory}
                 />
               </PreviewBoxWrapper>
             ))}
@@ -64,6 +66,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
               curClicked={curClicked}
               setCurClicked={setCurClicked}
               newsContent={newsContent}
+              voteHistory={voteHistory}
             />
           </NewsContentsWrapper>
         </MainContentsBody>

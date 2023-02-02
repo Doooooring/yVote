@@ -3,6 +3,18 @@ import axios from 'axios';
 import { HOST_URL } from '@assets/url';
 import { News, Preview } from '@interfaces/news';
 
+type AnswerState = 'left' | 'right' | 'none';
+
+interface getNewsContentResponse {
+  response: AnswerState;
+  news: News;
+}
+
+interface VoteResponse {
+  token: string;
+  state: boolean;
+}
+
 class NewsServices {
   async getPreviews(curNum: number, keyword: string | null = null) {
     const response = await axios.get(
@@ -13,8 +25,33 @@ class NewsServices {
   }
 
   async getNewsContent(id: Preview['_id']) {
-    const response = await axios.get(`${HOST_URL}/news/detail?id=${id}`);
-    const data: News = response.data;
+    const token = localStorage.getItem('yVote');
+    const response = await axios.get(`${HOST_URL}/news/detail?id=${id}`, {
+      headers: {
+        authorization: token,
+      },
+    });
+    const data: getNewsContentResponse = response.data;
+    return data;
+  }
+
+  async vote(id: News['_id'], answer: AnswerState, token: string | null): Promise<VoteResponse> {
+    const response = await axios.post(
+      `${HOST_URL}/vote`,
+      {
+        news: id,
+        response: answer,
+      },
+      {
+        headers: {
+          Authorization: `${token}`,
+        },
+      },
+    );
+    const data: {
+      token: string;
+      state: boolean;
+    } = response.data;
     return data;
   }
 }
