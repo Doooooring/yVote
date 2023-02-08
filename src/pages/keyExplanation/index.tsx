@@ -14,11 +14,14 @@ import { Keyword, KeywordOnDetail } from '@interfaces/keywords';
 import { Preview } from '@interfaces/news';
 import KeywordsServices from '@utils/keywords';
 
+type AnswerState = 'left' | 'right' | 'none' | null;
+
 export default function KeyExplanation() {
   const [curClicked, setCurClicked] = useState<curClicked>(undefined);
   const [curKeyword, setCurKeyword] = useState<KeywordOnDetail>();
   const [curNewsContent, setCurNewsContent] = useState<newsContent>(undefined);
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
+  const [voteHistory, setVoteHistory] = useState<AnswerState>(null);
   const params = useParams();
   const keyName = useMemo(() => params.keyname, [params]);
   const getKeywordData = useCallback(async () => {
@@ -73,6 +76,7 @@ export default function KeyExplanation() {
                     curClicked={curClicked}
                     setCurClicked={setCurClicked}
                     setNewsContent={setCurNewsContent}
+                    setVoteHistory={setVoteHistory}
                   />
                 );
               })}
@@ -84,6 +88,7 @@ export default function KeyExplanation() {
             curClicked={curClicked}
             setCurClicked={setCurClicked}
             newsContent={curNewsContent}
+            voteHistory={voteHistory}
           />
         </MainContentsRight>
       </MainContents>
