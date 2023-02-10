@@ -1,7 +1,7 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
 
 import icoNew from '@assets/img/ico_new.png';
 import defaultImg from '@assets/img/img_thumb@2x.png';
@@ -33,12 +33,17 @@ export default function PreviewBox({
   setVoteHistory,
 }: PreviewBoxProps) {
   const { _id, order, title, summary, keywords, state } = Preview;
+  const myRef = useRef<HTMLDivElement | null>(null);
+  const scrollToElement = () => {
+    console.log(myRef.current);
+    myRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const onErrorImg = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = defaultImg;
   }, []);
 
-  const showNewsContent = useCallback(async () => {
+  const showNewsContent = async () => {
     try {
       const newsInfo: getNewsContentResponse = await NewsServices.getNewsContent(_id);
       const { response, news } = newsInfo;
@@ -48,10 +53,11 @@ export default function PreviewBox({
     } catch (e) {
       console.error(e);
     }
-  }, []);
+  };
 
   return (
     <Wrapper
+      ref={myRef}
       state={curClicked === order}
       onClick={() => {
         if (curClicked === order) {
@@ -60,6 +66,7 @@ export default function PreviewBox({
           return;
         }
         showNewsContent();
+        scrollToElement();
       }}
     >
       <ImgWrapper>

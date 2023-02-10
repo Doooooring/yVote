@@ -26,7 +26,7 @@ export function BrickBar({ num }: BrickBarProps) {
       }}
     >
       {iterationBlock.map(() => {
-        return <div key={iterationBlock.indexOf(num)} className="brick"></div>;
+        return <Brick key={iterationBlock.indexOf(num)} className="brick"></Brick>;
       })}
     </Bar>
   );

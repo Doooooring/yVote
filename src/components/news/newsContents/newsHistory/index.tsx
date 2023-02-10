@@ -15,9 +15,10 @@ export default function NewsHistory({ news }: NewsHistoryProps) {
       <HistoryExplanation>
         <HistoryDate>
           {news.map((comp) => {
-            const year = comp.date.getFullYear;
-            const month = comp.date.getMonth;
-            return <li key={`${comp.date}`}>{`${year}.${month}`}</li>;
+            const dateToList = comp.date.split('.');
+            const year = dateToList[0];
+            const month = dateToList[1];
+            return <li key={`${comp.date}`} style={{ textAlign: 'left' }}>{`${year}.${month}`}</li>;
           })}
         </HistoryDate>
         <BrickBar num={news.length} />
@@ -25,14 +26,9 @@ export default function NewsHistory({ news }: NewsHistoryProps) {
           {news.map((comp) => {
             return (
               <SentenceWrapper key={comp.title}>
-                <Link
-                  to={`${comp.link}`}
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
+                <NewsLink href={`${comp.link}`} target="_blank">
                   {comp.title}
-                </Link>
+                </NewsLink>
               </SentenceWrapper>
             );
           })}
@@ -64,7 +60,6 @@ const HistoryExplanation = styled.p`
 
 const NewsGrid = styled.div`
   display: grid;
-  grid-template-rows: repeat(auto-fill, 40px);
   align-items: center;
 `;
 
@@ -75,3 +70,8 @@ const HistoryDate = styled(NewsGrid)`
 const HistorySentences = styled(NewsGrid)``;
 
 const SentenceWrapper = styled.div``;
+
+const NewsLink = styled.a`
+  text-decoration: none;
+  color: black;
+`;

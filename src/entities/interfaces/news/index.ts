@@ -5,7 +5,7 @@ export interface News {
   order: number;
   title: string;
   summary: string;
-  news: Array<{ date: Date; title: string; link: string }>;
+  news: Array<{ date: string; title: string; link: string }>;
   journals: Array<{ press: Press; title: string; link: string }>;
   keywords: Array<string>;
   state: boolean;
@@ -16,6 +16,7 @@ export interface News {
   votes: {
     left: number;
     right: number;
+    none: number;
   };
 }
 

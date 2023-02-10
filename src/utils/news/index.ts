@@ -32,6 +32,7 @@ class NewsServices {
       },
     });
     const data: getNewsContentResponse = response.data;
+    console.log(data);
     return data;
   }
 

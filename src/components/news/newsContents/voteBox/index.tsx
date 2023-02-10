@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { check } from 'prettier';
 import styled from 'styled-components';
 
 import { newsContent } from '@entities/state';
 import { News } from '@interfaces/news';
 import NewsServices from '@utils/news';
+
+type AnswerState = 'left' | 'right' | 'none';
 
 interface VoteBoxProps {
   id: News['_id'];
@@ -23,38 +26,32 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
   const submitButtonText = useMemo(() => {
     return {
       resolve: 'C 생각이 바뀌었습니다',
-      pending: ' ✔ 참여하기',
+      pending: '✔ 참여하기',
       error: '! 생각을 하고 왔습니다.',
     };
   }, []);
 
-  const vote = useCallback(async () => {
-    if (checkLeftRight === null) {
-      return;
-    }
+  const vote = async (voteAnswer: AnswerState) => {
     const token = localStorage.getItem('yVote');
-    const response = await NewsServices.vote(id, checkLeftRight, token);
+    const response = await NewsServices.vote(id, voteAnswer, token);
+    setCheckLeftRight('none');
     localStorage.setItem('yVote', response.token);
     return 0;
-  }, [checkLeftRight]);
+  };
 
-  function handlePendingState() {
-    switch (haveThinked) {
-      case true:
-        if (checkLeftRight === null) {
-          setCheckLeftRight('none');
-        }
-        setSubmitState('resolve');
-        break;
-      case false:
-        setSubmitState('error');
-        break;
+  const handlePendingState = async () => {
+    if (haveThinked) {
+      const voteAnswer: AnswerState = checkLeftRight === null ? 'none' : checkLeftRight;
+      const response = await vote(voteAnswer);
+      console.log(response);
+      setSubmitState('resolve');
+    } else {
+      setSubmitState('error');
     }
-  }
+  };
 
   const clickSubmitButton = async () => {
     try {
-      const response = await vote();
       switch (submitState) {
         case 'resolve':
           setSubmitState('pending');
@@ -76,8 +73,12 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
       setHaveThinked(true);
       setCheckLeftRight(voteHistory);
       setSubmitState('resolve');
+    } else {
+      setHaveThinked(false);
+      setCheckLeftRight(null);
+      setSubmitState('pending');
     }
-  }, [voteHistory]);
+  }, [id]);
 
   return (
     <Wrapper>

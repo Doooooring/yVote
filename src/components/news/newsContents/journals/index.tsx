@@ -31,17 +31,12 @@ export default function Journals({ journals }: JournalsProps) {
       <Head>사설 및 칼럼</Head>
       {journals.map((journal) => {
         return (
-          <Link
-            key={journal.press}
-            to={`${journal.link}`}
-            target="_blank"
-            style={{ textDecoration: 'none' }}
-          >
+          <JournalLink key={journal.press} href={`${journal.link}`} target="_blank">
             <Journal>
               <Press src={pressImage[journal.press]} alt="hmm"></Press>
               <JournalName>{journal.title}</JournalName>
             </Journal>
-          </Link>
+          </JournalLink>
         );
       })}
     </Wrapper>
@@ -64,6 +59,12 @@ const Head = styled.h2`
   font-weight: 800;
   margin-bottom: 20px;
 `;
+
+const JournalLink = styled.a`
+  text-decoration: none;
+  color: black;
+`;
+
 const Journal = styled.div`
   display: flex;
   flex-direction: row;

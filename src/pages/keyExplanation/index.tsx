@@ -24,7 +24,8 @@ export default function KeyExplanation() {
   const [voteHistory, setVoteHistory] = useState<AnswerState>(null);
   const params = useParams();
   const keyName = useMemo(() => params.keyname, [params]);
-  const getKeywordData = useCallback(async () => {
+
+  const getKeywordData = async () => {
     interface KeywordDetail {
       keyword: KeywordOnDetail;
       previews: Array<Preview>;
@@ -38,7 +39,7 @@ export default function KeyExplanation() {
     );
     setCurKeyword(keyword);
     setCurPreviews(previews);
-  }, []);
+  };
 
   useEffect(() => {
     getKeywordData();

@@ -59,7 +59,6 @@ export default function NewsContent({
 }
 
 const Wrapper = styled.div`
-  height: 1000px;
   width: 500px;
   background-color: white;
   border-width: 0px;
