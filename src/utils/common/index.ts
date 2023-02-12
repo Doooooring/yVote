@@ -97,8 +97,6 @@ export function getConstantVowel(wor: string, testWord = false) {
   let result;
   if (testWord) {
     result = [];
-    console.log(wor);
-    console.log('//');
     const lastCharUni = wor.slice(-1).charCodeAt(0) - ga;
     const lastCharTn = parseInt(`${lastCharUni & 28}`);
     if (lastCharUni < 0 || lastCharTn === 0) {

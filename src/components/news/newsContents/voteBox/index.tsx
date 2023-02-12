@@ -41,9 +41,9 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
 
   const handlePendingState = async () => {
     if (haveThinked) {
-      const voteAnswer: AnswerState = checkLeftRight === null ? 'none' : checkLeftRight;
+      const voteAnswer: AnswerState = checkLeftRight ?? 'none';
       const response = await vote(voteAnswer);
-      console.log(response);
+
       setSubmitState('resolve');
     } else {
       setSubmitState('error');
