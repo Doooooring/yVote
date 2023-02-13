@@ -1,4 +1,5 @@
-import React, { Dispatch, SetStateAction, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 import defaultImg from '@assets/img/img_thumb@2x.png';
@@ -10,13 +11,19 @@ interface RecentKeywordBoxProps {
 }
 
 export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
+  const navigation = useNavigate();
+
   const onErrorImg = useCallback((e: React.SyntheticEvent) => {
     const target = e.target as HTMLImageElement;
     target.src = defaultImg;
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        navigation(`/keywords/${keyword.keyword}`);
+      }}
+    >
       <KeywordWrapper>
         <KeywordTitle>{keyword.keyword}</KeywordTitle>
       </KeywordWrapper>
@@ -41,6 +48,9 @@ const Wrapper = styled.div`
   height: 190px;
   border-radius: 15px;
   overflow: hidden;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -62,7 +72,7 @@ const KeywordWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 99;
   background-color: rgba(0, 0, 0, 0.3);
 `;
 

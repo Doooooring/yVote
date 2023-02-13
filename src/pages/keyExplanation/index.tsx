@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Params, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import icoClose from '@assets/img/ico_close.png';
 import icoNews from '@assets/img/ico_news.png';
 import { SpeechBubble } from '@components/common/figure';
 import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
 import SearchBox from '@components/keywords/searchBox';
 import NewsContent from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
-import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
-import { Keyword, KeywordOnDetail } from '@interfaces/keywords';
+import { curClicked, curPreviewsList, newsContent } from '@entities/state';
+import { KeywordOnDetail } from '@interfaces/keywords';
 import { Preview } from '@interfaces/news';
 import KeywordsServices from '@utils/keywords';
 

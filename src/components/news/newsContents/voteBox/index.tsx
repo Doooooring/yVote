@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { check } from 'prettier';
 import styled from 'styled-components';
 
+import VoteGraph from '@components/news/newsContents/voteBox/voteGraph';
 import { newsContent } from '@entities/state';
 import { News } from '@interfaces/news';
 import NewsServices from '@utils/news';
@@ -23,6 +24,11 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
   const [checkLeftRight, setCheckLeftRight] = useState<'left' | 'right' | 'none' | null>(null);
   const [submitState, setSubmitState] = useState<SubmitState>('pending');
 
+  const voteTotal = useMemo(() => {
+    const { left, right, none } = votes;
+    return left + right + none;
+  }, [votes]);
+
   const submitButtonText = useMemo(() => {
     return {
       resolve: 'C 생각이 바뀌었습니다',
@@ -34,7 +40,6 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
   const vote = async (voteAnswer: AnswerState) => {
     const token = localStorage.getItem('yVote');
     const response = await NewsServices.vote(id, voteAnswer, token);
-    setCheckLeftRight('none');
     localStorage.setItem('yVote', response.token);
     return 0;
   };
@@ -43,7 +48,9 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
     if (haveThinked) {
       const voteAnswer: AnswerState = checkLeftRight ?? 'none';
       const response = await vote(voteAnswer);
-
+      if (checkLeftRight == null) {
+        setCheckLeftRight('none');
+      }
       setSubmitState('resolve');
     } else {
       setSubmitState('error');
@@ -127,8 +134,14 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
             }}
             disabled={haveThinked === false || submitState === 'resolve'}
           />
-          <LRComment>{'left'}</LRComment>
+          <LRComment>{opinions.left}</LRComment>
         </CheckBoxWrapper>
+        <VoteGraph
+          vote={votes.left}
+          totalVote={voteTotal}
+          backgroundColor={'#e17070'}
+          submitState={submitState}
+        />
         <CheckBoxWrapper>
           <CheckBox
             type="radio"
@@ -140,8 +153,14 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
             }}
             disabled={haveThinked === false || submitState === 'resolve'}
           />
-          <LRComment>{'right'}</LRComment>
+          <LRComment>{opinions.right}</LRComment>
         </CheckBoxWrapper>
+        <VoteGraph
+          vote={votes.right}
+          totalVote={voteTotal}
+          backgroundColor={'#6872c9'}
+          submitState={submitState}
+        />
         <CheckBoxWrapper>
           <CheckBox
             type="radio"
@@ -155,6 +174,12 @@ export default function VoteBox({ id, state, opinions, votes, voteHistory }: Vot
           />
           <LRComment>{'잘 모르겠다'}</LRComment>
         </CheckBoxWrapper>
+        <VoteGraph
+          vote={votes.none}
+          totalVote={voteTotal}
+          backgroundColor={'grey'}
+          submitState={submitState}
+        />
       </LeftRightBox>
       <SubmitBlock>
         <SubmitButton
@@ -221,18 +246,6 @@ const ThinkBox = styled.input`
   }
 `;
 
-const ThinkBoxLabel = styled.label`
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  border: 1px solid black;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
-  position: relative;
-  top: 5px;
-  margin-right: 10px;
-`;
-
 const LeftRightBox = styled.div`
   width: 100%;
 `;
@@ -260,17 +273,6 @@ const CheckBox = styled.input`
     top: -6px;
     left: 2px;
   }
-`;
-
-const CheckBoxLabel = styled.label`
-  display: inline-block;
-  height: 13px;
-  width: 13px;
-  border: 1px solid black;
-  border-radius: 15px;
-  position: relative;
-  top: 3px;
-  margin-right: 10px;
 `;
 
 const LRComment = styled.span`

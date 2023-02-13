@@ -9,7 +9,7 @@
       "@entities/*": ["src/entities/*"],
       "@utils/*": ["src/utils/*"],
       "@interfaces/*": ["src/entities/interfaces/*"],
-      "@state/*": ["src/entities/state/*"]
+      "@state/*": ["src/entities/state/*"],
     }
   }
 }

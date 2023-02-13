@@ -213,7 +213,7 @@ const RelatedWord = styled.p<RelatedWordProps>`
   border-width: 3px;
   font-size: 15px;
   border-style: solid;
-  z-index: 1;
+  z-index: 5;
   background-color: ${({ isFocused }) => (isFocused ? 'rgb(120, 120, 120)' : 'rgba(0,0,0,0)')};
 `;
 

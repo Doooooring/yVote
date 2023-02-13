@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import { SpeechBubble } from '@components/common/figure';
 import NewsContents from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
 import SearchBox from '@components/news/searchBox';
+import { useOnScreen } from '@entities/hook';
 import { News, Preview } from '@entities/interfaces/news';
 import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
 import NewsService from '@utils/news';
@@ -23,16 +24,41 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
   const [voteHistory, setVoteHistory] = useState<'left' | 'right' | 'none' | null>(null);
 
+  const curPage = useRef<number>(0);
+  const elementRef = useRef<HTMLDivElement>(null);
+  const isOnScreen = useOnScreen(elementRef);
+  const [isRequesting, setIsRequesting] = useState<boolean>(false);
+
   const getNewsContent = useCallback(async () => {
-    const PreviewInit: Array<Preview> = await NewsService.getPreviews(0);
-    setPreviewsDefault(PreviewInit);
-    setCurPreviews(PreviewInit);
-    return 0;
-  }, []);
+    setIsRequesting(true);
+    try {
+      const Previews: Array<Preview> = await NewsService.getPreviews(curPage.current);
+      if (Previews.length === 0) {
+        curPage.current = -1;
+        return;
+      }
+
+      if (curPage.current === 0) {
+        setPreviewsDefault(Previews);
+      }
+      curPage.current += 1;
+      const newPreviews = curPreviews.concat(Previews);
+      setCurPreviews(newPreviews);
+      return 0;
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsRequesting(false);
+    }
+  }, [curPreviews]);
 
   useEffect(() => {
-    getNewsContent();
-  }, []);
+    if (isOnScreen === true && isRequesting === false) {
+      getNewsContent();
+    } else {
+      return;
+    }
+  }, [isOnScreen]);
 
   return (
     <Wrapper>
@@ -60,6 +86,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
                 />
               </PreviewBoxWrapper>
             ))}
+            <LastLine ref={curPage.current === -1 ? null : elementRef}></LastLine>
           </NewsList>
           <NewsContentsWrapper curClicked={curClicked}>
             <NewsContents
@@ -80,7 +107,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 1200px;
+  height: 1500px;
   margin-top: 100px;
 `;
 
@@ -137,7 +164,7 @@ const NewsList = styled.div<NewsListProps>`
   border-radius: 10px;
   border-width: 0px;
   opacity: 1;
-  height: 900px;
+  height: 1300px;
   position: relative;
   overflow: scroll;
   animation: box-sliding 0.5s linear 1;
@@ -151,6 +178,11 @@ const PreviewBoxWrapper = styled.div`
 interface NewsContentsWrapperProps {
   curClicked: curClicked;
 }
+
+const LastLine = styled.div`
+  width: 10px;
+  height: 10px;
+`;
 
 const NewsContentsWrapper = styled.div<NewsContentsWrapperProps>`
   width: 500px;

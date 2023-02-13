@@ -33,7 +33,9 @@ export default function PreviewBox({
   setVoteHistory,
 }: PreviewBoxProps) {
   const { _id, order, title, summary, keywords, state } = Preview;
+
   const myRef = useRef<HTMLDivElement | null>(null);
+
   const scrollToElement = () => {
     console.log(myRef.current);
     myRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,7 +73,7 @@ export default function PreviewBox({
     >
       <ImgWrapper>
         <NewsImg
-          src={`${HOST_URL}`}
+          src={`${HOST_URL}/images/news/${order}`}
           alt=""
           height="100px"
           onError={(e) => {

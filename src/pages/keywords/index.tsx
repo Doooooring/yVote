@@ -98,6 +98,8 @@ const Wrapper = styled.div`
 `;
 
 const SearchWrapper = styled.div`
+  position: relative;
+  z-index: 999;
   width: 1000px;
   height: 50px;
   background-color: white;
