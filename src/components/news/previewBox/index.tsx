@@ -1,14 +1,17 @@
 import { useCallback, useMemo, useRef } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled, { StyledComponent } from 'styled-components';
 
 import icoNew from '@assets/img/ico_new.png';
 import defaultImg from '@assets/img/img_thumb@2x.png';
 import { HOST_URL } from '@assets/url';
-import { curClicked, setCurClicked, setNewsContent } from '@entities/state';
 import { News, Preview } from '@interfaces/news';
 import NewsServices from '@utils/news';
+
+type newsContent = undefined | News;
+type setNewsContent = (newsContent: newsContent) => void;
+type curClicked = undefined | News['order'];
+type setCurClicked = (curClicked: curClicked) => void;
 
 type AnswerState = 'left' | 'right' | 'none' | null;
 

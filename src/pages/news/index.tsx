@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import icoNews from '@assets/img/ico_news.png';
@@ -10,8 +8,13 @@ import PreviewBox from '@components/news/previewBox';
 import SearchBox from '@components/news/searchBox';
 import { useOnScreen } from '@entities/hook';
 import { News, Preview } from '@entities/interfaces/news';
-import { curClicked, curPreviewsList, newsContent, setCurClicked } from '@entities/state';
 import NewsService from '@utils/news';
+
+type curPreviewsList = Preview[];
+type setCurPreviewsList = (curNewsList: curPreviewsList) => void;
+type newsContent = undefined | News;
+type curClicked = undefined | News['order'];
+type setCurClicked = (curClicked: curClicked) => void;
 
 interface NewsProps {
   curClicked: curClicked;
@@ -24,11 +27,13 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
   const [voteHistory, setVoteHistory] = useState<'left' | 'right' | 'none' | null>(null);
 
+  //무한 페이지네이팅에 필요한 훅들
   const curPage = useRef<number>(0);
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
   const [isRequesting, setIsRequesting] = useState<boolean>(false);
 
+  //뷰에 들어옴이 감지될 때 요청 보내기
   const getNewsContent = useCallback(async () => {
     setIsRequesting(true);
     try {
@@ -53,6 +58,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   }, [curPreviews]);
 
   useEffect(() => {
+    //요청 중이라면 보내지 않기
     if (isOnScreen === true && isRequesting === false) {
       getNewsContent();
     } else {

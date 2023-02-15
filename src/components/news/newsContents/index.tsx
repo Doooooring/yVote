@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 
 import icoClose from '@assets/img/ico_close.png';
-import { BrickBar } from '@components/common/figure';
 import Journals from '@components/news/newsContents/journals';
 import NewsHistory from '@components/news/newsContents/newsHistory';
 import VoteBox from '@components/news/newsContents/voteBox';
-import { curClicked, newsContent, setCurClicked } from '@entities/state';
+import { News } from '@entities/interfaces/news';
+
+type newsContent = undefined | News;
+type curClicked = undefined | News['order'];
+type setCurClicked = (curClicked: curClicked) => void;
 
 interface NewsContentProps {
   curClicked: curClicked;

@@ -8,10 +8,15 @@ import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
 import SearchBox from '@components/keywords/searchBox';
 import NewsContent from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
-import { curClicked, curPreviewsList, newsContent } from '@entities/state';
 import { KeywordOnDetail } from '@interfaces/keywords';
-import { Preview } from '@interfaces/news';
+import { News, Preview } from '@interfaces/news';
 import KeywordsServices from '@utils/keywords';
+
+type curPreviewsList = Preview[];
+
+type newsContent = undefined | News;
+
+type curClicked = undefined | News['order'];
 
 type AnswerState = 'left' | 'right' | 'none' | null;
 
