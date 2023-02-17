@@ -19,7 +19,9 @@ export default function RecentCategoryGrid({ keywords, setKeywords }: RecentCate
       </Header>
       <GridWrapper>
         {keywords.map((keyword) => {
-          return <RecentKeywordBox key={keyword.keyword} keyword={keyword}></RecentKeywordBox>;
+          return (
+            <RecentKeywordBox key={keyword.keyword} keyword={keyword.keyword}></RecentKeywordBox>
+          );
         })}
       </GridWrapper>
     </Wrapper>

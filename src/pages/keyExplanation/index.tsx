@@ -13,11 +13,8 @@ import { News, Preview } from '@interfaces/news';
 import KeywordsServices from '@utils/keywords';
 
 type curPreviewsList = Preview[];
-
 type newsContent = undefined | News;
-
 type curClicked = undefined | News['order'];
-
 type AnswerState = 'left' | 'right' | 'none' | null;
 
 export default function KeyExplanation() {

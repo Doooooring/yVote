@@ -5,11 +5,12 @@ import styled from 'styled-components';
 import IcoSearch from '@assets/img/ico_search.png';
 import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
-import { News, Preview } from '@interfaces/news';
-import { curPreviewsList, setCurPreviewsList } from '@state/index';
+import { Preview } from '@interfaces/news';
 import { getConstantVowel } from '@utils/common';
 import NewsServices from '@utils/news';
 
+type curPreviewsList = Array<Preview>;
+type setCurPreviewsList = (curPreviewsList: curPreviewsList) => void;
 type KeyName = Keyword['keyword'];
 
 interface SearchBoxProps {

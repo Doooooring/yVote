@@ -7,7 +7,7 @@ import { HOST_URL } from '@assets/url';
 import { KeywordToView } from '@interfaces/keywords';
 
 interface RecentKeywordBoxProps {
-  keyword: KeywordToView;
+  keyword: KeywordToView['keyword'];
 }
 
 export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
@@ -21,15 +21,15 @@ export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
   return (
     <Wrapper
       onClick={() => {
-        navigation(`/keywords/${keyword.keyword}`);
+        navigation(`/keywords/${keyword}`);
       }}
     >
       <KeywordWrapper>
-        <KeywordTitle>{keyword.keyword}</KeywordTitle>
+        <KeywordTitle>{keyword}</KeywordTitle>
       </KeywordWrapper>
       <ImageWrapper>
         <img
-          src={`${HOST_URL}/`}
+          src={`${HOST_URL}/images/keyword/${keyword}`}
           height="190px"
           width="190px"
           alt="hmm"

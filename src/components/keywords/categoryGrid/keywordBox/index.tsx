@@ -31,7 +31,7 @@ export default function KeywordBox({ keyword, tail }: KeywordBoxProps) {
       <Wrapper state={tail}>
         <ImageWrapper>
           <CloseImg
-            src={`${HOST_URL}/`}
+            src={`${HOST_URL}/images/keyword/${keyword}`}
             alt="hmm"
             height="95px"
             onError={(e) => {

@@ -3,11 +3,11 @@ import { check } from 'prettier';
 import styled from 'styled-components';
 
 import VoteGraph from '@components/news/newsContents/voteBox/voteGraph';
-import { newsContent } from '@entities/state';
 import { News } from '@interfaces/news';
 import NewsServices from '@utils/news';
 
 type AnswerState = 'left' | 'right' | 'none';
+type SubmitState = 'resolve' | 'pending' | 'error';
 
 interface VoteBoxProps {
   id: News['_id'];
@@ -16,8 +16,6 @@ interface VoteBoxProps {
   votes: News['votes'];
   voteHistory: 'left' | 'right' | 'none' | null;
 }
-
-type SubmitState = 'resolve' | 'pending' | 'error';
 
 export default function VoteBox({ id, state, opinions, votes, voteHistory }: VoteBoxProps) {
   const [haveThinked, setHaveThinked] = useState<boolean | null>(false);
