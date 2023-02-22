@@ -5,8 +5,7 @@ import { SpeechBubble } from '@components/common/figure';
 import CategoryGrid from '@components/keywords/categoryGrid';
 import RecentCategoryGrid from '@components/keywords/recentCategoryGrid';
 import SearchBox from '@components/keywords/searchBox';
-import { recentKeywords } from '@entities/state';
-import { category, Keyword, KeywordToView } from '@interfaces/keywords';
+import { KeywordToView } from '@interfaces/keywords';
 import KeywordServices, { getKeywordsResponse } from '@utils/keywords';
 
 export default function KeywordsPage() {

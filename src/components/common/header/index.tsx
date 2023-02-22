@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logo from '@assets/img/ico_logo.png';
-import { setCurClicked } from '@entities/state';
+import { News } from '@interfaces/news';
 
 interface HeaderProps {
   setCurClicked: setCurClicked;
@@ -13,6 +13,9 @@ interface NavBoxProps {
   comment: string;
   setCurClicked: setCurClicked;
 }
+
+type curClicked = undefined | News['order'];
+type setCurClicked = (curClicked: curClicked) => void;
 
 function NavBox({ link, comment, setCurClicked }: NavBoxProps) {
   return (

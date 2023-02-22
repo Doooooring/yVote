@@ -1,9 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 import icoNews from '@assets/img/ico_news.png';
 import { LeftButton, RightButton } from '@components/keywords/categoryGrid/buttons';
 import KeywordBox from '@components/keywords/categoryGrid/keywordBox';
+import { useSlide } from '@entities/hook/useSlide';
 import { KeywordToView } from '@interfaces/keywords';
 
 interface CategoryGridProps {
@@ -12,16 +13,8 @@ interface CategoryGridProps {
   setKeywords: Dispatch<SetStateAction<KeywordToView[]>>;
 }
 
-export default function CategoryGrid({ category, keywords, setKeywords }: CategoryGridProps) {
-  const [curView, setCurView] = useState<number>(0);
-
-  const viewToLeft = () => {
-    setCurView(curView - 1);
-  };
-
-  const viewToRight = () => {
-    setCurView(curView + 1);
-  };
+export default function CategoryGrid({ category, keywords }: CategoryGridProps) {
+  const [curView, onSlideLeft, onSlideRight] = useSlide();
 
   return (
     <Wrapper>
@@ -30,7 +23,7 @@ export default function CategoryGrid({ category, keywords, setKeywords }: Catego
         <CategoryHead>{category}</CategoryHead>
       </HeaderWrapper>
       <BodyWrapper>
-        <LeftButton curView={curView} viewToLeft={viewToLeft} />
+        <LeftButton curView={curView} viewToLeft={onSlideLeft} />
         <GridWrapper>
           <GridContainer curView={curView}>
             {keywords.map((keyword) => {
@@ -40,7 +33,7 @@ export default function CategoryGrid({ category, keywords, setKeywords }: Catego
         </GridWrapper>
         <RightButton
           curView={curView}
-          viewToRight={viewToRight}
+          viewToRight={onSlideRight}
           lastPage={Math.floor(keywords.length / 8)}
         />
       </BodyWrapper>

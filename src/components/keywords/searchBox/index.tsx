@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { News, Preview } from '@interfaces/news';
-import { curPreviewsList, setCurPreviewsList } from '@state/index';
 import { getConstantVowel } from '@utils/common';
 
 type KeyName = Keyword['keyword'];

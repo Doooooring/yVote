@@ -12,7 +12,6 @@ type newsContent = undefined | News;
 type setNewsContent = (newsContent: newsContent) => void;
 type curClicked = undefined | News['order'];
 type setCurClicked = (curClicked: curClicked) => void;
-
 type AnswerState = 'left' | 'right' | 'none' | null;
 
 interface PreviewBoxProps {
@@ -40,7 +39,6 @@ export default function PreviewBox({
   const myRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToElement = () => {
-    console.log(myRef.current);
     myRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 

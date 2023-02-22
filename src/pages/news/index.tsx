@@ -6,7 +6,7 @@ import { SpeechBubble } from '@components/common/figure';
 import NewsContents from '@components/news/newsContents';
 import PreviewBox from '@components/news/previewBox';
 import SearchBox from '@components/news/searchBox';
-import { useOnScreen } from '@entities/hook';
+import { useOnScreen } from '@entities/hook/useOnScreen';
 import { News, Preview } from '@entities/interfaces/news';
 import NewsService from '@utils/news';
 
