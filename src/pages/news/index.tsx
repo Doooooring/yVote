@@ -11,7 +11,6 @@ import { News, Preview } from '@entities/interfaces/news';
 import NewsService from '@utils/news';
 
 type curPreviewsList = Preview[];
-type setCurPreviewsList = (curNewsList: curPreviewsList) => void;
 type newsContent = undefined | News;
 type curClicked = undefined | News['order'];
 type setCurClicked = (curClicked: curClicked) => void;
@@ -22,12 +21,13 @@ interface NewsProps {
 }
 
 export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
+  const [submitWord, setSubmitWord] = useState<string>('');
   const [previewsDefault, setPreviewsDefault] = useState<Preview[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
   const [voteHistory, setVoteHistory] = useState<'left' | 'right' | 'none' | null>(null);
 
-  //무한 페이지네이팅에 필요한 훅들
+  //무한 스크롤에 필요한 훅들
   const curPage = useRef<number>(0);
   const elementRef = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(elementRef);
@@ -37,7 +37,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const getNewsContent = useCallback(async () => {
     setIsRequesting(true);
     try {
-      const Previews: Array<Preview> = await NewsService.getPreviews(curPage.current);
+      const Previews: Array<Preview> = await NewsService.getPreviews(curPage.current, submitWord);
       if (Previews.length === 0) {
         curPage.current = -1;
         return;
@@ -69,7 +69,11 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   return (
     <Wrapper>
       <SearchWrapper>
-        <SearchBox newsContentDefault={previewsDefault} setCurPreviewsList={setPreviewsDefault} />
+        <SearchBox
+          setSubmitWord={setSubmitWord}
+          curPage={curPage}
+          setCurPreviewsList={setPreviewsDefault}
+        />
         <SpeechBubble width={200} height={30} />
       </SearchWrapper>
       <MainContents>

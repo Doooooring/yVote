@@ -26,6 +26,12 @@ class KeywordsServices {
     return keywords;
   }
 
+  async getKeywordForSearch() {
+    const response = await axios.get(`${HOST_URL}/keywords/keyword`);
+    const keylist = response.data;
+    return keylist;
+  }
+
   async getKeywordsWithCategory() {
     return 0;
   }

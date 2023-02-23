@@ -1,4 +1,10 @@
-import React, { InputHTMLAttributes, useCallback, useEffect, useState } from 'react';
+import React, {
+  InputHTMLAttributes,
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -7,6 +13,7 @@ import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { Preview } from '@interfaces/news';
 import { getConstantVowel } from '@utils/common';
+import KeywordsServices from '@utils/keywords';
 import NewsServices from '@utils/news';
 
 type curPreviewsList = Array<Preview>;
@@ -14,11 +21,12 @@ type setCurPreviewsList = (curPreviewsList: curPreviewsList) => void;
 type KeyName = Keyword['keyword'];
 
 interface SearchBoxProps {
-  newsContentDefault: Preview[];
+  curPage: MutableRefObject<number>;
+  setSubmitWord: (submitWord: string) => void;
   setCurPreviewsList: setCurPreviewsList;
 }
 
-export default function SearchBox({ newsContentDefault, setCurPreviewsList }: SearchBoxProps) {
+export default function SearchBox({ curPage, setSubmitWord, setCurPreviewsList }: SearchBoxProps) {
   const [searchWord, setSearchWord] = useState<string>('');
   const [relatedWords, setRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
   const [keylist, setKeyList] = useState<KeyName[]>([]);
@@ -27,9 +35,8 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
 
   const getKeys = useCallback(async () => {
     try {
-      const response = await axios.get(`${HOST_URL}/keywords/keyword`);
-      const keylist = response.data;
-      setKeyList(keylist);
+      const response: KeyName[] = await KeywordsServices.getKeywordForSearch();
+      setKeyList(response);
     } catch {
       Error();
     }
@@ -41,8 +48,10 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
       if (curFocusOnWord !== -1) {
         setSearchWord(relatedWords[curFocusOnWord]);
       }
-      const newsList = await NewsServices.getPreviews(0, searchWord);
+      curPage.current = 0;
+      const newsList = await NewsServices.getPreviews(curPage.current, searchWord);
       if (newsList.length !== 0) {
+        setSubmitWord(searchWord);
         setCurPreviewsList(newsList);
       } else {
         alert('Nothing');
@@ -65,7 +74,6 @@ export default function SearchBox({ newsContentDefault, setCurPreviewsList }: Se
     setSearchWord(preValue);
     if (preValue === '') {
       setCurFocusOnWord(-1);
-      setCurPreviewsList(newsContentDefault);
       setRelatedWords(['키워드를 검색해 봅시다']);
     } else {
       if (curFocusOnWord !== -1) {
