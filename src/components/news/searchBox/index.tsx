@@ -16,17 +16,17 @@ import { getConstantVowel } from '@utils/common';
 import KeywordsServices from '@utils/keywords';
 import NewsServices from '@utils/news';
 
-type curPreviewsList = Array<Preview>;
-type setCurPreviewsList = (curPreviewsList: curPreviewsList) => void;
+type curPreviews = Array<Preview>;
+type setCurPreviews = (curPreviews: curPreviews) => void;
 type KeyName = Keyword['keyword'];
 
 interface SearchBoxProps {
   curPage: MutableRefObject<number>;
   setSubmitWord: (submitWord: string) => void;
-  setCurPreviewsList: setCurPreviewsList;
+  setCurPreviews: setCurPreviews;
 }
 
-export default function SearchBox({ curPage, setSubmitWord, setCurPreviewsList }: SearchBoxProps) {
+export default function SearchBox({ curPage, setSubmitWord, setCurPreviews }: SearchBoxProps) {
   const [searchWord, setSearchWord] = useState<string>('');
   const [relatedWords, setRelatedWords] = useState<string[]>(['키워드를 검색해 봅시다.']);
   const [keylist, setKeyList] = useState<KeyName[]>([]);
@@ -52,7 +52,7 @@ export default function SearchBox({ curPage, setSubmitWord, setCurPreviewsList }
       const newsList = await NewsServices.getPreviews(curPage.current, searchWord);
       if (newsList.length !== 0) {
         setSubmitWord(searchWord);
-        setCurPreviewsList(newsList);
+        setCurPreviews(newsList);
       } else {
         alert('Nothing');
       }

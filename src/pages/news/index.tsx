@@ -22,7 +22,6 @@ interface NewsProps {
 
 export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
   const [submitWord, setSubmitWord] = useState<string>('');
-  const [previewsDefault, setPreviewsDefault] = useState<Preview[]>([]);
   const [newsContent, setNewsContent] = useState<newsContent>(undefined);
   const [curPreviews, setCurPreviews] = useState<curPreviewsList>([]);
   const [voteHistory, setVoteHistory] = useState<'left' | 'right' | 'none' | null>(null);
@@ -42,14 +41,10 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
         curPage.current = -1;
         return;
       }
-
-      if (curPage.current === 0) {
-        setPreviewsDefault(Previews);
-      }
       curPage.current += 1;
       const newPreviews = curPreviews.concat(Previews);
       setCurPreviews(newPreviews);
-      return 0;
+      return;
     } catch (e) {
       console.error(e);
     } finally {
@@ -70,9 +65,9 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
     <Wrapper>
       <SearchWrapper>
         <SearchBox
-          setSubmitWord={setSubmitWord}
           curPage={curPage}
-          setCurPreviewsList={setPreviewsDefault}
+          setSubmitWord={setSubmitWord}
+          setCurPreviews={setCurPreviews}
         />
         <SpeechBubble width={200} height={30} />
       </SearchWrapper>
