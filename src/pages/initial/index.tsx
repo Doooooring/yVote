@@ -8,40 +8,73 @@ export default function Initial() {
   return (
     <Wrapper>
       <IntroductionWrapper>
-        <IntroductionBack>
-          <IntroductTitle>{''}</IntroductTitle>
-          <NewsImageWrapper>
-            <NewsImage src={newsImage} width="400px" />
-          </NewsImageWrapper>
-        </IntroductionBack>
-        <Comp1>
-          <CauseBox cause="covid" />
-        </Comp1>
-        <Comp2>
-          <CauseBox cause="avoid_arguments" />
-        </Comp2>
-        <Comp3>
-          <CauseBox cause="excessive_news" />
-        </Comp3>
-        <Comp4>
-          <CauseBox cause="negative_mood" />
-        </Comp4>
-        <Comp5>
-          <CauseBox cause="unessential" />
-        </Comp5>
-        <Comp6>
-          <CauseBox cause="untrustworthy" />
-        </Comp6>
+        <IntroductTitleWrapper>
+          <IntroductTitle>
+            <Highlight>{'Q. '}</Highlight>
+            {'오늘 '}
+            <Highlight>뉴스 </Highlight> {'보셨나요? '}
+          </IntroductTitle>
+        </IntroductTitleWrapper>
+        <Introduction>
+          <IntroductionBack>
+            <NewsImageWrapper>
+              <NewsImage src={newsImage} width="400px" />
+            </NewsImageWrapper>
+          </IntroductionBack>
+          <Comp1>
+            <CauseBox cause="covid" />
+          </Comp1>
+          <Comp2>
+            <CauseBox cause="avoid_arguments" />
+          </Comp2>
+          <Comp3>
+            <CauseBox cause="excessive_news" />
+          </Comp3>
+          <Comp4>
+            <CauseBox cause="negative_mood" />
+          </Comp4>
+          <Comp5>
+            <CauseBox cause="unessential" />
+          </Comp5>
+          <Comp6>
+            <CauseBox cause="untrustworthy" />
+          </Comp6>
+        </Introduction>
       </IntroductionWrapper>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  padding-top: 150px;
-`;
+const Wrapper = styled.div``;
 
 const IntroductionWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 110px;
+`;
+
+const Highlight = styled.span`
+  color: rgb(61, 152, 247);
+  font-weight: 700;
+`;
+
+const IntroductTitleWrapper = styled.div`
+  display: block;
+  width: 400px;
+  margin-bottom: 30px;
+`;
+
+const IntroductTitle = styled.h2`
+  display: inline-block;
+  color: rgb(85, 86, 86);
+  font-size: 30px;
+  font-weight: 450;
+  border-bottom: 3px solid rgb(61, 152, 247);
+`;
+
+const Introduction = styled.div`
   width: 100%;
   position: relative;
 `;
@@ -51,10 +84,6 @@ const IntroductionBack = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
-`;
-
-const IntroductTitle = styled.h1`
-  display: block;
 `;
 
 const NewsImageWrapper = styled.div`
