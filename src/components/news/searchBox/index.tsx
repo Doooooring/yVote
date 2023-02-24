@@ -9,7 +9,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import IcoSearch from '@assets/img/ico_search.png';
-import { HOST_URL } from '@assets/url';
 import { Keyword } from '@interfaces/keywords';
 import { Preview } from '@interfaces/news';
 import { getConstantVowel } from '@utils/common';

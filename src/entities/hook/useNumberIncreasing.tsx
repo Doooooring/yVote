@@ -8,7 +8,7 @@ export function useNumberIncreasing(num: number): number {
       if (curNum < num) {
         setCurNum(curNum + 1);
       }
-    }, 15);
+    }, 30);
   }, [curNum]);
 
   return curNum;
