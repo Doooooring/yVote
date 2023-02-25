@@ -13,6 +13,85 @@ interface CauseBoxProps {
     | 'untrustworthy';
 }
 
+interface TitleHighlightProps extends CauseBoxProps {
+  title: string;
+  color: string;
+}
+
+function Highlight({ color, str }: { color: string; str: string }) {
+  return (
+    <span
+      style={{
+        color: color,
+      }}
+    >
+      {str}
+    </span>
+  );
+}
+
+function TitleHighlight({ cause, title, color }: TitleHighlightProps) {
+  if (cause === 'covid') {
+    const titleSplited = title.split(/코로나|정치/);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'코로나'} />
+        {titleSplited[1]}
+        <Highlight color={color} str={'정치'} />
+        {titleSplited[2]}
+      </Title>
+    );
+  } else if (cause === 'avoid_arguments') {
+    const titleSplited = title.split(/논쟁/);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'논쟁'} />
+        {titleSplited[1]}
+      </Title>
+    );
+  } else if (cause === 'excessive_news') {
+    const titleSplited = title.split(/너무 많아요../);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'너무 많아요..'} />
+        {titleSplited[1]}
+      </Title>
+    );
+  } else if (cause === 'negative_mood') {
+    const titleSplited = title.split(/부정적 기사/);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'부정적 기사'} />
+        {titleSplited[1]}
+      </Title>
+    );
+  } else if (cause === 'unessential') {
+    const titleSplited = title.split(/알빠노/);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'알빠노'} />
+        {titleSplited[1]}
+      </Title>
+    );
+  } else {
+    const titleSplited = title.split(/가짜뉴스|팩트체크/);
+    return (
+      <Title>
+        {titleSplited[0]}
+        <Highlight color={color} str={'가짜뉴스'} />
+        {titleSplited[1]}
+        <Highlight color={color} str={'팩트체크'} />
+        {titleSplited[2]}
+      </Title>
+    );
+  }
+}
+
 export default function CauseBox({ cause }: CauseBoxProps) {
   const [percent, curImage, curTitle, curColor] = useCause(cause);
   const curPercent = useNumberIncreasing(percent);
@@ -25,7 +104,9 @@ export default function CauseBox({ cause }: CauseBoxProps) {
         <Expanded>
           <Image src={curImage} width="70px" height="70px" />
           <ContentsWrapper>
-            <TitleWrapper>{`${curTitle}`}</TitleWrapper>
+            <TitleWrapper>
+              <TitleHighlight cause={cause} title={curTitle} color={curColor} />
+            </TitleWrapper>
           </ContentsWrapper>
         </Expanded>
       </BodyWrapper>
@@ -112,4 +193,8 @@ const ContentsWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   font-family: var(--font-cafe);
+`;
+
+const Title = styled.p`
+  display: inline;
 `;

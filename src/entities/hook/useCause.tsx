@@ -38,7 +38,7 @@ const titleMap = {
   covid: `"맨날 코로나랑 정치 애기 뿐이라.."`,
   avoid_arguments: `"논쟁에 참여하고 싶지 않습니다"`,
   excessive_news: `"그냥 너무 많아요.. 어디서 부터 읽어야 할지 모르겠어요"`,
-  negative_mood: `"매번 안좋은 얘기 뿐이라 괜히 기분 안좋아"`,
+  negative_mood: `"매번 부정적 기사 뿐이라 괜히 기분 안좋아"`,
   unessential: `"그거 알아서 뭐함. 알빠노?"`,
   untrustworthy: `"가짜뉴스니.. 팩트체크니.. 말도 다 다르고 뭐가 뭔지 모르겠네요."`,
 };

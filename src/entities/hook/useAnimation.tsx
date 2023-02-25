@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useNumberIncreasing(num: number): number {
+export function useAnimation(num: number, duration: number): number {
   const [curNum, setCurNum] = useState<number>(0);
 
   useEffect(() => {
@@ -8,7 +8,7 @@ export function useNumberIncreasing(num: number): number {
       if (curNum < num) {
         setCurNum(curNum + 1);
       }
-    }, 40);
+    }, duration);
   }, [curNum]);
 
   return curNum;
