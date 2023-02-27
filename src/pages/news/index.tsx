@@ -41,7 +41,7 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
         curPage.current = -1;
         return;
       }
-      curPage.current += 1;
+      curPage.current += 10;
       const newPreviews = curPreviews.concat(Previews);
       setCurPreviews(newPreviews);
       return;
@@ -51,6 +51,10 @@ export default function NewsPage({ curClicked, setCurClicked }: NewsProps) {
       setIsRequesting(false);
     }
   }, [curPreviews]);
+
+  useEffect(() => {
+    getNewsContent();
+  }, []);
 
   useEffect(() => {
     //요청 중이라면 보내지 않기

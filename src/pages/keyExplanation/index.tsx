@@ -144,10 +144,11 @@ const KeywordBoxWrapper = styled.div`
 
 const ExplanationWrapper = styled.div`
   width: 480px;
-  height: 180px;
   background-color: white;
   padding-top: 30px;
+  padding-bottom: 30px;
   padding-left: 20px;
+  padding-right: 20px;
   border-radius: 20px;
   box-shadow: 0 0 30px -25px;
 `;

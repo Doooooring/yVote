@@ -115,7 +115,7 @@ export default function CauseBox({ cause }: CauseBoxProps) {
 }
 
 const Wrapper = styled.div`
-  display: inline-block;
+  width: 800px;
   height: 120px;
   display: flex;
   flex-direction: row;

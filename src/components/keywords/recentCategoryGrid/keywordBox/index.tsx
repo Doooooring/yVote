@@ -29,7 +29,7 @@ export default function RecentKeywordBox({ keyword }: RecentKeywordBoxProps) {
       </KeywordWrapper>
       <ImageWrapper>
         <img
-          src={`${HOST_URL}/images/keyword/${keyword}`}
+          src={`${HOST_URL}/images/keyword/${keyword}.png`}
           height="190px"
           width="190px"
           alt="hmm"

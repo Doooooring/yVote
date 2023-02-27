@@ -22,24 +22,28 @@ export default function IntroductionComp() {
             <NewsImage src={newsImage} width="400px" />
           </NewsImageWrapper>
         </IntroductionBack>
-        <Comp1 state={stateArray[5]}>
-          <CauseBox cause="covid" />
-        </Comp1>
-        <Comp2 state={stateArray[0]}>
-          <CauseBox cause="avoid_arguments" />
-        </Comp2>
-        <Comp3 state={stateArray[3]}>
-          <CauseBox cause="excessive_news" />
-        </Comp3>
-        <Comp4 state={stateArray[4]}>
-          <CauseBox cause="negative_mood" />
-        </Comp4>
-        <Comp5 state={stateArray[1]}>
-          <CauseBox cause="unessential" />
-        </Comp5>
-        <Comp6 state={stateArray[2]}>
-          <CauseBox cause="untrustworthy" />
-        </Comp6>
+        <IntroductionFront>
+          <CompWrapper>
+            <Comp1 state={stateArray[5]}>
+              <CauseBox cause="covid" />
+            </Comp1>
+            <Comp2 state={stateArray[0]}>
+              <CauseBox cause="avoid_arguments" />
+            </Comp2>
+            <Comp3 state={stateArray[3]}>
+              <CauseBox cause="excessive_news" />
+            </Comp3>
+            <Comp4 state={stateArray[4]}>
+              <CauseBox cause="negative_mood" />
+            </Comp4>
+            <Comp5 state={stateArray[1]}>
+              <CauseBox cause="unessential" />
+            </Comp5>
+            <Comp6 state={stateArray[2]}>
+              <CauseBox cause="untrustworthy" />
+            </Comp6>
+          </CompWrapper>
+        </IntroductionFront>
       </Introduction>
     </IntroductionWrapper>
   );
@@ -47,6 +51,7 @@ export default function IntroductionComp() {
 
 const IntroductionWrapper = styled.div`
   width: 100%;
+  height: 900px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,6 +89,22 @@ const IntroductionBack = styled.div`
   width: 100%;
 `;
 
+const IntroductionFront = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+`;
+
+const CompWrapper = styled.div`
+  width: 400px;
+  position: relative;
+`;
+
 const NewsImageWrapper = styled.div`
   width: 400px;
   height: 603px;
@@ -109,25 +130,25 @@ const comp = styled.div<CompProps>`
 
 const Comp1 = styled(comp)`
   top: 0;
-  left: 10px;
+  left: -390px;
 `;
 const Comp2 = styled(comp)`
   top: 80px;
-  left: 600px;
+  left: 200px;
 `;
 const Comp3 = styled(comp)`
   top: 160px;
-  left: 50px;
+  left: -350px;
 `;
 const Comp4 = styled(comp)`
   top: 240px;
-  left: 700px;
+  left: 300px;
 `;
 const Comp5 = styled(comp)`
   top: 320px;
-  left: 50px;
+  left: -350px;
 `;
 const Comp6 = styled(comp)`
   top: 430px;
-  left: 500px;
+  left: 100px;
 `;
