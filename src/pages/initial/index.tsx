@@ -14,4 +14,5 @@ export default function Initial() {
 
 const Wrapper = styled.div`
   overflow: scroll;
+  padding-bottom: 100px;
 `;
