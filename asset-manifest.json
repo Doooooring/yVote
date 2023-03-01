@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/yVote/static/css/main.782b9763.css",
+    "main.js": "/yVote/static/js/main.5459e1c4.js",
+    "static/js/787.b48d0cea.chunk.js": "/yVote/static/js/787.b48d0cea.chunk.js",
+    "static/media/news_image.png": "/yVote/static/media/news_image.563f649d0dd04a8bde1a.png",
+    "static/media/yvote.png": "/yVote/static/media/yvote.c72cf43bb8adcc086a9d.png",
+    "static/media/avoid_arguments.png": "/yVote/static/media/avoid_arguments.26ee21ae90acd7bf4118.png",
+    "static/media/negative_mood.png": "/yVote/static/media/negative_mood.7a626d6044b50e7ae55c.png",
+    "static/media/covid.png": "/yVote/static/media/covid.6ad32dc2be8a15795369.png",
+    "static/media/unessential.png": "/yVote/static/media/unessential.7fba3614c6fbc6b579b4.png",
+    "static/media/excessive_news.png": "/yVote/static/media/excessive_news.dc7139b81183c0acee84.png",
+    "static/media/untrustworthy.png": "/yVote/static/media/untrustworthy.4d9b00da2f5d7d5644e6.png",
+    "index.html": "/yVote/index.html",
+    "main.782b9763.css.map": "/yVote/static/css/main.782b9763.css.map",
+    "main.5459e1c4.js.map": "/yVote/static/js/main.5459e1c4.js.map",
+    "787.b48d0cea.chunk.js.map": "/yVote/static/js/787.b48d0cea.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.782b9763.css",
+    "static/js/main.5459e1c4.js"
+  ]
+}
