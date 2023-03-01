@@ -4,28 +4,27 @@ import styled from 'styled-components';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useCause } from '@entities/hook/useCause';
 import { useOnScreen } from '@entities/hook/useOnScreen';
-import { usePopAnimation } from '@entities/hook/usePopAnimation';
 import { useTypeEffect } from '@entities/hook/useTypeEffect';
 
 export default function Intent() {
   const intentViewer = useRef<HTMLDivElement>(null);
-  const popUpArray = usePopAnimation(1, 500);
   const isOnScreen = useOnScreen(intentViewer);
 
-  const popUpEnd = useAnimationEnd(popUpArray[0]);
+  const imagePopUpEnd = useAnimationEnd(isOnScreen);
+  const mainSentencePopUpEnd = useAnimationEnd(imagePopUpEnd);
 
   //type effect
-  const [firstInd, firstComment, firstEnd] = useTypeEffect(
-    '감정에 휘둘리지 않고 차분히 생각하기 위해서는 환경 조성이 중요하다.',
-    50,
-    popUpEnd,
-  );
+  // const [firstInd, firstComment, firstEnd] = useTypeEffect(
+  //   '감정에 휘둘리지 않고 차분히 생각하기 위해서는 환경 조성이 중요하다.',
+  //   30,
+  //   mainSentencePopUpEnd,
+  // );
 
-  const [secondInd, secondComment, secondEnd] = useTypeEffect(
-    '공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.',
-    50,
-    firstEnd,
-  );
+  // const [secondInd, secondComment, secondEnd] = useTypeEffect(
+  //   '공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.',
+  //   30,
+  //   firstEnd,
+  // );
 
   const colorMap = useMemo(() => {
     return {
@@ -86,7 +85,7 @@ export default function Intent() {
       </Row>
       <Viewer ref={intentViewer} />
       <Column>
-        <MainSentenceWrapper>
+        <MainSentenceWrapper state={imagePopUpEnd}>
           <MainSentence>
             <Highlight color={colorMap['avoid_arguments']} str={'미래를 위한 논의'} />
             에
@@ -102,9 +101,15 @@ export default function Intent() {
             서비스가 필요하다!
           </MainSentence>
         </MainSentenceWrapper>
-        <SubSentenceWrapper>
-          <SubSentence>{firstComment}</SubSentence>
-          <SubSentence>{secondComment}</SubSentence>
+        <SubSentenceWrapper state={mainSentencePopUpEnd}>
+          <QuotationUp>{`"`}</QuotationUp>
+          <SubSentence>
+            {'감정에 휘둘리지 않고 차분히 생각하기 위해서는 환경 조성이 중요하다.'}
+          </SubSentence>
+          <SubSentence>
+            {'공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.'}
+          </SubSentence>
+          <QuotationDown>{`"`}</QuotationDown>
         </SubSentenceWrapper>
       </Column>
     </Wrapper>
@@ -152,6 +157,8 @@ function ImageBox({ cause, width, height, state }: ImageBoxProps) {
 }
 
 const Wrapper = styled.div`
+  width: 100%;
+  min-width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -204,8 +211,17 @@ const Column = styled.div`
   align-items: center;
 `;
 
-const MainSentenceWrapper = styled(Column)`
-  margin-bottom: 20px;
+interface MainSentenceWrapper {
+  state: boolean;
+}
+
+const MainSentenceWrapper = styled(Column)<MainSentenceWrapper>`
+  border: 4px dashed rgb(200, 200, 200);
+  border-radius: 30px;
+  padding: 20px;
+  margin-bottom: 50px;
+  opacity: ${({ state }) => (state ? 1 : 0)};
+  transition-duration: 1s;
 `;
 
 const MainSentence = styled.p`
@@ -214,11 +230,31 @@ const MainSentence = styled.p`
   margin-bottom: 5px;
 `;
 
-const SubSentenceWrapper = styled(Column)`
+interface SubSentenceWrapperProps {
+  state: boolean;
+}
+
+const SubSentenceWrapper = styled(Column)<SubSentenceWrapperProps>`
   height: 80px;
+  opacity: ${({ state }) => (state ? 1 : 0)};
+  transition-duration: 1s;
 `;
 
 const SubSentence = styled.p`
   height: 30px;
-  font-size: 20px;
+  font-size: 25px;
+  margin-bottom: 5px;
+  color: rgb(100, 100, 100);
+  font-weight: 600;
+`;
+
+const Quotation = styled.p`
+  font-size: 35px;
+  color: rgb(120, 120, 120);
+`;
+
+const QuotationUp = styled(Quotation)``;
+
+const QuotationDown = styled(Quotation)`
+  margin-top: 10px;
 `;

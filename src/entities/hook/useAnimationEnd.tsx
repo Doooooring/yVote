@@ -7,7 +7,7 @@ export function useAnimationEnd(state: boolean) {
     if (state) {
       setTimeout(() => {
         setIsEnd(true);
-      }, 500);
+      }, 400);
     }
   }, [state]);
 

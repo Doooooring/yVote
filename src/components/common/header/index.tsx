@@ -42,9 +42,9 @@ export default function Header({ setCurClicked }: HeaderProps) {
         <NavigationBox>
           <NavBox link={'/news'} comment="뉴스 모아보기" setCurClicked={setCurClicked} />
           <Blank />
-          <NavBox link={'/keywords'} comment="키워드 검색" setCurClicked={setCurClicked} />
+          <NavBox link={'/keywords'} comment="키워드 모아보기" setCurClicked={setCurClicked} />
           <Blank />
-          <NavBox link={'/analyze'} comment="hmmm..." setCurClicked={setCurClicked} />
+          <NavBox link={'/analyze'} comment="정치 성향 테스트" setCurClicked={setCurClicked} />
           <Blank />
           <NavBox link={'/contact'} comment="CONTACT" setCurClicked={setCurClicked} />
         </NavigationBox>
@@ -58,6 +58,7 @@ const Wrapper = styled.header`
   flex-direction: row;
   align-items: center;
   width: 100%;
+  min-width: 800px;
   height: 80px;
   font-size: 15px;
   text-align: left;

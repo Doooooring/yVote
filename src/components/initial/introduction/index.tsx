@@ -1,12 +1,17 @@
+import { useRef } from 'react';
 import styled from 'styled-components';
 
 import newsImage from '@assets/img/news_image.png';
-import Header from '@components/common/header';
 import CauseBox from '@components/initial/causeBox';
+import { useOnScreen } from '@entities/hook/useOnScreen';
 import { usePopAnimation } from '@entities/hook/usePopAnimation';
 
 export default function IntroductionComp() {
-  const stateArray = usePopAnimation(6, 150);
+  const stateArray = usePopAnimation(7, 150);
+
+  const problemRef = useRef(null);
+  const problemView = useOnScreen(problemRef);
+
   return (
     <IntroductionWrapper>
       <IntroductTitleWrapper>
@@ -24,38 +29,66 @@ export default function IntroductionComp() {
         </IntroductionBack>
         <IntroductionFront>
           <CompWrapper>
-            <Comp1 state={stateArray[5]}>
+            <Comp1 state={stateArray[6]}>
               <CauseBox cause="covid" />
             </Comp1>
-            <Comp2 state={stateArray[0]}>
+            <Comp2 state={stateArray[1]}>
               <CauseBox cause="avoid_arguments" />
             </Comp2>
-            <Comp3 state={stateArray[3]}>
+            <Comp3 state={stateArray[4]}>
               <CauseBox cause="excessive_news" />
             </Comp3>
-            <Comp4 state={stateArray[4]}>
+            <Comp4 state={stateArray[5]}>
               <CauseBox cause="negative_mood" />
             </Comp4>
-            <Comp5 state={stateArray[1]}>
+            <Comp5 state={stateArray[2]}>
               <CauseBox cause="unessential" />
             </Comp5>
-            <Comp6 state={stateArray[2]}>
+            <Comp6 state={stateArray[3]}>
               <CauseBox cause="untrustworthy" />
             </Comp6>
           </CompWrapper>
         </IntroductionFront>
       </Introduction>
+      <ProblemWrapper ref={problemRef} state={problemView}>
+        <ProblemBox>
+          <p>
+            2022년 <ProblemHighlight>한국 언론 신뢰도</ProblemHighlight>
+          </p>
+          <p> 46개국 중 40위</p>
+        </ProblemBox>
+        <LineWrapper width="300px" height="510px" viewBox="300 500">
+          <path
+            strokeDasharray="10"
+            fill="none"
+            stroke="lightgrey"
+            strokeWidth="3"
+            d="M 0 50 H 300"
+          ></path>
+          <path
+            strokeDasharray="10"
+            fill="none"
+            stroke="lightgrey"
+            strokeWidth="3"
+            d="M 150 50 V 520"
+          ></path>
+        </LineWrapper>
+        <ProblemBox>
+          <p>
+            <ProblemHighlight>기성언론</ProblemHighlight>이 주는 피로감
+          </p>
+        </ProblemBox>
+      </ProblemWrapper>
     </IntroductionWrapper>
   );
 }
 
 const IntroductionWrapper = styled.div`
   width: 100%;
-  height: 900px;
+  height: 1100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 110px;
 `;
 
 const Highlight = styled.span`
@@ -80,6 +113,7 @@ const IntroductTitle = styled.h2`
 const Introduction = styled.div`
   width: 100%;
   position: relative;
+  margin-bottom: 100px;
 `;
 
 const IntroductionBack = styled.div`
@@ -151,4 +185,47 @@ const Comp5 = styled(comp)`
 const Comp6 = styled(comp)`
   top: 430px;
   left: 100px;
+`;
+
+interface ProblemWrapperProps {
+  state: boolean;
+}
+
+const ProblemWrapper = styled.div<ProblemWrapperProps>`
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  opacity: ${({ state }) => (state ? 1 : 0)};
+  transition-duration: 1s;
+`;
+
+const ProblemBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 300px;
+  height: 120px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px -15px black;
+  background-color: white;
+  font-size: 20px;
+  font-family: var(--font-cafe);
+  z-index: 5;
+  & > p {
+    color: rgb(80, 80, 80);
+  }
+`;
+
+const ProblemHighlight = styled.span`
+  color: rgb(61, 152, 247);
+  font-weight: 700;
+  transition-duration: 0.5s;
+`;
+
+const LineWrapper = styled.svg`
+  margin-left: 20px;
+  margin-right: 20px;
 `;
