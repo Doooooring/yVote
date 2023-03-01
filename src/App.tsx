@@ -18,7 +18,7 @@ function App() {
   const [curClicked, setCurClicked] = useState<curClicked>(undefined);
   return (
     <Wrapper>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Header setCurClicked={setCurClicked} />
         <Routes>
           <Route
