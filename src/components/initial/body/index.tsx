@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import firstBack from '@assets/img/newsbackground.jpg';
 import Logo from '@assets/img/yvote.png';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useOnScreen } from '@entities/hook/useOnScreen';
