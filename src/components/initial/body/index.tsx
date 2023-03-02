@@ -1,10 +1,19 @@
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Logo from '@assets/img/yvote.png';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useOnScreen } from '@entities/hook/useOnScreen';
+
+function AnswerBox(color: string, title: string) {
+  return (
+    <BoxWrapper color={color}>
+      <BoxHeader color={color}>{title}</BoxHeader>
+      <BoxBody></BoxBody>
+    </BoxWrapper>
+  );
+}
 
 export default function InitialBody() {
   const navigation = useNavigate();
@@ -15,6 +24,25 @@ export default function InitialBody() {
   const firstHeaderEnd = useAnimationEnd(firstCompImgEnd);
   const firstBodyEnd = useAnimationEnd(firstHeaderEnd);
   const firstButtonEnd = useAnimationEnd(firstBodyEnd);
+
+  const colorMap: {
+    [key: string]: string;
+    covid: string;
+    avoid_arguments: string;
+    excessive_news: string;
+    negative_mood: string;
+    unessential: string;
+    untrustworthy: string;
+  } = useMemo(() => {
+    return {
+      covid: 'rgb(102, 166, 174)',
+      avoid_arguments: 'rgb(160, 181, 128)',
+      excessive_news: 'rgb(168, 161, 121)',
+      negative_mood: 'rgb(194, 119, 73)',
+      unessential: 'rgb(151, 69, 53)',
+      untrustworthy: 'rgb(100, 47, 76)',
+    };
+  }, []);
 
   return (
     <Wrapper>
@@ -47,6 +75,10 @@ export default function InitialBody() {
           </ButtonWrapper>
         </FirstBodyWrapper>
       </FirstComp>
+
+      {Object.keys(colorMap).map((key) => {
+        return AnswerBox(colorMap[key], '테스트 문구');
+      })}
     </Wrapper>
   );
 }
@@ -69,7 +101,8 @@ const Column = styled.div`
 
 const Wrapper = styled(Column)`
   align-items: center;
-  height: 600px;
+  height: 12000px;
+  gap: 20px;
 `;
 
 const FirstComp = styled(Row)`
@@ -152,3 +185,33 @@ const NavigationButton = styled.button`
 const NewsButton = styled(NavigationButton)``;
 
 const KeywordButton = styled(NavigationButton)``;
+
+interface BoxWrapper {
+  color: string;
+}
+
+const BoxWrapper = styled.div<BoxWrapper>`
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px -10px black;
+  overflow: hidden;
+`;
+
+interface BoxHeader {
+  color: string;
+}
+
+const BoxHeader = styled(Row)<BoxHeader>`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+  background-color: ${({ color }) => color};
+  padding-left: 20px;
+`;
+
+const BoxBody = styled.div``;
