@@ -11,14 +11,14 @@ export default function InitialBody() {
 
   const firstComp = useRef(null);
   const firstCompOn = useOnScreen(firstComp);
-  const firstCompImgEnd = useAnimationEnd(firstCompOn);
-  const firstHeaderEnd = useAnimationEnd(firstCompImgEnd);
-  const firstBodyEnd = useAnimationEnd(firstHeaderEnd);
+  const firstCompImgEnd = useAnimationEnd(firstCompOn, 200);
+  const firstHeaderEnd = useAnimationEnd(firstCompImgEnd, 200);
+  const firstBodyEnd = useAnimationEnd(firstHeaderEnd, 200);
   const firstButtonEnd = useAnimationEnd(firstBodyEnd);
 
   return (
     <Wrapper>
-      <FirstComp ref={firstComp}>
+      <FirstComp>
         <ImgWrapper>
           <LogoImg src={Logo} alt={'hmm'} width="500px" height="500px" state={firstCompImgEnd} />
         </ImgWrapper>
@@ -41,6 +41,7 @@ export default function InitialBody() {
               onClick={() => {
                 navigation('/keywords');
               }}
+              ref={firstComp}
             >
               키워드 모아보기
             </KeywordButton>
@@ -69,7 +70,7 @@ const Column = styled.div`
 
 const Wrapper = styled(Column)`
   align-items: center;
-  height: 1200px;
+  height: 300px;
   gap: 20px;
 `;
 
@@ -90,7 +91,7 @@ const LogoImg = styled.img<LogoImgProps>`
   width: ${({ width, state }) => (state ? `${width}px` : 0)};
   height: ${({ height, state }) => (state ? `${height}px` : 0)};
   opacity: ${({ state }) => (state ? 1 : 0)};
-  transition-duration: 1s;
+  transition-duration: 2s;
 `;
 
 const FirstBodyWrapper = styled(Column)`

@@ -66,7 +66,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 500px;
+  height: 400px;
   position: relative;
 `;
 
@@ -126,7 +126,6 @@ const SubSentenceWrapper = styled(Column)<SubSentenceWrapperProps>`
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
   padding: 40px;
-  border: 5px dashed rgb(123, 174, 229);
   border-radius: 50px;
 `;
 
