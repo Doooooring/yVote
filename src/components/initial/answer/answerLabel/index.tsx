@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useCauseAnswer } from '@entities/hook/useCauseAnswer';
@@ -26,8 +26,9 @@ export default function AnswerLabel({ cause, left }: AnswerProps) {
       <BodyWrapper>
         <ImgWrapper>
           <Img src={curImage} />
-          <CircleWrapper viewBox="1000 1000">
-            <Circle cx="200" cy="150" r="140" color={curColor} />
+          <CircleWrapper viewBox="1000 1000" left={left}>
+            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
+            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
           </CircleWrapper>
         </ImgWrapper>
         <AnswerBox color={curColor} title={curTitle} body={curAnswer} state={isOn} />
@@ -41,8 +42,9 @@ export default function AnswerLabel({ cause, left }: AnswerProps) {
         <AnswerBox color={curColor} title={curTitle} body={curAnswer} state={isOn} />
         <ImgWrapper>
           <Img src={curImage} />
-          <CircleWrapper viewBox="1000 1000">
-            <Circle cx="200" cy="150" r="140" color={curColor} />
+          <CircleWrapper viewBox="1000 1000" left={left}>
+            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
+            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
           </CircleWrapper>
         </ImgWrapper>
       </BodyWrapper>
@@ -114,7 +116,6 @@ const Back = styled.div<BackProps>`
 
 const BodyWrapper = styled(Row)`
   height: 300px;
-  gap: 50px;
 `;
 
 const ImgWrapper = styled(Row)`
@@ -128,16 +129,23 @@ const ImgWrapper = styled(Row)`
 
 const Img = styled.img``;
 
-const CircleWrapper = styled.svg`
+interface CircleWrapper {
+  left: boolean;
+}
+
+const CircleWrapper = styled.svg<CircleWrapper>`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+  transform: ${({ left }) => (left ? null : 'rotateY(180deg)')};
 `;
 
 interface CircleProps {
   color: string;
+  left: boolean;
+  state: boolean;
 }
 
 const Circle = styled.circle<CircleProps>`
@@ -145,6 +153,13 @@ const Circle = styled.circle<CircleProps>`
   stroke-width: 6;
   fill: transparent;
   stroke-dasharray: 1000;
+  stroke-dashoffset: ${({ state, left }) => (left ? (state ? 0 : 1000) : state ? 0 : 1000)};
+  transition-duration: 2s;
+`;
+
+const Path = styled.path`
+  transition-delay: 1.1s;
+  transition-duration: 1s;
 `;
 
 interface BoxWrapper {
