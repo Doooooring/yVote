@@ -16,37 +16,43 @@ interface AnswerProps {
   left: boolean;
 }
 
+interface CircleCompProps {
+  curColor: string;
+  left: boolean;
+  state: boolean;
+}
+
+function CircleComp({ curColor, left, state }: CircleCompProps) {
+  if (left) {
+    return (
+      <CircleWrapper viewBox="1000 1000" left={left}>
+        <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={state} />
+        <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${state ? 400 : 340}`} />
+      </CircleWrapper>
+    );
+  } else {
+    return (
+      <CircleWrapper viewBox="1000 1000" left={left}>
+        <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={state} />
+        <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${state ? 400 : 340}`} />
+      </CircleWrapper>
+    );
+  }
+}
+
 export default function AnswerLabel({ cause, left }: AnswerProps) {
   const viewerRef = useRef(null);
   const viewOnScreen = useOnScreen(viewerRef);
   const isOn = useAnimationEnd(viewOnScreen, 10);
   const [curImage, curTitle, curColor, curAnswer] = useCauseAnswer(cause);
-  return left ? (
+  return (
     <Wrapper>
       <BodyWrapper>
         <ImgWrapper>
           <Img src={curImage} />
-          <CircleWrapper viewBox="1000 1000" left={left}>
-            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
-            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
-          </CircleWrapper>
+          <CircleComp curColor={curColor} left={left} state={isOn} />
         </ImgWrapper>
         <AnswerBox color={curColor} title={curTitle} body={curAnswer} state={isOn} />
-      </BodyWrapper>
-      <Viewer ref={viewerRef} />
-      <Back color={curColor} state={isOn} />
-    </Wrapper>
-  ) : (
-    <Wrapper>
-      <BodyWrapper>
-        <AnswerBox color={curColor} title={curTitle} body={curAnswer} state={isOn} />
-        <ImgWrapper>
-          <Img src={curImage} />
-          <CircleWrapper viewBox="1000 1000" left={left}>
-            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
-            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
-          </CircleWrapper>
-        </ImgWrapper>
       </BodyWrapper>
       <Viewer ref={viewerRef} />
       <Back color={curColor} state={isOn} />
