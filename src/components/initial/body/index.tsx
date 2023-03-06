@@ -69,7 +69,7 @@ const Column = styled.div`
 
 const Wrapper = styled(Column)`
   align-items: center;
-  height: 12000px;
+  height: 1200px;
   gap: 20px;
 `;
 

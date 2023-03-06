@@ -16,15 +16,6 @@ const imgMap = {
   untrustworthy: untrustworthyImg,
 };
 
-const percentMap = {
-  covid: 43,
-  avoid_arguments: 17,
-  excessive_news: 29,
-  negative_mood: 36,
-  unessential: 16,
-  untrustworthy: 29,
-};
-
 const colorMap = {
   covid: 'rgb(102, 166, 174)',
   avoid_arguments: 'rgb(160, 181, 128)',
@@ -35,12 +26,12 @@ const colorMap = {
 };
 
 const titleMap = {
-  covid: `1. 정치 뉴스 싫어요, 어려워요`,
-  avoid_arguments: `"2. "`,
-  excessive_news: `"3. "`,
-  negative_mood: `"4. "`,
-  unessential: `"5. "`,
-  untrustworthy: `"6. "`,
+  covid: `"정치 뉴스 싫어요, 어려워요"`,
+  avoid_arguments: `""`,
+  excessive_news: `""`,
+  negative_mood: `""`,
+  unessential: `""`,
+  untrustworthy: `""`,
 };
 
 const answerMap = {
@@ -49,7 +40,7 @@ const answerMap = {
   excessive_news: `정치 뉴스는 한번 읽기 시작하면 끝이 없기도 합니다. 각종 의혹, 수사, 재판의 진행상황 그리고 심지어는 정치인의 발언 하나하나까지 개별적인 기사로 나오기도 합니다. 이는 과거와 달리 무제한으로, 실시간으로 뉴스를 업로드할 수 있는 온라인 매체의 발전과 함께 심화된 문제입니다. 이렇게 끊임 없이 쏟아지는 정치 뉴스를 우리느 (어떤 기준으로) 어디까지 읽고 끊어야하나 고민이 될 수 밖에 없습니다.`,
   negative_mood: `얼굴 붉히는 일이 없는 환경의 뉴스 서비스 부재`,
   unessential: `차분하게 내 생각을 정리할 수 있는 환경의 뉴스 서비스 부재`,
-  untrustworthy: `" "`,
+  untrustworthy: ``,
 };
 
 export function useCauseAnswer(
@@ -60,11 +51,11 @@ export function useCauseAnswer(
     | 'negative_mood'
     | 'unessential'
     | 'untrustworthy',
-): [number, string, string, string] {
-  const percent = useMemo(() => percentMap[cause], []);
+): [string, string, string, string] {
   const curImage = useMemo(() => imgMap[cause], []);
   const curTitle = useMemo(() => titleMap[cause], []);
   const curColor = useMemo(() => colorMap[cause], []);
+  const curAnswer = useMemo(() => answerMap[cause], []);
 
-  return [percent, curImage, curTitle, curColor];
+  return [curImage, curTitle, curColor, curAnswer];
 }

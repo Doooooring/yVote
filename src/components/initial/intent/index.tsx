@@ -81,7 +81,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 500px;
   position: relative;
-  background-color: rgba(100, 100, 100, 0.1);
+  background-color: rgb(61, 152, 247, 0.3); ;
 `;
 
 const ImageWrapper = styled.div`

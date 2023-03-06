@@ -50,42 +50,13 @@ export default function IntroductionComp() {
           </CompWrapper>
         </IntroductionFront>
       </Introduction>
-      <ProblemWrapper ref={problemRef} state={problemView}>
-        <ProblemBox>
-          <p>
-            2022년 <ProblemHighlight>한국 언론 신뢰도</ProblemHighlight>
-          </p>
-          <p> 46개국 중 40위</p>
-        </ProblemBox>
-        <LineWrapper width="300px" height="510px" viewBox="300 500">
-          <path
-            strokeDasharray="10"
-            fill="none"
-            stroke="lightgrey"
-            strokeWidth="3"
-            d="M 0 50 H 300"
-          ></path>
-          <path
-            strokeDasharray="10"
-            fill="none"
-            stroke="lightgrey"
-            strokeWidth="3"
-            d="M 150 50 V 520"
-          ></path>
-        </LineWrapper>
-        <ProblemBox>
-          <p>
-            <ProblemHighlight>기성언론</ProblemHighlight>이 주는 피로감
-          </p>
-        </ProblemBox>
-      </ProblemWrapper>
     </IntroductionWrapper>
   );
 }
 
 const IntroductionWrapper = styled.div`
   width: 100%;
-  height: 1100px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -229,3 +200,35 @@ const LineWrapper = styled.svg`
   margin-left: 20px;
   margin-right: 20px;
 `;
+
+{
+  /* <ProblemWrapper ref={problemRef} state={problemView}>
+        <ProblemBox>
+          <p>
+            2022년 <ProblemHighlight>한국 언론 신뢰도</ProblemHighlight>
+          </p>
+          <p> 46개국 중 40위</p>
+        </ProblemBox>
+        <LineWrapper width="300px" height="510px" viewBox="300 500">
+          <path
+            strokeDasharray="10"
+            fill="none"
+            stroke="lightgrey"
+            strokeWidth="3"
+            d="M 0 50 H 300"
+          ></path>
+          <path
+            strokeDasharray="10"
+            fill="none"
+            stroke="lightgrey"
+            strokeWidth="3"
+            d="M 150 50 V 520"
+          ></path>
+        </LineWrapper>
+        <ProblemBox>
+          <p>
+            <ProblemHighlight>기성언론</ProblemHighlight>이 주는 피로감
+          </p>
+        </ProblemBox>
+      </ProblemWrapper> */
+}
