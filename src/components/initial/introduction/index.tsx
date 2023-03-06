@@ -50,6 +50,7 @@ export default function IntroductionComp() {
           </CompWrapper>
         </IntroductionFront>
       </Introduction>
+      <SourceWrapper>출처 : 로이터 디지털 뉴스 리포트 2022</SourceWrapper>
     </IntroductionWrapper>
   );
 }
@@ -92,6 +93,13 @@ const IntroductionBack = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
+`;
+
+const SourceWrapper = styled.p`
+  display: inline-block;
+  width: 800px;
+  color: grey;
+  text-align: right;
 `;
 
 const IntroductionFront = styled.div`
