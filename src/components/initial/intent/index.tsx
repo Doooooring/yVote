@@ -4,14 +4,11 @@ import styled from 'styled-components';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useCause } from '@entities/hook/useCause';
 import { useOnScreen } from '@entities/hook/useOnScreen';
-import { useTypeEffect } from '@entities/hook/useTypeEffect';
 
 export default function Intent() {
   const intentViewer = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(intentViewer);
-
-  const imagePopUpEnd = useAnimationEnd(isOnScreen);
-  const mainSentencePopUpEnd = useAnimationEnd(imagePopUpEnd);
+  const mainSentencePopUpEnd = useAnimationEnd(isOnScreen);
 
   //type effect
   // const [firstInd, firstComment, firstEnd] = useTypeEffect(
@@ -26,81 +23,9 @@ export default function Intent() {
   //   firstEnd,
   // );
 
-  const colorMap = useMemo(() => {
-    return {
-      covid: 'rgb(102, 166, 174)',
-      avoid_arguments: 'rgb(160, 181, 128)',
-      excessive_news: 'rgb(168, 161, 121)',
-      negative_mood: 'rgb(194, 119, 73)',
-      unessential: 'rgb(151, 69, 53)',
-      untrustworthy: 'rgb(100, 47, 76)',
-    };
-  }, []);
-
-  const ImageSize = useMemo(() => {
-    return 90;
-  }, []);
-
   return (
     <Wrapper>
-      <Row>
-        <Comp>
-          <ImageBox
-            cause={'avoid_arguments'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox cause={'unessential'} width={ImageSize} height={ImageSize} state={isOnScreen} />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'excessive_news'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox cause={'covid'} width={ImageSize} height={ImageSize} state={isOnScreen} />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'negative_mood'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'untrustworthy'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-      </Row>
-      <Viewer ref={intentViewer} />
       <Column>
-        <MainSentenceWrapper state={imagePopUpEnd}>
-          <MainSentence>
-            <Highlight color={colorMap['avoid_arguments']} str={'미래를 위한 논의'} />
-            에
-            <Highlight color={colorMap['unessential']} str={' 도움이 되는 '} />
-            <Highlight color={colorMap['excessive_news']} str={'최소한의 '} />
-            <Highlight color={colorMap['covid']} str={'정치 뉴스'} />
-            만을
-          </MainSentence>
-          <MainSentence>
-            <Highlight color={colorMap['negative_mood']} str={'보기 좋게 '} />
-            제공하는
-            <Highlight color={colorMap['untrustworthy']} str={' 이성적인 '} />
-            서비스가 필요하다!
-          </MainSentence>
-        </MainSentenceWrapper>
         <SubSentenceWrapper state={mainSentencePopUpEnd}>
           <QuotationUp>{`"`}</QuotationUp>
           <SubSentence>
@@ -112,6 +37,7 @@ export default function Intent() {
           <QuotationDown>{`"`}</QuotationDown>
         </SubSentenceWrapper>
       </Column>
+      <Viewer ref={intentViewer} />
     </Wrapper>
   );
 }
@@ -144,16 +70,6 @@ interface ImageBoxProps {
   width: number;
   height: number;
   state: boolean;
-}
-
-function ImageBox({ cause, width, height, state }: ImageBoxProps) {
-  const [percent, curImage, curTitle, curColor] = useCause(cause);
-
-  return (
-    <ImageWrapper>
-      <CauseImage src={curImage} width={width} height={height} state={state} />
-    </ImageWrapper>
-  );
 }
 
 const Wrapper = styled.div`

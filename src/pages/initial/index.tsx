@@ -8,7 +8,6 @@ import IntroductionComp from '@components/initial/introduction';
 export default function Initial() {
   return (
     <Wrapper>
-      <InitialHeader />
       <IntroductionComp />
       <Intent />
       <InitialBody />
