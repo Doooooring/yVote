@@ -10,6 +10,7 @@ export default function Initial() {
   return (
     <Wrapper>
       <IntroductionComp />
+      <InitialHeader />
       <Answer />
       <Intent />
       <InitialBody />

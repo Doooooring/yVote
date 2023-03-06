@@ -176,7 +176,7 @@ interface BoxWrapper {
 
 const BoxWrapper = styled.div<BoxWrapper>`
   width: ${({ state }) => (state ? `700px` : 0)};
-  height: ${({ state }) => (state ? `auto` : 0)};
+  height: ${({ state }) => (state ? `350px` : 0)};
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
   border-radius: 15px;
