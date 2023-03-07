@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useCauseAnswer } from '@entities/hook/useCauseAnswer';
@@ -16,12 +16,6 @@ interface AnswerProps {
   left: boolean;
 }
 
-interface CircleCompProps {
-  curColor: string;
-  left: boolean;
-  state: boolean;
-}
-
 export default function AnswerLabel({ cause, left }: AnswerProps) {
   const viewerRef = useRef(null);
   const viewOnScreen = useOnScreen(viewerRef);
@@ -34,8 +28,8 @@ export default function AnswerLabel({ cause, left }: AnswerProps) {
         <ImgWrapper>
           <Img src={curImage} />
           <CircleWrapper viewBox="1000 1000" left={left}>
-            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
-            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
+            <Circle cx="250" cy="150" r="140" color={curColor} left={left} state={isOn} />
+            <Path stroke={curColor} strokeWidth="6" d={`M 390 150 H ${isOn ? 500 : 390}`} />
           </CircleWrapper>
         </ImgWrapper>
         <AnswerBox color={curColor} title={curTitle} body={curAnswer} state={isOn} />
@@ -50,8 +44,8 @@ export default function AnswerLabel({ cause, left }: AnswerProps) {
         <ImgWrapper>
           <Img src={curImage} />
           <CircleWrapper viewBox="1000 1000" left={left}>
-            <Circle cx="200" cy="150" r="140" color={curColor} left={left} state={isOn} />
-            <Path stroke={curColor} strokeWidth="6" d={`M 340 150 H ${isOn ? 400 : 340}`} />
+            <Circle cx="250" cy="150" r="140" color={curColor} left={left} state={isOn} />
+            <Path stroke={curColor} strokeWidth="6" d={`M 390 150 H ${isOn ? 500 : 390}`} />
           </CircleWrapper>
         </ImgWrapper>
       </BodyWrapper>
@@ -103,6 +97,7 @@ const Wrapper = styled(Column)`
   justify-content: center;
   align-items: center;
   position: relative;
+  padding-bottom: 50px;
 `;
 
 interface BackProps {
@@ -126,7 +121,7 @@ const BodyWrapper = styled(Row)`
 `;
 
 const ImgWrapper = styled(Row)`
-  width: 400px;
+  width: 500px;
   height: 100%;
   justify-content: center;
   align-items: center;
@@ -175,8 +170,8 @@ interface BoxWrapper {
 }
 
 const BoxWrapper = styled.div<BoxWrapper>`
-  width: ${({ state }) => (state ? `700px` : 0)};
-  height: ${({ state }) => (state ? `350px` : 0)};
+  width: ${({ state }) => (state ? `780px` : 0)};
+  height: ${({ state }) => (state ? `370px` : 0)};
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
   border-radius: 15px;
@@ -193,14 +188,15 @@ const BoxHeader = styled(Row)<BoxHeader>`
   display: flex;
   align-items: center;
   width: ${({ state }) => (state ? `auto` : 0)};
-  height: ${({ state }) => (state ? `60px` : 0)};
+  height: ${({ state }) => (state ? `70px` : 0)};
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
   color: white;
+  font-family: var(--font-cafe);
   font-size: 30px;
-  font-weight: 600;
+  font-weight: 100;
   background-color: ${({ color }) => color};
-  padding-left: 20px;
+  padding-left: 35px;
 `;
 
 interface BoxBody {
@@ -212,11 +208,14 @@ const BoxBody = styled(Column)<BoxBody>`
   height: ${({ state }) => (state ? `auto` : 0)};
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 0.5s;
-  padding: 20px;
-  color: rgb(100, 100, 100);
-  font-size: 20px;
+  padding: 25px;
+  padding-left: 35px;
+  padding-right: 30px;
+  color: rgb(80, 80, 80);
+  font-size: 22px;
   font-weight: 600;
-  gap: 15px;
+  line-height: 31px;
+  gap: 10px;
 `;
 
 const Viewer = styled.div`

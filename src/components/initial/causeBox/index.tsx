@@ -185,6 +185,7 @@ const ContentsWrapper = styled.div`
   padding-left: 40px;
   padding-right: 20px;
   border-radius: 0 20px 20px 0;
+  font-size: 18px;
 `;
 
 const TitleWrapper = styled.div`
