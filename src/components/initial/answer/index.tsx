@@ -15,11 +15,11 @@ export default function Answer() {
   const causes: cause[] = useMemo(() => {
     return [
       'covid',
-      'avoid_arguments',
-      'excessive_news',
       'negative_mood',
-      'unessential',
+      'excessive_news',
+      'avoid_arguments',
       'untrustworthy',
+      'unessential',
     ];
   }, []);
   return (
