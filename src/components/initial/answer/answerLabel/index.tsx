@@ -72,7 +72,7 @@ function AnswerBox({
       <BoxHeader color={color} state={isOn}>
         {title}
       </BoxHeader>
-      <BoxBody state={isOn}>
+      <BoxBody state={isOn} color={color}>
         {body.split('.').map((sentence, idx) => {
           return <p key={idx}>{sentence}</p>;
         })}
@@ -201,6 +201,7 @@ const BoxHeader = styled(Row)<BoxHeader>`
 
 interface BoxBody {
   state: boolean;
+  color: string;
 }
 
 const BoxBody = styled(Column)<BoxBody>`
@@ -211,9 +212,9 @@ const BoxBody = styled(Column)<BoxBody>`
   padding: 25px;
   padding-left: 35px;
   padding-right: 30px;
-  color: rgb(80, 80, 80);
-  font-size: 22px;
-  font-weight: 600;
+  color: ${({ color }) => color};
+  font-size: 23px;
+  font-weight: 700;
   line-height: 31px;
   gap: 10px;
 `;
