@@ -11,7 +11,7 @@ export default function InitialBody() {
 
   const firstComp = useRef(null);
   const firstCompOn = useOnScreen(firstComp);
-  const firstCompImgEnd = useAnimationEnd(firstCompOn, 100);
+  const firstCompImgEnd = useAnimationEnd(firstCompOn, 0);
   const firstHeaderEnd = useAnimationEnd(firstCompImgEnd, 100);
   const firstBodyEnd = useAnimationEnd(firstHeaderEnd, 100);
   const firstButtonEnd = useAnimationEnd(firstBodyEnd);
@@ -29,7 +29,7 @@ export default function InitialBody() {
               뉴스 큐레이팅 서비스 <Highlight>Y보트</Highlight>는
             </p>
             <p>
-              <Highlight>나</Highlight>의 생각이 다듬어지는 경험을 제공합니다
+              <Highlight ref={firstComp}>나</Highlight>의 생각이 다듬어지는 경험을 제공합니다
             </p>
           </FirstBody>
           <ButtonWrapper state={firstButtonEnd}>
@@ -44,7 +44,6 @@ export default function InitialBody() {
               onClick={() => {
                 navigation('/keywords');
               }}
-              ref={firstComp}
             >
               키워드 모아보기
             </KeywordButton>
@@ -143,8 +142,8 @@ const ButtonWrapper = styled(Row)<ButtonWrapperProps>`
 `;
 
 const NavigationButton = styled.button`
-  width: 160px;
-  height: 75px;
+  width: 150px;
+  height: 55px;
   border: 0;
   border-radius: 20px;
   box-shadow: 0 0 20px -10px black;
