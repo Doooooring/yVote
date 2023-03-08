@@ -2,7 +2,9 @@ import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
 import quoteDown from '@assets/img/quoteDown.png';
+import quoteDownWhite from '@assets/img/quoteDownWhite.png';
 import quoteUpper from '@assets/img/quoteUp.png';
+import quoteUpWhite from '@assets/img/quoteUpWhite.png';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useOnScreen } from '@entities/hook/useOnScreen';
 import { useTypeEffect } from '@entities/hook/useTypeEffect';
@@ -72,8 +74,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   position: relative;
+  background-color: white;
 `;
 
 const Viewer = styled.div`
@@ -107,7 +109,7 @@ const SubSentence = styled.p`
   transition-duration: 1s;
   height: 30px;
   font-size: 23px;
-  color: rgb(83, 84, 85);
+  color: rgb(60, 60, 60);
   font-weight: 700;
 `;
 
@@ -116,7 +118,7 @@ interface Border {
 }
 
 const Border = styled.span<Border>`
-  background-color: rgb(125, 127, 130);
+  background-color: rgb(60, 60, 60);
   position: absolute;
 `;
 
@@ -161,7 +163,7 @@ const Quote = styled.div<Quote>`
   text-align: center;
   width: 90px;
   height: 90px;
-  background-color: rgb(245, 245, 245);
+  background-color: white;
   opacity: ${({ state }) => (state ? 1 : 0)};
 `;
 
