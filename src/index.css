@@ -6,8 +6,42 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'MICEGothic 400';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+    format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MICEGothic 700';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'KimjungchulMyungjo-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MICEGothic Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --font-cafe: 'Cafe24Ssurround';
+  --font-ibm: 'MICEGothic 400';
+  --font-ibm-bold: 'MICEGothic 700';
+  --font-gangwon: 'MICEGothic Bold';
 }
 
 body {

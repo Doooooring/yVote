@@ -11,24 +11,27 @@ export default function InitialBody() {
 
   const firstComp = useRef(null);
   const firstCompOn = useOnScreen(firstComp);
-  const firstCompImgEnd = useAnimationEnd(firstCompOn, 200);
-  const firstHeaderEnd = useAnimationEnd(firstCompImgEnd, 200);
-  const firstBodyEnd = useAnimationEnd(firstHeaderEnd, 200);
+  const firstCompImgEnd = useAnimationEnd(firstCompOn, 100);
+  const firstHeaderEnd = useAnimationEnd(firstCompImgEnd, 100);
+  const firstBodyEnd = useAnimationEnd(firstHeaderEnd, 100);
   const firstButtonEnd = useAnimationEnd(firstBodyEnd);
 
   return (
     <Wrapper>
       <FirstComp>
         <ImgWrapper>
-          <LogoImg src={Logo} alt={'hmm'} width="500px" height="500px" state={firstCompImgEnd} />
+          <LogoImg src={Logo} alt={'hmm'} width="450px" height="450px" state={firstCompImgEnd} />
         </ImgWrapper>
         <FirstBodyWrapper>
-          <FirstHeader state={firstHeaderEnd}>
-            <Highlight>와이보트</Highlight>는 어떤 서비스 인가요?
-          </FirstHeader>
-          <FirstBody
-            state={firstBodyEnd}
-          >{`와이보트는 기성언론의 한계점을 극복하기 위해 시작한 뉴스 큐레이션 서비스입니다. 한계점은 뭐고(자극적 트래픽 유도 ${'->'} 정치적 무관심), 그것을 해결하기 위해 객관적인 기준으로 뉴스 필터링하고 가공하여 접근성을 높인다`}</FirstBody>
+          <FirstBody state={firstBodyEnd}>
+            {' '}
+            <p>
+              뉴스 큐레이팅 서비스 <Highlight>Y보트</Highlight>는
+            </p>
+            <p>
+              <Highlight>나</Highlight>의 생각이 다듬어지는 경험을 제공합니다
+            </p>
+          </FirstBody>
           <ButtonWrapper state={firstButtonEnd}>
             <NewsButton
               onClick={() => {
@@ -53,9 +56,10 @@ export default function InitialBody() {
 }
 
 const Highlight = styled.span`
+  font-size: 26px;
   color: rgb(61, 152, 247);
-  font-weight: 700;
   transition-duration: 0.5s;
+  font-family: var(--font-ibm-bold);
 `;
 
 const Row = styled.div`
@@ -70,12 +74,14 @@ const Column = styled.div`
 
 const Wrapper = styled(Column)`
   align-items: center;
-  height: 250px;
+  justify-content: center;
+  height: 550px;
   gap: 20px;
 `;
 
 const FirstComp = styled(Row)`
   background: transparent;
+  align-items: center;
 `;
 
 const ImgWrapper = styled(Column)`
@@ -95,7 +101,7 @@ const LogoImg = styled.img<LogoImgProps>`
 `;
 
 const FirstBodyWrapper = styled(Column)`
-  height: 500px;
+  height: 300px;
   width: 500px;
   padding-top: 100px;
 `;
@@ -117,9 +123,11 @@ interface FirstBody {
 }
 
 const FirstBody = styled.div<FirstBody>`
-  font-size: 20px;
-  padding-top: 20px;
+  font-family: var(--font-ibm);
+  font-size: 25px;
+  line-height: 35px;
   margin-bottom: 40px;
+  color: rgb(109, 154, 196);
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
 `;
@@ -135,13 +143,13 @@ const ButtonWrapper = styled(Row)<ButtonWrapperProps>`
 `;
 
 const NavigationButton = styled.button`
-  width: 130px;
-  height: 55px;
+  width: 160px;
+  height: 75px;
   border: 0;
   border-radius: 20px;
   box-shadow: 0 0 20px -10px black;
   color: white;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   background-color: rgba(61, 152, 247);
   opacity: 0.5;

@@ -5,6 +5,7 @@ import quoteDown from '@assets/img/quoteDown.png';
 import quoteUpper from '@assets/img/quoteUp.png';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
 import { useOnScreen } from '@entities/hook/useOnScreen';
+import { useTypeEffect } from '@entities/hook/useTypeEffect';
 
 export default function Intent() {
   const intentViewer = useRef<HTMLDivElement>(null);
@@ -16,8 +17,16 @@ export default function Intent() {
   const bottomLineEnd = useAnimationEnd(rightLineEnd, 300);
   const quoteUnderEnd = useAnimationEnd(bottomLineEnd, 40);
   const leftLineEnd = useAnimationEnd(bottomLineEnd, 300);
-  const sentenceUpEnd = useAnimationEnd(leftLineEnd);
-  const sentenceDownEnd = useAnimationEnd(sentenceUpEnd);
+  const [upInd, sentenceUp, sentenceUpEnd] = useTypeEffect(
+    '뉴스를 읽으며 차분히 생각하기 위해서는 환경 조성이 중요하다.',
+    35,
+    leftLineEnd,
+  );
+  const [downInd, sentenceDown, sentenceDownEnd] = useTypeEffect(
+    '공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.',
+    35,
+    sentenceUpEnd,
+  );
 
   //type effect
   // const [firstInd, firstComment, firstEnd] = useTypeEffect(
@@ -36,21 +45,17 @@ export default function Intent() {
     <Wrapper>
       <Column>
         <SubSentenceWrapper state={mainSentencePopUpEnd}>
-          <SubSentence state={sentenceUpEnd}>
-            {'감정에 휘둘리지 않고 차분히 생각하기 위해서는 환경 조성이 중요하다'}
-          </SubSentence>
-          <SubSentence state={sentenceDownEnd}>
-            {'공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다'}
-          </SubSentence>
+          <SubSentence>{sentenceUp}</SubSentence>
+          <SubSentence>{sentenceDown}</SubSentence>
           <Top state={topLineEnd}></Top>
           <Right state={rightLineEnd}></Right>
           <Bottom state={bottomLineEnd}></Bottom>
           <Left state={leftLineEnd}></Left>
           <QuoteUpper state={quoteUpperEnd}>
-            <img src={quoteUpper} width="80px" height="80px" />
+            <img src={quoteUpper} width="50px" height="50px" />
           </QuoteUpper>
           <QuoteUnder state={quoteUnderEnd}>
-            <img src={quoteDown} width="80px" height="80px" />
+            <img src={quoteDown} width="50px" height="50px" />
           </QuoteUnder>
         </SubSentenceWrapper>
       </Column>
@@ -82,26 +87,13 @@ const Column = styled.div`
   align-items: center;
 `;
 
-interface MainSentenceWrapper {
-  state: boolean;
-}
-
-const MainSentenceWrapper = styled(Column)<MainSentenceWrapper>`
-  border: 4px dashed rgb(200, 200, 200);
-  border-radius: 30px;
-  padding: 20px;
-  margin-bottom: 0px;
-  opacity: ${({ state }) => (state ? 1 : 0)};
-  transition-duration: 1s;
-`;
-
 interface SubSentenceWrapperProps {
   state: boolean;
 }
 
 const SubSentenceWrapper = styled(Column)<SubSentenceWrapperProps>`
-  width: 1200px;
-  height: 300px;
+  width: 900px;
+  height: 200px;
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
   padding: 40px;
@@ -110,17 +102,12 @@ const SubSentenceWrapper = styled(Column)<SubSentenceWrapperProps>`
   position: relative;
 `;
 
-interface SubSentenceProps {
-  state: boolean;
-}
-
-const SubSentence = styled.p<SubSentenceProps>`
-  opacity: ${({ state }) => (state ? 1 : 0)};
-  transform: ${({ state }) => (state ? `translateY(0)` : `translateY(30px)`)};
+const SubSentence = styled.p`
+  font-family: var(--font-gangwon);
   transition-duration: 1s;
   height: 30px;
-  font-size: 35px;
-  color: rgb(123, 174, 229);
+  font-size: 23px;
+  color: rgb(83, 84, 85);
   font-weight: 700;
 `;
 
@@ -129,18 +116,18 @@ interface Border {
 }
 
 const Border = styled.span<Border>`
-  background-color: rgb(123, 174, 229);
+  background-color: rgb(125, 127, 130);
   position: absolute;
 `;
 
 const Horizontal = styled(Border)`
-  height: 5px;
-  width: ${({ state }) => (state ? '1200px' : '0px')};
+  height: 3px;
+  width: ${({ state }) => (state ? '860px' : '0px')};
   transition-duration: 0.4s;
 `;
 const Vertical = styled(Border)`
-  width: 5px;
-  height: ${({ state }) => (state ? '300px' : '0px')};
+  width: 3px;
+  height: ${({ state }) => (state ? '160px' : '0px')};
   transition-duration: 0.4s;
 `;
 
@@ -149,7 +136,7 @@ const Top = styled(Horizontal)`
   left: 0;
 `;
 const Right = styled(Vertical)`
-  top: 0;
+  top: 40px;
   right: 0;
 `;
 const Bottom = styled(Horizontal)`
@@ -157,7 +144,7 @@ const Bottom = styled(Horizontal)`
   right: 0;
 `;
 const Left = styled(Vertical)`
-  bottom: 0;
+  bottom: 40px;
   left: 0;
 `;
 
@@ -166,6 +153,10 @@ interface Quote {
 }
 
 const Quote = styled.div<Quote>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   text-align: center;
   width: 90px;
@@ -175,11 +166,11 @@ const Quote = styled.div<Quote>`
 `;
 
 const QuoteUpper = styled(Quote)`
-  top: -40px;
+  top: -55px;
   left: 50px;
 `;
 
 const QuoteUnder = styled(Quote)`
-  bottom: -40px;
+  bottom: -45px;
   right: 50px;
 `;
