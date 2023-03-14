@@ -168,21 +168,21 @@ interface CircleProps {
   state: boolean;
 }
 
-const Circle = styled.circle<CircleProps>`
-  stroke: ${({ color }) => color};
-  stroke-width: 6;
-  fill: transparent;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: ${({ state, left }) => (left ? (state ? 0 : 1000) : state ? 0 : 1000)};
-  transition-duration: 2s;
-  opacity: 0.5;
-`;
+// const Circle = styled.circle<CircleProps>`
+//   stroke: ${({ color }) => color};
+//   stroke-width: 6;
+//   fill: transparent;
+//   stroke-dasharray: 1000;
+//   stroke-dashoffset: ${({ state, left }) => (left ? (state ? 0 : 1000) : state ? 0 : 1000)};
+//   transition-duration: 2s;
+//   opacity: 0.5;
+// `;
 
-const Path = styled.path`
-  transition-delay: 1.1s;
-  transition-duration: 1s;
-  opacity: 0.5;
-`;
+// const Path = styled.path`
+//   transition-delay: 1.1s;
+//   transition-duration: 1s;
+//   opacity: 0.5;
+// `;
 
 interface BoxWrapper {
   color: string;
