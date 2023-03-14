@@ -73,10 +73,12 @@ const KeywordWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 99;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const KeywordTitle = styled.p`
-  font-size: 18px;
-  font-weight: 600;
+  color: rgb(220, 220, 220);
+  font-size: 32px;
+  font-weight: 700;
+  padding-bottom: 1px;
 `;

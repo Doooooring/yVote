@@ -17,6 +17,19 @@ type newsContent = undefined | News;
 type curClicked = undefined | News['order'];
 type AnswerState = 'left' | 'right' | 'none' | null;
 
+function ExplanationComp({ explain }: { explain: string | undefined }) {
+  if (explain === undefined) {
+    return <div></div>;
+  }
+  return (
+    <ExplanationWrapper>
+      {explain.split('$').map((s, idx) => {
+        return <Explanation key={idx}>{s}</Explanation>;
+      })}
+    </ExplanationWrapper>
+  );
+}
+
 export default function KeyExplanation() {
   const [curClicked, setCurClicked] = useState<curClicked>(undefined);
   const [curKeyword, setCurKeyword] = useState<KeywordOnDetail>();
@@ -60,9 +73,7 @@ export default function KeyExplanation() {
             <KeywordBoxWrapper>
               <KeywordBox keyword={keyName} tail={true} />
             </KeywordBoxWrapper>
-            <ExplanationWrapper>
-              <Explanation>{curKeyword.explain}</Explanation>
-            </ExplanationWrapper>
+            <ExplanationComp explain={curKeyword.explain} />
           </KeywordWrapper>
           <NewsListWrapper>
             <NewsHeaderWrapper>
@@ -112,7 +123,7 @@ const SearchWrapper = styled.div`
   height: 50px;
   background-color: white;
   border-radius: 10px;
-  box-shadow: 0 0 30px -25px;
+  box-shadow: 0 0 30px -20px;
   margin-bottom: 60px;
 `;
 
@@ -143,6 +154,9 @@ const KeywordBoxWrapper = styled.div`
 `;
 
 const ExplanationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 480px;
   background-color: white;
   padding-top: 30px;
@@ -154,7 +168,12 @@ const ExplanationWrapper = styled.div`
 `;
 
 const Explanation = styled.p`
+  font-family: var(--font-pretendard);
+  font-size: 18px;
+  color: rgb(90, 90, 90);
+  line-height: 1.5;
   text-align: left;
+  text-indent: 1em;
 `;
 
 const NewsListWrapper = styled.div``;

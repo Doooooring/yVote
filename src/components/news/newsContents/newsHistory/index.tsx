@@ -15,6 +15,7 @@ export default function NewsHistory({ news }: NewsHistoryProps) {
       <HistoryExplanation>
         <HistoryDate>
           {news.map((comp) => {
+            console.log(comp);
             const dateToList = comp.date.split('.');
             const year = dateToList[0];
             const month = dateToList[1];

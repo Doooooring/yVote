@@ -33,10 +33,13 @@ export default function KeywordBox({ keyword, tail }: KeywordBoxProps) {
           <CloseImg
             src={`${HOST_URL}/images/keyword/${keyword}.png`}
             alt="hmm"
-            width="95px"
-            height="95px"
+            width="85px"
+            height="85px"
             onError={(e) => {
               onErrorImg(e);
+            }}
+            style={{
+              borderRadius: '5px',
             }}
             state={tail}
           />
@@ -84,7 +87,14 @@ const Wrapper = styled.div<WrapperProps>`
   overflow: hidden; ;
 `;
 
-const ImageWrapper = styled.div``;
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  padding-left: 5px;
+`;
 
 const KeywordWrapper = styled.div`
   display: flex;
@@ -95,9 +105,9 @@ const KeywordWrapper = styled.div`
 `;
 
 const KeywordTitle = styled.p`
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
-  color: black;
+  color: rgb(50, 50, 50);
 `;
 
 interface KeywordBoxTailProps {

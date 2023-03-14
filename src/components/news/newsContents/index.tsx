@@ -110,6 +110,7 @@ const ContentBody = styled.div`
 const Summary = styled.div`
   display: inline-block;
   font-size: 17px;
+  line-height: 1.5;
   color: rgb(130, 130, 130);
   font-weight: 450;
   margin-bottom: 5%;
