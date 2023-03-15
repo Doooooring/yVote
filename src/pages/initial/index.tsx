@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import Answer from '@components/initial/answer';
 import InitialBody from '@components/initial/body';
 import InitialHeader from '@components/initial/header';
 import Intent from '@components/initial/intent';
@@ -8,10 +9,10 @@ import IntroductionComp from '@components/initial/introduction';
 export default function Initial() {
   return (
     <Wrapper>
-      <InitialHeader />
       <IntroductionComp />
-      <Intent />
       <InitialBody />
+      <Answer />
+      <Intent />
     </Wrapper>
   );
 }

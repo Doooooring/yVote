@@ -1,17 +1,34 @@
 import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
+import quoteDown from '@assets/img/quoteDown.png';
+import quoteDownWhite from '@assets/img/quoteDownWhite.png';
+import quoteUpper from '@assets/img/quoteUp.png';
+import quoteUpWhite from '@assets/img/quoteUpWhite.png';
 import { useAnimationEnd } from '@entities/hook/useAnimationEnd';
-import { useCause } from '@entities/hook/useCause';
 import { useOnScreen } from '@entities/hook/useOnScreen';
 import { useTypeEffect } from '@entities/hook/useTypeEffect';
 
 export default function Intent() {
   const intentViewer = useRef<HTMLDivElement>(null);
   const isOnScreen = useOnScreen(intentViewer);
-
-  const imagePopUpEnd = useAnimationEnd(isOnScreen);
-  const mainSentencePopUpEnd = useAnimationEnd(imagePopUpEnd);
+  const mainSentencePopUpEnd = useAnimationEnd(isOnScreen, 50);
+  const topLineEnd = useAnimationEnd(mainSentencePopUpEnd, 300);
+  const quoteUpperEnd = useAnimationEnd(mainSentencePopUpEnd, 40);
+  const rightLineEnd = useAnimationEnd(topLineEnd, 300);
+  const bottomLineEnd = useAnimationEnd(rightLineEnd, 300);
+  const quoteUnderEnd = useAnimationEnd(bottomLineEnd, 40);
+  const leftLineEnd = useAnimationEnd(bottomLineEnd, 300);
+  const [upInd, sentenceUp, sentenceUpEnd] = useTypeEffect(
+    '뉴스를 읽으며 차분히 생각하기 위해서는 환경 조성이 중요하다.',
+    35,
+    leftLineEnd,
+  );
+  const [downInd, sentenceDown, sentenceDownEnd] = useTypeEffect(
+    '공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.',
+    35,
+    sentenceUpEnd,
+  );
 
   //type effect
   // const [firstInd, firstComment, firstEnd] = useTypeEffect(
@@ -26,182 +43,43 @@ export default function Intent() {
   //   firstEnd,
   // );
 
-  const colorMap = useMemo(() => {
-    return {
-      covid: 'rgb(102, 166, 174)',
-      avoid_arguments: 'rgb(160, 181, 128)',
-      excessive_news: 'rgb(168, 161, 121)',
-      negative_mood: 'rgb(194, 119, 73)',
-      unessential: 'rgb(151, 69, 53)',
-      untrustworthy: 'rgb(100, 47, 76)',
-    };
-  }, []);
-
-  const ImageSize = useMemo(() => {
-    return 90;
-  }, []);
-
   return (
     <Wrapper>
-      <Row>
-        <Comp>
-          <ImageBox
-            cause={'avoid_arguments'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox cause={'unessential'} width={ImageSize} height={ImageSize} state={isOnScreen} />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'excessive_news'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox cause={'covid'} width={ImageSize} height={ImageSize} state={isOnScreen} />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'negative_mood'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-        <Comp>
-          <ImageBox
-            cause={'untrustworthy'}
-            width={ImageSize}
-            height={ImageSize}
-            state={isOnScreen}
-          />
-        </Comp>
-      </Row>
-      <Viewer ref={intentViewer} />
       <Column>
-        <MainSentenceWrapper state={imagePopUpEnd}>
-          <MainSentence>
-            <Highlight color={colorMap['avoid_arguments']} str={'미래를 위한 논의'} />
-            에
-            <Highlight color={colorMap['unessential']} str={' 도움이 되는 '} />
-            <Highlight color={colorMap['excessive_news']} str={'최소한의 '} />
-            <Highlight color={colorMap['covid']} str={'정치 뉴스'} />
-            만을
-          </MainSentence>
-          <MainSentence>
-            <Highlight color={colorMap['negative_mood']} str={'보기 좋게 '} />
-            제공하는
-            <Highlight color={colorMap['untrustworthy']} str={' 이성적인 '} />
-            서비스가 필요하다!
-          </MainSentence>
-        </MainSentenceWrapper>
         <SubSentenceWrapper state={mainSentencePopUpEnd}>
-          <QuotationUp>{`"`}</QuotationUp>
-          <SubSentence>
-            {'감정에 휘둘리지 않고 차분히 생각하기 위해서는 환경 조성이 중요하다.'}
-          </SubSentence>
-          <SubSentence>
-            {'공부를 시작하기 전에 휴대폰을 끄고 책상을 정리하는 것과 같은 이치이다.'}
-          </SubSentence>
-          <QuotationDown>{`"`}</QuotationDown>
+          <SubSentence>{sentenceUp}</SubSentence>
+          <SubSentence>{sentenceDown}</SubSentence>
+          <Top state={topLineEnd}></Top>
+          <Right state={rightLineEnd}></Right>
+          <Bottom state={bottomLineEnd}></Bottom>
+          <Left state={leftLineEnd}></Left>
+          <QuoteUpper state={quoteUpperEnd}>
+            <img src={quoteUpper} width="50px" height="50px" />
+          </QuoteUpper>
+          <QuoteUnder state={quoteUnderEnd}>
+            <img src={quoteDown} width="50px" height="50px" />
+          </QuoteUnder>
         </SubSentenceWrapper>
       </Column>
+      <Viewer ref={intentViewer} />
     </Wrapper>
-  );
-}
-
-interface HighlightProps {
-  color: string;
-  str: string;
-}
-
-function Highlight({ color, str }: HighlightProps) {
-  return (
-    <span
-      style={{
-        color: color,
-      }}
-    >
-      {str}
-    </span>
-  );
-}
-
-interface ImageBoxProps {
-  cause:
-    | 'covid'
-    | 'avoid_arguments'
-    | 'excessive_news'
-    | 'negative_mood'
-    | 'unessential'
-    | 'untrustworthy';
-  width: number;
-  height: number;
-  state: boolean;
-}
-
-function ImageBox({ cause, width, height, state }: ImageBoxProps) {
-  const [percent, curImage, curTitle, curColor] = useCause(cause);
-
-  return (
-    <ImageWrapper>
-      <CauseImage src={curImage} width={width} height={height} state={state} />
-    </ImageWrapper>
   );
 }
 
 const Wrapper = styled.div`
   width: 100%;
   min-width: 800px;
+  height: 430px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 500px;
   position: relative;
-  background-color: rgba(100, 100, 100, 0.1);
-`;
-
-const ImageWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 90px;
-  height: 90px;
-`;
-
-interface CauseImageProps {
-  width: number;
-  height: number;
-  state: boolean;
-}
-
-const CauseImage = styled.img<CauseImageProps>`
-  width: ${({ width, state }) => (state ? `${width}px` : 0)};
-  height: ${({ height, state }) => (state ? `${height}px` : 0)};
-  opacity: ${({ state }) => (state ? 1 : 0)};
-  transition-duration: 0.5s;
+  background-color: white;
 `;
 
 const Viewer = styled.div`
   height: 30px;
-`;
-
-const Comp = styled.div`
-  display: inline-block;
-  transition-duration: 0.6s;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
 `;
 
 const Column = styled.div`
@@ -211,50 +89,90 @@ const Column = styled.div`
   align-items: center;
 `;
 
-interface MainSentenceWrapper {
-  state: boolean;
-}
-
-const MainSentenceWrapper = styled(Column)<MainSentenceWrapper>`
-  border: 4px dashed rgb(200, 200, 200);
-  border-radius: 30px;
-  padding: 20px;
-  margin-bottom: 50px;
-  opacity: ${({ state }) => (state ? 1 : 0)};
-  transition-duration: 1s;
-`;
-
-const MainSentence = styled.p`
-  font-size: 30px;
-  font-weight: 600;
-  margin-bottom: 5px;
-`;
-
 interface SubSentenceWrapperProps {
   state: boolean;
 }
 
 const SubSentenceWrapper = styled(Column)<SubSentenceWrapperProps>`
-  height: 80px;
+  width: 900px;
+  height: 200px;
   opacity: ${({ state }) => (state ? 1 : 0)};
   transition-duration: 1s;
+  padding: 40px;
+  border-radius: 50px;
+  gap: 30px;
+  position: relative;
 `;
 
 const SubSentence = styled.p`
+  font-family: var(--font-gangwon);
+  transition-duration: 1s;
   height: 30px;
-  font-size: 25px;
-  margin-bottom: 5px;
-  color: rgb(100, 100, 100);
-  font-weight: 600;
+  font-size: 23px;
+  color: rgb(60, 60, 60);
+  font-weight: 700;
 `;
 
-const Quotation = styled.p`
-  font-size: 35px;
-  color: rgb(120, 120, 120);
+interface Border {
+  state: boolean;
+}
+
+const Border = styled.span<Border>`
+  background-color: rgb(60, 60, 60);
+  position: absolute;
 `;
 
-const QuotationUp = styled(Quotation)``;
+const Horizontal = styled(Border)`
+  height: 3px;
+  width: ${({ state }) => (state ? '860px' : '0px')};
+  transition-duration: 0.4s;
+`;
+const Vertical = styled(Border)`
+  width: 3px;
+  height: ${({ state }) => (state ? '160px' : '0px')};
+  transition-duration: 0.4s;
+`;
 
-const QuotationDown = styled(Quotation)`
-  margin-top: 10px;
+const Top = styled(Horizontal)`
+  top: 0;
+  left: 0;
+`;
+const Right = styled(Vertical)`
+  top: 40px;
+  right: 0;
+`;
+const Bottom = styled(Horizontal)`
+  bottom: 0;
+  right: 0;
+`;
+const Left = styled(Vertical)`
+  bottom: 40px;
+  left: 0;
+`;
+
+interface Quote {
+  state: boolean;
+}
+
+const Quote = styled.div<Quote>`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  text-align: center;
+  width: 90px;
+  height: 90px;
+  background-color: white;
+  opacity: ${({ state }) => (state ? 1 : 0)};
+`;
+
+const QuoteUpper = styled(Quote)`
+  top: -55px;
+  left: 50px;
+`;
+
+const QuoteUnder = styled(Quote)`
+  bottom: -45px;
+  right: 50px;
 `;

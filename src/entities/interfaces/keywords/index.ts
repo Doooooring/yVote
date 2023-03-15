@@ -2,7 +2,7 @@ export type category =
   | 'human'
   | 'politics'
   | 'policy'
-  | 'economy'
+  | 'economics'
   | 'social'
   | 'organization'
   | 'etc';
@@ -31,7 +31,7 @@ export interface KeywordInPolicy extends KeywordToView {
   category: 'policy';
 }
 export interface KeywordInEconomy extends KeywordToView {
-  category: 'economy';
+  category: 'economics';
 }
 export interface KeywordInSocial extends KeywordToView {
   category: 'social';

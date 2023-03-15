@@ -32,22 +32,20 @@ function Highlight({ color, str }: { color: string; str: string }) {
 
 function TitleHighlight({ cause, title, color }: TitleHighlightProps) {
   if (cause === 'covid') {
-    const titleSplited = title.split(/코로나|정치/);
+    const titleSplited = title.split(/정치/);
     return (
       <Title>
         {titleSplited[0]}
-        <Highlight color={color} str={'코로나'} />
-        {titleSplited[1]}
         <Highlight color={color} str={'정치'} />
-        {titleSplited[2]}
+        {titleSplited[1]}
       </Title>
     );
   } else if (cause === 'avoid_arguments') {
-    const titleSplited = title.split(/논쟁/);
+    const titleSplited = title.split(/싸움/);
     return (
       <Title>
         {titleSplited[0]}
-        <Highlight color={color} str={'논쟁'} />
+        <Highlight color={color} str={'싸움'} />
         {titleSplited[1]}
       </Title>
     );
@@ -70,23 +68,21 @@ function TitleHighlight({ cause, title, color }: TitleHighlightProps) {
       </Title>
     );
   } else if (cause === 'unessential') {
-    const titleSplited = title.split(/알빠노/);
+    const titleSplited = title.split(/뭐가 달라지나요/);
     return (
       <Title>
         {titleSplited[0]}
-        <Highlight color={color} str={'알빠노'} />
+        <Highlight color={color} str={'뭐가 달라지나요'} />
         {titleSplited[1]}
       </Title>
     );
   } else {
-    const titleSplited = title.split(/가짜뉴스|팩트체크/);
+    const titleSplited = title.split(/어느 쪽 말이 맞는지/);
     return (
       <Title>
         {titleSplited[0]}
-        <Highlight color={color} str={'가짜뉴스'} />
+        <Highlight color={color} str={'어느 쪽 말이 맞는지'} />
         {titleSplited[1]}
-        <Highlight color={color} str={'팩트체크'} />
-        {titleSplited[2]}
       </Title>
     );
   }
@@ -189,6 +185,7 @@ const ContentsWrapper = styled.div`
   padding-left: 40px;
   padding-right: 20px;
   border-radius: 0 20px 20px 0;
+  font-size: 18px;
 `;
 
 const TitleWrapper = styled.div`

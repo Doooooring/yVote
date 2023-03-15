@@ -21,7 +21,7 @@ export default function KeywordsPage() {
   const setStateMap = useMemo(() => {
     return {
       human: setKeywordInHuman,
-      economy: setKeywordInEconomy,
+      economics: setKeywordInEconomy,
       organization: setkeywordInOrganization,
       policy: setKeywordInPolicy,
       politics: setKeywordInPolitics,
@@ -33,10 +33,13 @@ export default function KeywordsPage() {
   const setInitKeywords = useCallback(async () => {
     const response: getKeywordsResponse = await KeywordServices.getKeywords();
     const { recent, other } = response;
+    console.log(other);
     setRecentKeywords(recent);
     other.forEach((comp) => {
       const { _id, keywords } = comp;
+
       const setState: Dispatch<SetStateAction<KeywordToView[]>> = setStateMap[_id];
+
       setState(keywords);
     });
   }, []);
@@ -54,12 +57,7 @@ export default function KeywordsPage() {
       <GridContainer>
         <RecentCategoryGrid keywords={recentKeywords} setKeywords={setRecentKeywords} />
         <CategoryGrid
-          category={'human'}
-          keywords={keywordInHuman}
-          setKeywords={setKeywordInHuman}
-        />
-        <CategoryGrid
-          category={'economy'}
+          category={'economics'}
           keywords={keywordInEconomy}
           setKeywords={setKeywordInEconomy}
         />
@@ -82,6 +80,11 @@ export default function KeywordsPage() {
           category={'social'}
           keywords={keywordInSocial}
           setKeywords={setKeywordInSocial}
+        />
+        <CategoryGrid
+          category={'human'}
+          keywords={keywordInHuman}
+          setKeywords={setKeywordInHuman}
         />
         <CategoryGrid category={'etc'} keywords={keywordInEtc} setKeywords={setKeywordInEtc} />
       </GridContainer>
